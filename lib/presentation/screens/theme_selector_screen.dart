@@ -57,7 +57,27 @@ class _ThemeSelectorScreenState extends State<ThemeSelectorScreen> {
       ).getTheme(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Seleccionar Tema'),
+          title: Row(
+            children: [
+              const SizedBox(width: 16),
+              Image.asset(
+                'assets/images/cr_logo.jpg',
+                width: 40,
+                height: 40,
+              ),
+              const SizedBox(width: 8),
+              const Text(
+                'Car Rent',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
           actions: [
             IconButton(
               onPressed: _toggleDarkMode,

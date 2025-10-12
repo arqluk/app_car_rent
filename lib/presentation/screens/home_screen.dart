@@ -19,23 +19,35 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Car Rent'),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/cr_logo.jpg',
+              width: 40,
+              height: 40,
+            ),
+            const SizedBox(width: 8),
+            const Text('Car Rent'),
+          ],
+        ),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         actions: [
           TextButton(
-            onPressed: () {
-              // TODO: Navegar a pantalla de Login
-            },
+            onPressed: () => context.push('/start_session_screen'),
+            // onPressed: () {
+            //   // TODO: Navegar a pantalla de Login
+            // },
             child: const Text(
               'Login',
               style: TextStyle(color: Colors.white),
             ),
           ),
           TextButton(
-            onPressed: () {
-              // TODO: Navegar a pantalla de Registro
-            },
+            onPressed: () => context.push('/register_screen'),
+            // onPressed: () {
+            //   // TODO: Navegar a pantalla de Registro
+            // },
             child: const Text(
               'Registrar',
               style: TextStyle(color: Colors.white),
@@ -53,7 +65,8 @@ class _HomeView extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             ElevatedButton.icon(
-              onPressed: () => context.go('/theme_selector'),
+              // onPressed: () => context.go('/theme_selector'),
+              onPressed: () => context.push('/theme_selector'),
               icon: const Icon(Icons.palette),
               label: const Text('Seleccionar Tema'),
               style: ElevatedButton.styleFrom(

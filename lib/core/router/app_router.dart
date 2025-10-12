@@ -1,9 +1,12 @@
 import 'package:app_car_rental/presentation/screens/home_screen.dart';
+import 'package:app_car_rental/presentation/screens/register_screen.dart';
+import 'package:app_car_rental/presentation/screens/start_session_screen.dart';
 import 'package:app_car_rental/presentation/screens/theme_selector_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/home_screen',
+  // initialLocation: '/start_session_screen',
   routes: [
     // GoRoute(
     //   path: '/login',
@@ -12,6 +15,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/home_screen',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/start_session_screen',
+      builder: (context, state) => const StartSessionScreen(),
+    ),
+     GoRoute(
+      path: '/register_screen',
+      builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
       path: '/theme_selector',
