@@ -47,15 +47,42 @@ class _StartSesionScreenView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Inicio',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ' -----    Iniciar con    -----',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+            ),
+            const SizedBox(height: 30),
+             ElevatedButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.g_mobiledata),
+              // icon: Image.asset('assets/images/google_logo.png'),
+              // icon: SizedBox(
+              //   width: 24,
+              //   height: 24,
+              //   child: Image.asset('assets/images/google_logo.png')
+              // ),
+            //   icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
+              label: Text('Google'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.apple),
+              label: Text('Apple'),
+            ),
+             const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.email),
+              label: Text('email'),
             ),
             const SizedBox(height: 30),
             TextButton(
               onPressed: () => context.push('/register_screen'),
             //   onPressed: () {},
-              child: const Text('No estoy registrado'),
-            ),
+              child: const Text('No estoy registrado',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
+              ),
+           ),
           ],
         ),
       ),
