@@ -79,7 +79,7 @@
 
 
 
-
+// ---------------------------------------------------------------------------
 
 
 
@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _registerUser() {
     if (_formKey.currentState!.validate()) {
-      final username = _usernameController.text.trim();
+      final name = _usernameController.text.trim();
       final email = _emailController.text.trim();
       final passport = _passportController.text.trim();
       final country = _countryController.text.trim();
@@ -146,6 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 }
 
   final newUser = User(
+    userName: name,
     userEmail: email,
     password: password,
     passport: passport,
@@ -160,17 +161,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       // Navegar al login
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Registro exitoso. Ahora inicia sesión.")),
+        const SnackBar(content: Text("Registro exitoso. Inicia sesión.")),
       );
 
       context.push('/login_screen');
+      // context.pop('/login_screen');  // 👈 vuelve al login sin recrearlo
     }
   }
 
   @override
   void dispose() {
     _usernameController.dispose();
-    _emailController.dispose();
+    // _emailController.dispose();
     _emailController.dispose();
     _passportController.dispose();
     _countryController.dispose();
@@ -321,6 +323,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () => context.push('/login_screen'),
+                //onPressed: () => context.pop('/login_screen'),   // 👈 vuelve al login sin recrearlo
                 child: const Text("¿Ya tienes cuenta? Iniciar sesión"),
               ),
             ],
@@ -330,3 +333,141 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+
+
+// ----------------------------------------------------------------------
+
+// import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
+
+// class RegisterScreen extends StatefulWidget {
+//   const RegisterScreen({super.key});
+
+//   @override
+//   State<RegisterScreen> createState() => _RegisterScreenState();
+// }
+
+// class _RegisterScreenState extends State<RegisterScreen> {
+//   final TextEditingController _usernameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passportController = TextEditingController();
+//   final TextEditingController _countryController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmPasswordController = TextEditingController();
+
+//   static final List<Map<String, String>> _registeredUsers = [];
+
+//   final _formKey = GlobalKey<FormState>();
+//   String? _errorMessage;
+
+//   void _registerUser() {
+//     if (_formKey.currentState!.validate()) {
+//       final email = _emailController.text.trim();
+
+//       final exists = _registeredUsers.any((u) => u['email'] == email);
+//       if (exists) {
+//         setState(() => _errorMessage = 'Ya existe un usuario con ese email');
+//         return;
+//       }
+
+//       _registeredUsers.add({
+//         'username': _usernameController.text.trim(),
+//         'email': _emailController.text.trim(),
+//         'passport': _passportController.text.trim(),
+//         'country': _countryController.text.trim(),
+//         'password': _passwordController.text.trim(),
+//       });
+
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         const SnackBar(content: Text('Registro exitoso')),
+//       );
+
+//       context.pop(); // 👈 Vuelve al login sin recrearlo
+//     }
+//   }
+
+//   @override
+//   void dispose() {
+//     _usernameController.dispose();
+//     _emailController.dispose();
+//     _passportController.dispose();
+//     _countryController.dispose();
+//     _passwordController.dispose();
+//     _confirmPasswordController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Registrar Usuario'),
+//         backgroundColor: Colors.blue,
+//         foregroundColor: Colors.white,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20),
+//         child: Form(
+//           key: _formKey,
+//           child: ListView(
+//             children: [
+//               TextFormField(
+//                 controller: _usernameController,
+//                 decoration: const InputDecoration(labelText: 'Nombre de usuario', border: OutlineInputBorder()),
+//                 validator: (v) => v == null || v.isEmpty ? 'Ingrese su nombre' : null,
+//               ),
+//               const SizedBox(height: 16),
+//               TextFormField(
+//                 controller: _emailController,
+//                 decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+//                 validator: (v) => v == null || !v.contains('@') ? 'Email inválido' : null,
+//               ),
+//               const SizedBox(height: 16),
+//               TextFormField(
+//                 controller: _passportController,
+//                 decoration: const InputDecoration(labelText: 'Pasaporte', border: OutlineInputBorder()),
+//                 validator: (v) => v == null || v.isEmpty ? 'Ingrese pasaporte' : null,
+//               ),
+//               const SizedBox(height: 16),
+//               TextFormField(
+//                 controller: _countryController,
+//                 decoration: const InputDecoration(labelText: 'País', border: OutlineInputBorder()),
+//                 validator: (v) => v == null || v.isEmpty ? 'Ingrese país' : null,
+//               ),
+//               const SizedBox(height: 16),
+//               TextFormField(
+//                 controller: _passwordController,
+//                 obscureText: true,
+//                 decoration: const InputDecoration(labelText: 'Contraseña', border: OutlineInputBorder()),
+//                 validator: (v) => v == null || v.length < 6 ? 'Mínimo 6 caracteres' : null,
+//               ),
+//               const SizedBox(height: 16),
+//               TextFormField(
+//                 controller: _confirmPasswordController,
+//                 obscureText: true,
+//                 decoration: const InputDecoration(labelText: 'Confirmar contraseña', border: OutlineInputBorder()),
+//                 validator: (v) => v != _passwordController.text ? 'No coincide' : null,
+//               ),
+//               const SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: _registerUser,
+//                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+//                 child: const Text('Registrar', style: TextStyle(color: Colors.white)),
+//               ),
+//               if (_errorMessage != null)
+//                 Padding(
+//                   padding: const EdgeInsets.only(top: 10),
+//                   child: Text(_errorMessage!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+//                 ),
+//               TextButton(
+//                 onPressed: () => context.pop(), // 👈 vuelve al login sin recrearlo
+//                 child: const Text('¿Ya tienes cuenta? Iniciar sesión'),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+

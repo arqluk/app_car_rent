@@ -19,13 +19,13 @@ class _LoginScreenState extends State<LoginScreen> {
   String? userEmailError;
   String? passwordError;
 
-  final List<User> users = [
-    User(userEmail: 'ale@gmail.com', password: '123', passport: 'A12345', country: 'ARG'),
-    User(userEmail: 'ben@gmail.com', password: '234', passport: 'A12345', country: 'BRA'),
-    User(userEmail: 'cam@gmail.com', password: '345', passport: 'A12345', country: 'CHN'),
-    User(userEmail: 'dan@gmail.com', password: '456', passport: 'A12345', country: 'DEN'),
-    User(userEmail: 'eva@gmail.com', password: '567', passport: 'A12345', country: 'ESP'),
-  ];
+  // final List<User> users = [
+  //   User(userEmail: 'ale@gmail.com', password: '123', passport: 'A12345', country: 'ARG'),
+  //   User(userEmail: 'ben@gmail.com', password: '234', passport: 'A12345', country: 'BRA'),
+  //   User(userEmail: 'cam@gmail.com', password: '345', passport: 'A12345', country: 'CHN'),
+  //   User(userEmail: 'dan@gmail.com', password: '456', passport: 'A12345', country: 'DEN'),
+  //   User(userEmail: 'eva@gmail.com', password: '567', passport: 'A12345', country: 'ESP'),
+  // ];
 
   // 🔹 initState: se ejecuta al crear el State
   @override
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (userEmail.isEmpty) {
-      setState(() => userEmailError = 'El usuario no puede estar vacío');
+      setState(() => userEmailError = 'El email no puede estar vacío');
       return;
     }
 
@@ -93,8 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
   if (userFound == null) {
 
     setState(() {
-      userEmailError = 'Usuario o contraseña incorrectos';
-      passwordError = 'Usuario o contraseña incorrectos';
+      userEmailError = 'email o contraseña incorrectos';
+      passwordError = 'email o contraseña incorrectos';
     });
     return;
   }
@@ -106,7 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
     // context.push('/animal_screen', extra: username);
     // context.push('/perfil_screen', extra: userFound);
     // context.push('/settings_screen', extra: userFound);
-    context.pushReplacement('/home', extra: userFound);
+
+    // context.pushReplacement('/home', extra: userFound);
+    context.pushReplacement('/cars_screen', extra: userFound);
     
   }
 
@@ -174,11 +176,140 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 200),
             OutlinedButton(
-              onPressed: () => context.push('/cars_screen'),
-              child: const Text('Login')),
+              // onPressed: () => context.push('/cars_screen'),
+              onPressed: _login,
+              child: const Text('Login')
+              ),
+
+
+            TextButton(
+              onPressed: () => context.push('/register_screen'),
+              child: const Text('¿No tenés cuenta? Registrate'),
+            ),
+
+
+
+
           ],
         ),
       ),
     );
   }
 }
+
+
+// -----------------------------------------------------------------
+
+// import 'package:app_car_rental/domain/user.dart';
+// import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
+
+// class LoginScreen extends StatefulWidget {
+//   const LoginScreen({super.key});
+
+//   @override
+//   State<LoginScreen> createState() => _LoginScreenState();
+// }
+
+// class _LoginScreenState extends State<LoginScreen> {
+//   final TextEditingController inputUserEmail = TextEditingController();
+//   final TextEditingController inputPassword = TextEditingController();
+
+//   String? userEmailError;
+//   String? passwordError;
+
+//   // 🔹 Lista temporal de usuarios
+//   final List<User> users = [
+//     User(userEmail: 'ale@gmail.com', password: '123', passport: 'A12345', country: 'ARG'),
+//     User(userEmail: 'ben@gmail.com', password: '234', passport: 'A12345', country: 'BRA'),
+//   ];
+
+//   @override
+//   void dispose() {
+//     inputUserEmail.dispose();
+//     inputPassword.dispose();
+//     super.dispose();
+//   }
+
+//   void _login() {
+//     final email = inputUserEmail.text.trim();
+//     final pass = inputPassword.text.trim();
+
+//     setState(() {
+//       userEmailError = null;
+//       passwordError = null;
+//     });
+
+//     if (email.isEmpty) {
+//       setState(() => userEmailError = 'Ingrese su email');
+//       return;
+//     }
+//     if (pass.isEmpty) {
+//       setState(() => passwordError = 'Ingrese su contraseña');
+//       return;
+//     }
+
+//     final userFound = users.firstWhere(
+//       (u) => u.userEmail == email && u.password == pass,
+//       orElse: () => User(userEmail: '', password: '', passport: '', country: ''),
+//     );
+
+//     if (userFound.userEmail.isEmpty) {
+//       setState(() {
+//         userEmailError = 'Usuario o contraseña incorrectos';
+//         passwordError = 'Usuario o contraseña incorrectos';
+//       });
+//       return;
+//     }
+
+//     context.pushReplacement('/home', extra: userFound);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Iniciar Sesión'),
+//         backgroundColor: Colors.blue,
+//         foregroundColor: Colors.white,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             TextField(
+//               controller: inputUserEmail,
+//               decoration: InputDecoration(
+//                 labelText: 'Email',
+//                 border: const OutlineInputBorder(),
+//                 errorText: userEmailError,
+//               ),
+//             ),
+//             const SizedBox(height: 16),
+//             TextField(
+//               controller: inputPassword,
+//               obscureText: true,
+//               decoration: InputDecoration(
+//                 labelText: 'Contraseña',
+//                 border: const OutlineInputBorder(),
+//                 errorText: passwordError,
+//               ),
+//             ),
+//             const SizedBox(height: 30),
+//             ElevatedButton(
+//               onPressed: _login,
+//               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+//               child: const Text('Login'),
+//             ),
+//             const SizedBox(height: 10),
+//             TextButton(
+//               onPressed: () => context.push('/register_screen'),
+//               child: const Text('¿No tienes cuenta? Registrate'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

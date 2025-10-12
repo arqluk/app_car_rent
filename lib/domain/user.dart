@@ -1,6 +1,7 @@
 // import 'package:list_view_al_ej/domain/welcoming_interface.dart';
 
 class User {
+  String userName;
   String userEmail;
   String password;
   String passport;
@@ -8,6 +9,7 @@ class User {
   // String imageUrl;
 
   User({
+    required this.userName,
     required this.userEmail,
     required this.password,
     required this.passport,
