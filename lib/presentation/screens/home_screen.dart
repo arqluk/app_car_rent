@@ -59,20 +59,68 @@ class _HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Welcome to Car Rent',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+ //           Center(
+ //             Center(
+       //         Row(
+       //           mainAxisAlignment: MainAxisAlignment.center, // 👈 centra horizontalmente
+       //           children: [
+              const Text(
+              'Bienvenido a',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
             ),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              // onPressed: () => context.go('/theme_selector'),
+
+            const SizedBox(height: 20),
+
+            Image.asset(
+              'assets/images/cr_logo.jpg',
+                width: 150,
+                height: 150,
+            ),
+
+            // const SizedBox(height: 5),
+
+            const Text(
+              'Car Rent',
+              style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+            ),
+        //          ],
+        //        ),
+ //             ),
+ //           ),
+            const SizedBox(height: 50),
+
+            // const Text(
+            //   'Bienvenido a',
+            //   style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
+            // ),
+            const SizedBox(height: 50),
+            // // ElevatedButton.icon(
+            // ElevatedButton.icon(
+            //   // onPressed: () => context.go('/theme_selector'),
+            //   onPressed: () => context.push('/theme_selector'),
+            //   icon: const Icon(Icons.palette),
+            //   label: const Text('Seleccionar Tema'),
+            //   style: ElevatedButton.styleFrom(
+            //     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            //   ),
+            // ),
+
+            TextButton.icon(
               onPressed: () => context.push('/theme_selector'),
-              icon: const Icon(Icons.palette),
-              label: const Text('Seleccionar Tema'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              icon: const Icon(
+                Icons.palette,
+                // color: Colors.blue
+               ),
+              label: const Text(
+                'Seleccionar Tema',
+                style: TextStyle(
+                  fontSize: 18,
+                  decoration: TextDecoration.underline,
+                  // color: Colors.blue,
+                ),
               ),
             ),
+
           ],
         ),
       ),
