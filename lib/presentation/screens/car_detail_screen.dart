@@ -39,7 +39,8 @@ class CarDetailScreen extends StatelessWidget {
         colorDetail: car.color,
         description: '${car.capacidad} personas - ${car.equipaje} maletas',
         subdescription: 'Aire: ${car.aire} - Automático: ${car.automatico}',
-        imageUrl: car.imageUrl,
+        // imageUrl: car.imageUrl,
+        imageUrl: car.imageUrl.isNotEmpty ? car.imageUrl : 'https://blocks.astratic.com/img/general-img-landscape.png',
         precio: car.precio,
       ),
     );

@@ -101,7 +101,12 @@ class _CarsItemView extends StatelessWidget {
       child: ListTile(
         title: Text(car.grupo),
         subtitle: Text('${car.marca} ${car.modelo}'),
-        leading: Image.network(car.imageUrl),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child:
+          car.imageUrl.isEmpty ? const Icon(Icons.movie, size: 50)
+         : Image.network(car.imageUrl)
+         ),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: () {
           context.push('/car_detail_screen', extra: car);
