@@ -1,4 +1,4 @@
-import 'user.dart';
+import '../domain/user.dart';
 
 class UserRepository {
   static final List<User> users = [

@@ -86,7 +86,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app_car_rental/domain/user.dart';
-import 'package:app_car_rental/domain/user_repository.dart';
+import 'package:app_car_rental/data/user_repository.dart';
 
 
 class RegisterScreen extends StatefulWidget {
