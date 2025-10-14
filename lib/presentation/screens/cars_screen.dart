@@ -48,7 +48,74 @@ class _CarsScreenView extends StatelessWidget {
           ),
         ],
       ),
-      body: _CarsListView(carsList: carRepository.getCars(), textStyle: textStyle),
+      // body: _CarsListView(carsList: carRepository.getCars(), textStyle: textStyle),
+
+            // ✅ Cuerpo con texto arriba + lista centrada
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // centra verticalmente
+          crossAxisAlignment: CrossAxisAlignment.center, // centra horizontalmente
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  // Text(
+                  //   'Elegí tu vehículo ideal en nuestra flota.\n'
+                  //   'Encontrá autos compactos, SUV o premium al mejor precio.\n'
+                  //   'Hacé clic en cualquier modelo para ver más detalles.',
+                  //   textAlign: TextAlign.center,
+                  //   style: textStyle.bodyLarge?.copyWith(
+                  //     fontSize: 16,
+                  //     color: Colors.black87,
+                  //   ),
+                  // ),
+                  Text(
+                    'Elegí tu vehículo en nuestra flota',
+                    textAlign: TextAlign.center,
+                    style: textStyle.bodyLarge?.copyWith(
+                      fontSize: 20, fontWeight: FontWeight.bold,
+                      // color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Encontrá autos al mejor precio.',
+                    textAlign: TextAlign.center,
+                    style: textStyle.bodyLarge?.copyWith(
+                      fontSize: 18,
+                      // color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  Text(
+                    'Hacé clic en un modelo para ver detalles',
+                    textAlign: TextAlign.center,
+                    style: textStyle.bodyLarge?.copyWith(
+                      fontSize: 16,
+                      // color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // const SizedBox(height: 20),
+
+            const SizedBox(height: 5),
+            // ✅ Lista expandible dentro de la columna
+            Expanded(
+              child: _CarsListView(
+                carsList: carRepository.getCars(),
+                textStyle: textStyle,
+              ),
+            ),
+
+
+
+
+          ]
+        )
+      )
     );
   }
 }

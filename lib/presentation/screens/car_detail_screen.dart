@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class CarDetailScreen extends StatelessWidget {
   final Car car;
-  const CarDetailScreen({super.key, required this.car});
-
+  
+  CarDetailScreen({super.key, required this.car});
+  // final textStyle = Theme.of(context).textTheme;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +35,14 @@ class CarDetailScreen extends StatelessWidget {
         ],
       ),
       body: ItemDetailScreen(
-        title: car.grupo,
+        title: 'Grupo: ${car.grupo}',
         subtitle: '${car.marca} ${car.modelo}',
-        colorDetail: car.color,
+        colorDetail: 'Color: ${car.color}',
         description: '${car.capacidad} personas - ${car.equipaje} maletas',
         subdescription: 'Aire: ${car.aire} - Automático: ${car.automatico}',
         // imageUrl: car.imageUrl,
         imageUrl: car.imageUrl.isNotEmpty ? car.imageUrl : 'https://blocks.astratic.com/img/general-img-landscape.png',
+        // precio: 'Precio: ${car.precio} por día',
         precio: car.precio,
       ),
     );

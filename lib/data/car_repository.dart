@@ -14,7 +14,7 @@ class CarRepository {
     equipaje: 4, automatico: true, aire: false, precio: 250, imageUrl: 'https://www.localiza.com/argentina-site/geral/Frota/PLSE.png'),
 
     Car(id: 'CS', grupo: 'Super', marca: 'Chevrolet', modelo: 'Spin', color: 'Gris', capacidad: 7,
-    equipaje: 5, automatico: false, aire: true, precio: 250, imageUrl: 'https://www.localiza.com/argentina-site/geral/Frota/SPIN.png'),
+    equipaje: 5, automatico: false, aire: true, precio: 500, imageUrl: 'https://www.localiza.com/argentina-site/geral/Frota/SPIN.png'),
 
     Car(id: 'EH', grupo: 'Econ', marca: 'Etios', modelo: 'Hatchback', color: 'Blanco', capacidad: 5,
     equipaje: 3, automatico: false, aire: true, precio: 100, imageUrl: 'https://www.localiza.com/argentina-site/geral/Frota/ETIH.png'),
