@@ -42,7 +42,7 @@ class ItemDetailScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(title, style: textStyle.titleLarge,),
+          Text(title, style: textStyle.titleLarge),
           SizedBox(height: 5,),
           Text(subtitle, style: textStyle.titleMedium,),
           SizedBox(height: 10,),
@@ -50,7 +50,9 @@ class ItemDetailScreen extends StatelessWidget {
           Text(description),
           Text(subdescription),
           SizedBox(height: 40,),
-          Image.network(imageUrl),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.network(imageUrl, width: 350,)),
           SizedBox(height: 20),
           // Text(precio as String),
 
