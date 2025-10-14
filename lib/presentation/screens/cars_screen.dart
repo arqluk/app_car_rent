@@ -60,6 +60,7 @@ class _CarsScreenView extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
+                  const SizedBox(height: 20),
                   // Text(
                   //   'Elegí tu vehículo ideal en nuestra flota.\n'
                   //   'Encontrá autos compactos, SUV o premium al mejor precio.\n'
@@ -78,7 +79,7 @@ class _CarsScreenView extends StatelessWidget {
                       // color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   Text(
                     'Encontrá autos al mejor precio.',
                     textAlign: TextAlign.center,
