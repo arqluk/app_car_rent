@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MenuItem {
+class MenuItem{
   String title;
   String subtitle;
   IconData icon;
@@ -12,6 +12,7 @@ class MenuItem {
     required this.icon,
     required this.link,
   });
+}
 
   final List<MenuItem> menuItems = [
     MenuItem(
@@ -20,7 +21,11 @@ class MenuItem {
       icon: Icons.directions_car,
       link: '/cars_screen',
     ),
+    MenuItem(
+      title: 'Mis Reservas',
+      subtitle: 'Ver reservas',
+      icon: Icons.menu_book,
+      link: '/reservations_screen',
+    ),
   ];
-
-}
 

@@ -53,9 +53,19 @@ final appRouter = GoRouter(
       builder: (context, state) => CarDetailScreen(car: state.extra as Car),
     ),
      GoRoute(
-      path: '/reservation_screen',
-      builder: (context, state) => ReservationScreen(car: state.extra as Car),
+      path: '/reservations_screen',
+      // builder: (context, state) => ReservationScreen(car: state.extra as Car),
+      builder: (context, state) => ReservationScreen(),
     ),
+    // GoRoute(
+    //   path: '/reservations_screen',
+    //   builder: (context, state) {
+    //     final car = state.extra;
+    //     // Si se pasó un Car, lo usa; si no, lo ignora
+    //     return ReservationScreen(car: car is Car ? car : null);
+    //   },
+    //),
+
     // GoRoute(
     //   path: '/animal_example_screen',
     //   builder: (context, state) {

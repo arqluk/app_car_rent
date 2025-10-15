@@ -1,3 +1,4 @@
+import 'package:app_car_rental/presentation/components/drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +18,7 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -124,6 +126,9 @@ class _HomeView extends StatelessWidget {
           ],
         ),
       ),
+
+      // drawer: DrawerMenu(),
+      drawer: DrawerMenu(scaffoldKey: scaffoldKey), // ✅ se pasa aquí
     );
   }
 }

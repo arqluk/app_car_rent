@@ -1,19 +1,23 @@
-import 'package:app_car_rental/domain/car.dart';
+// import 'package:app_car_rental/domain/car.dart';
 import 'package:flutter/material.dart';
 
 class ReservationScreen extends StatelessWidget {
-  final Car car;
-  const ReservationScreen({super.key, required this.car});
+  // final Car car;
+  // final Car? car;
+  // const ReservationScreen({super.key, required this.car});
+  const ReservationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return _ReservationScreenView(car: car);
+    // return _ReservationScreenView(car: car);
+    return _ReservationScreenView();
   }
 }
 
 class _ReservationScreenView extends StatelessWidget {
   const _ReservationScreenView({
-    super.key, required Car car,
+    // super.key, required Car car,
+    super.key,
   });
 
   @override
@@ -43,7 +47,9 @@ class _ReservationScreenView extends StatelessWidget {
           ),
         ],
       ),
-      body: Placeholder(),
+      body: const Center(
+        child: Text('Aquí se mostrarán las reservas del usuario'),
+      ),
     );
   }
 }

@@ -53,7 +53,7 @@ class CarDetailScreen extends StatelessWidget {
           ElevatedButton(
             // style: ButtonStyle(backgroundColor: Colors.lightBlueAccent),
             onPressed: () {
-              context.push('/reservation_screen', extra: car);
+              context.push('/reservations_screen', extra: car);
             },
             child: Text('Reservar',
             style: const TextStyle(
