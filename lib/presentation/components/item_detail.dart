@@ -72,14 +72,14 @@ class ItemDetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.lightBlueAccent, // fondo azul
+              color: Colors.blue, // fondo azul
               border: Border.all(color: Colors.black, width: 2), // borde negro
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              '\$${formatNumber.format(precio)}.- por día',
+              '\$ ${formatNumber.format(precio)}.- por día',
               style: const TextStyle(
-                color: Colors.black, // texto negro
+                color: Colors.white, // texto negro
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),

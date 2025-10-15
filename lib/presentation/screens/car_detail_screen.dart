@@ -1,6 +1,7 @@
 import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/presentation/components/item_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CarDetailScreen extends StatelessWidget {
   final Car car;
@@ -34,16 +35,34 @@ class CarDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ItemDetailScreen(
-        title: 'Grupo: ${car.grupo}',
-        subtitle: '${car.marca} ${car.modelo}',
-        colorDetail: 'Color: ${car.color}',
-        description: '${car.capacidad} personas - ${car.equipaje} maletas',
-        subdescription: 'Aire: ${car.aire ? "Sí" : "No"} - Automático: ${car.automatico ? "Sí" : "No"}',
-        // imageUrl: car.imageUrl,
-        imageUrl: car.imageUrl.isNotEmpty ? car.imageUrl : 'https://blocks.astratic.com/img/general-img-landscape.png',
-        // precio: 'Precio: ${car.precio} por día',
-        precio: car.precio,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ItemDetailScreen(
+            title: 'Grupo: ${car.grupo}',
+            subtitle: '${car.marca} ${car.modelo}',
+            colorDetail: 'Color: ${car.color}',
+            description: '${car.capacidad} personas - ${car.equipaje} maletas',
+            subdescription: 'Aire: ${car.aire ? "Sí" : "No"} - Automático: ${car.automatico ? "Sí" : "No"}',
+            // imageUrl: car.imageUrl,
+            imageUrl: car.imageUrl.isNotEmpty ? car.imageUrl : 'https://blocks.astratic.com/img/general-img-landscape.png',
+            // precio: 'Precio: ${car.precio} por día',
+            precio: car.precio,
+          ),
+          SizedBox(height: 50,),
+          ElevatedButton(
+            // style: ButtonStyle(backgroundColor: Colors.lightBlueAccent),
+            onPressed: () {
+              context.push('/reservation_screen', extra: car);
+            },
+            child: Text('Reservar',
+            style: const TextStyle(
+                color: Colors.black, // texto negro
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),)
+          )
+        ],
       ),
     );
   }
