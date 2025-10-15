@@ -27,5 +27,17 @@ class MenuItem{
       icon: Icons.menu_book,
       link: '/reservations_screen',
     ),
+     MenuItem(
+      title: 'Configuración',
+      subtitle: 'Seleccionar configuraciones',
+      icon: Icons.select_all,
+      link: '/settings_screen',
+    ),
+      MenuItem(
+      title: 'Logout',
+      subtitle: 'Salir de la app',
+      icon: Icons.exit_to_app,
+      link: '/home_screen',
+    ),
   ];
 
