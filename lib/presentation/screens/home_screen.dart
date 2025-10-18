@@ -1,3 +1,4 @@
+import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:app_car_rental/presentation/components/drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -20,43 +21,59 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/cr_logo.jpg',
-              width: 40,
-              height: 40,
-            ),
-            const SizedBox(width: 8),
-            const Text('Car Rent'),
-          ],
-        ),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        actions: [
-          TextButton(
-            onPressed: () => context.push('/start_session_screen'),
-            // onPressed: () {
-            //   // TODO: Navegar a pantalla de Login
-            // },
-            child: const Text(
-              'Login',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          TextButton(
-            onPressed: () => context.push('/register_screen'),
-            // onPressed: () {
-            //   // TODO: Navegar a pantalla de Registro
-            // },
-            child: const Text(
-              'Registrar',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
+      // appBar: AppBar(
+      //   title: Row(
+      //     children: [
+      //       Image.asset(
+      //         'assets/images/cr_logo.jpg',
+      //         width: 40,
+      //         height: 40,
+      //       ),
+      //       const SizedBox(width: 8),
+      //       const Text('Car Rent'),
+      //     ],
+      //   ),
+      //   backgroundColor: Colors.blue,
+      //   foregroundColor: Colors.white,
+      //   actions: [
+      //     TextButton(
+      //       onPressed: () => context.push('/start_session_screen'),
+      //       // onPressed: () {
+      //       //   // TODO: Navegar a pantalla de Login
+      //       // },
+      //       child: const Text(
+      //         'Login',
+      //         style: TextStyle(color: Colors.white),
+      //       ),
+      //     ),
+      //     TextButton(
+      //       onPressed: () => context.push('/register_screen'),
+      //       // onPressed: () {
+      //       //   // TODO: Navegar a pantalla de Registro
+      //       // },
+      //       child: const Text(
+      //         'Registrar',
+      //         style: TextStyle(color: Colors.white),
+      //       ),
+      //     ),
+      //   ],
+      // ),
+
+      appBar: CustomAppBar(
+        title: 'Car Rent',
+        showAuthButtons: true, // muestra los botones
+        onLoginPressed: () {
+          // Navegar a la pantalla de login
+          context.push('/login_screen');
+        },
+        onRegisterPressed: () {
+          // Navegar a la pantalla de registro
+          context.push('/register_screen');
+        },
       ),
+
+
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

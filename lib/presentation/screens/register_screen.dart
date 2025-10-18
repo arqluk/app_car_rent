@@ -83,6 +83,7 @@
 
 
 
+import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app_car_rental/domain/user.dart';
@@ -189,31 +190,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
       //   foregroundColor: Colors.white,
       // ),
 
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/cr_logo.jpg',
-              width: 40,
-              height: 40,
-            ),
-            const SizedBox(width: 8),
-            const Text('Car Rent'),
-          ],
-        ),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              // TODO: Agregar funcionalidad del ícono de auto
-            },
-            icon: const Icon(Icons.directions_car),
-            tooltip: 'Car Rent',
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Row(
+      //     children: [
+      //       Image.asset(
+      //         'assets/images/cr_logo.jpg',
+      //         width: 40,
+      //         height: 40,
+      //       ),
+      //       const SizedBox(width: 8),
+      //       const Text('Car Rent'),
+      //     ],
+      //   ),
+      //   backgroundColor: Colors.blue,
+      //   foregroundColor: Colors.white,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         // TODO: Agregar funcionalidad del ícono de auto
+      //       },
+      //       icon: const Icon(Icons.directions_car),
+      //       tooltip: 'Car Rent',
+      //     ),
+      //   ],
+      // ),
 
+      appBar: const CustomAppBar(title: 'Car Rent'),
 
       body: Padding(
         padding: const EdgeInsets.all(20.0),
