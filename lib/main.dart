@@ -1,7 +1,9 @@
 import 'package:app_car_rental/core/router/app_router.dart';
 import 'package:app_car_rental/core/theme/app_theme.dart';
+import 'package:app_car_rental/presentation/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,19 +15,28 @@ void main() async {
   // 👇 Test simple para confirmar la conexión
   print("✅ Firebase inicializado correctamente!");
 
-  runApp(const MainApp());
+  // runApp(const MainApp());
+  runApp(
+    ProviderScope(
+    child: MainApp()
+    )
+  );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appTheme = AppTheme(); // Usa valores por defecto: Colors.blue y isDarkMode: false
+  Widget build(BuildContext context, ref) {
+     final appTheme = ref.watch(themeNotifierProvider); 
     
     return MaterialApp.router(
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
+      // theme: appTheme.getTheme(),
+      // theme: ThemeData(
+      //   colorSchemeSeed: Colors.red,
+      // ),
       theme: appTheme.getTheme(),
     );
   }

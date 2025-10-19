@@ -33,6 +33,12 @@ class MenuItem{
       icon: Icons.select_all,
       link: '/settings_screen',
     ),
+       MenuItem(
+      title: 'Apariencia',
+      subtitle: 'Seleccionar apariencia de la aplicación',
+      icon: Icons.select_all,
+      link: '/theme_selector',
+    ),
       MenuItem(
       title: 'Logout',
       subtitle: 'Salir de la app',

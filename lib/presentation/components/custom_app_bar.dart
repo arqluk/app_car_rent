@@ -45,7 +45,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               // Podés pasar una acción por parámetro si querés hacerlo más flexible
             },
-            icon: const Icon(Icons.directions_car),
+            // icon: const Icon(Icons.directions_car),
+            icon: const Icon(Icons.dark_mode),
             tooltip: 'Car Rent',
           ),
         ],

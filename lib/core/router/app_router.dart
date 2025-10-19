@@ -32,7 +32,7 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/theme_selector',
-      builder: (context, state) => const ThemeSelectorScreen(),
+      builder: (context, state) => ThemeSelectorScreen(),
     ),
     // GoRoute(
     //   path: '/perfil_screen',
