@@ -106,7 +106,7 @@ class _HomeView extends StatelessWidget {
         //        ),
  //             ),
  //           ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
 
             // const Text(
             //   'Bienvenido a',
@@ -186,8 +186,8 @@ class _HomeView extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
               child: Image.asset(
                 'assets/images/cars_banner.jpg', // <-- agregá esta imagen a tu carpeta assets
-                width: 200,
-                height: 100,
+                width: 150,
+                height: 75,
                 fit: BoxFit.cover,
               ),
             ),
