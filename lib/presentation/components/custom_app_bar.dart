@@ -4,18 +4,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showAuthButtons;
   final bool showDarkModeButton;
+  final bool isDarkMode;
   final VoidCallback? onLoginPressed;
   final VoidCallback? onRegisterPressed;
-  // final VoidCallback? onDarkModePressed;
+  final VoidCallback? onDarkModePressed;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.showAuthButtons = false,
     this.showDarkModeButton = false,
+    this.isDarkMode = false,
     this.onLoginPressed,
     this.onRegisterPressed,
-    // this.onDarkModePressed,
+    this.onDarkModePressed,
   });
 
   @override
@@ -44,23 +46,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: onRegisterPressed,
             child: const Text('Register', style: TextStyle(color: Colors.white)),
           ),
-        ] else ...[
-          IconButton(
-            onPressed: () {
-              // Podés pasar una acción por parámetro si querés hacerlo más flexible
-            },
-            // icon: const Icon(Icons.directions_car),
-            icon: const Icon(Icons.dark_mode),
-            tooltip: 'Car Rent',
-          ),
+        // ] else ...[
+        //   IconButton(
+        //     onPressed: () {
+        //       // Podés pasar una acción por parámetro si querés hacerlo más flexible
+        //     },
+        //     // icon: const Icon(Icons.directions_car),
+        //     icon: const Icon(Icons.dark_mode),
+        //     tooltip: 'Car Rent',
+        //   ),
 
-          // ] else if (showDarkModeButton) ...[
-          // IconButton(
-          //   // onPressed: onDarkModePressed,
-          //   icon: const Icon(Icons.dark_mode),
-          //   tooltip: 'Modo oscuro',
-          // )
-        ],
+          ] else if (showDarkModeButton) ...[
+          IconButton(
+      onPressed: onDarkModePressed,
+      icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+      tooltip: isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro',
+    ),
+  ],
       ],
     );
   }

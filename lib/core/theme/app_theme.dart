@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
   ];
 class AppTheme {
   // final Color selectedColor;
-  final int selectedColor;
+  final int selectedColor; // índice en availableColors
   final bool isDarkMode;
 
   AppTheme({

@@ -12,11 +12,19 @@ class ThemeSelectorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final appTheme = ref.watch(themeNotifierProvider); // obtiene AppTheme
+    // final selectedColorIndex = appTheme.selectedColor;
+    // final isDark = appTheme.isDarkMode;
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Car Rent',
-        // showDarkModeButton: true,
-        //   onDarkModePressed: () {
+        showDarkModeButton: true,
+        isDarkMode: appTheme.isDarkMode,
+        onDarkModePressed: () {
+              // ✅ aquí llamamos al método del notifier — ya debe existir
+          ref.read(themeNotifierProvider.notifier).toggleDarkMode();
+        },
         //     ref.read(themeNotifierProvider.notifier).toggleDarkMode();
          // },
         ),
