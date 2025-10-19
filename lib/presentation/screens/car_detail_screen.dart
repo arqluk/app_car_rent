@@ -11,6 +11,7 @@ class CarDetailScreen extends StatelessWidget {
   // final textStyle = Theme.of(context).textTheme;
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       // appBar: AppBar(
       //   title: Row(
@@ -54,18 +55,55 @@ class CarDetailScreen extends StatelessWidget {
             precio: car.precio,
           ),
           SizedBox(height: 50,),
-          ElevatedButton(
-            // style: ButtonStyle(backgroundColor: Colors.lightBlueAccent),
-            onPressed: () {
-              context.push('/reservations_screen', extra: car);
-            },
-            child: Text('Reservar',
-            style: const TextStyle(
-                color: Colors.black, // texto negro
+          // ElevatedButton(
+          //   // style: ButtonStyle(backgroundColor: Colors.lightBlueAccent),
+
+            
+          //   onPressed: () {
+          //     context.push('/reservations_screen', extra: car);
+          //   },
+
+          //   ElevatedButton(
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: colorScheme.primary,
+          //       // backgroundColor: colorScheme.secondary,
+          //       foregroundColor: colorScheme.onPrimary,
+          //       // foregroundColor: colorScheme.onSecondary,
+          //     ),
+          //     onPressed: () {
+          //       context.push('/reservations_screen', extra: car);
+          //     },
+
+
+          //   child: Text('Reservar',
+          //   style: const TextStyle(
+          //       color: Colors.black, // texto negro
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 18,
+          //     ),)
+          // )
+
+        //   FilledButton(
+        //   onPressed: () => context.push('/reservations_screen', extra: car),
+        //   child: const Text('Reservar'),
+        // )
+
+        SizedBox(
+          width: 200,   // 👈 más ancho
+          height: 50,   // 👈 más alto
+          child: FilledButton(
+            onPressed: () => context.push('/reservation_screen', extra: car),
+            style: FilledButton.styleFrom(
+              textStyle: const TextStyle(
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),)
-          )
+              ),
+            ),
+            child: const Text('Reservar'),
+          ),
+        ),
+
+
         ],
       ),
     );

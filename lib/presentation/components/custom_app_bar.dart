@@ -22,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return AppBar(
       title: Row(
         children: [
@@ -34,17 +35,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text(title),
         ],
       ),
-      backgroundColor: Colors.blue,
-      foregroundColor: Colors.white,
+      // backgroundColor: Colors.blue,
+      backgroundColor: colorScheme.primary,
+   
+      // foregroundColor: Colors.white,
+      foregroundColor: colorScheme.onPrimary,
       actions: [
         if (showAuthButtons) ...[
           TextButton(
             onPressed: onLoginPressed,
-            child: const Text('Login', style: TextStyle(color: Colors.white)),
+            // child: const Text('Login', style: TextStyle(color: Colors.white)),
+            child: Text('Login', style: TextStyle(color: colorScheme.onPrimary)),
           ),
           TextButton(
             onPressed: onRegisterPressed,
-            child: const Text('Register', style: TextStyle(color: Colors.white)),
+            // child: const Text('Register', style: TextStyle(color: Colors.white)),
+            child: Text('Register', style: TextStyle(color: colorScheme.onPrimary)),
           ),
         // ] else ...[
         //   IconButton(
@@ -60,7 +66,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
       onPressed: onDarkModePressed,
       icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
-      tooltip: isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro',
+        color: colorScheme.onPrimary,
+        tooltip: isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro',
     ),
   ],
       ],

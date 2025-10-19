@@ -124,19 +124,71 @@ class _HomeView extends StatelessWidget {
             //   ),
             // ),
 
-            TextButton.icon(
-              onPressed: () => context.push('/theme_selector'),
+            // TextButton.icon(
+            //   onPressed: () => context.push('/theme_selector'),
+            //   icon: const Icon(
+            //     Icons.palette,
+            //     // color: Colors.blue
+            //    ),
+            //   label: const Text(
+            //     'Seleccionar Tema',
+            //     style: TextStyle(
+            //       fontSize: 18,
+            //       decoration: TextDecoration.underline,
+            //       // color: Colors.blue,
+            //     ),
+            //   ),
+            // ),
+
+            // TextButton.icon(
+            //   onPressed: () => context.push('/cars_screen'),
+            //   icon: const Icon(
+            //     Icons.directions_car,
+            //     // color: Colors.blue
+            //     size: 45, // 👈 ÍCONO MUCHO MÁS GRANDE
+            //    ),
+            //   label: const Text(
+            //     'Ver nuestra flota',
+            //     style: TextStyle(
+            //       fontSize: 18,
+            //       decoration: TextDecoration.underline,
+            //       // color: Colors.blue,
+            //     ),
+            //   ),
+            // ),
+
+            FilledButton.icon(
+              onPressed: () => context.push('/cars_screen'),
               icon: const Icon(
-                Icons.palette,
-                // color: Colors.blue
-               ),
-              label: const Text(
-                'Seleccionar Tema',
-                style: TextStyle(
-                  fontSize: 18,
-                  decoration: TextDecoration.underline,
-                  // color: Colors.blue,
+                Icons.directions_car,
+                size: 45,
+              ),
+             label: Text(
+              'Ver nuestra flota',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999), // botón tipo píldora
                 ),
+                backgroundColor: Theme.of(context).colorScheme.primary, // usa color del theme
+              ),
+            ),
+
+
+            const SizedBox(height: 10),
+
+      // ✅ IMAGEN DE VARIOS AUTOS DEBAJO DEL BOTÓN
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: Image.asset(
+                'assets/images/cars_banner.jpg', // <-- agregá esta imagen a tu carpeta assets
+                width: 200,
+                height: 100,
+                fit: BoxFit.cover,
               ),
             ),
 

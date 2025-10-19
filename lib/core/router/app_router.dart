@@ -4,6 +4,7 @@ import 'package:app_car_rental/presentation/screens/cars_screen.dart';
 import 'package:app_car_rental/presentation/screens/home_screen.dart';
 import 'package:app_car_rental/presentation/screens/login_screen.dart';
 import 'package:app_car_rental/presentation/screens/register_screen.dart';
+import 'package:app_car_rental/presentation/screens/reservation_screen.dart';
 import 'package:app_car_rental/presentation/screens/reservations_screen.dart';
 import 'package:app_car_rental/presentation/screens/settings_screen.dart';
 import 'package:app_car_rental/presentation/screens/start_session_screen.dart';
@@ -53,10 +54,15 @@ final appRouter = GoRouter(
       path: '/car_detail_screen',
       builder: (context, state) => CarDetailScreen(car: state.extra as Car),
     ),
+      GoRoute(
+      path: '/reservation_screen',
+      // builder: (context, state) => ReservationScreen(car: state.extra as Car),
+      builder: (context, state) => ReservationScreen(),
+    ),
      GoRoute(
       path: '/reservations_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
-      builder: (context, state) => ReservationScreen(),
+      builder: (context, state) => ReservationsScreen(),
     ),
     // GoRoute(
     //   path: '/reservations_screen',
