@@ -5,16 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:app_car_rental/core/theme/app_theme.dart';
 
-class ThemeSelectorScreen extends StatelessWidget {
+class ThemeSelectorScreen extends ConsumerWidget {
   ThemeSelectorScreen({super.key});
 
   final colors = availableColors;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Car Rent'),
+      appBar: CustomAppBar(
+        title: 'Car Rent',
+        // showDarkModeButton: true,
+        //   onDarkModePressed: () {
+        //     ref.read(themeNotifierProvider.notifier).toggleDarkMode();
+         // },
+        ),
 
       body: _ThemeSelectorView(colorsList: colors),
     );

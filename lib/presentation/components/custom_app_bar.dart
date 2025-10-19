@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showAuthButtons;
+  final bool showDarkModeButton;
   final VoidCallback? onLoginPressed;
   final VoidCallback? onRegisterPressed;
+  // final VoidCallback? onDarkModePressed;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.showAuthButtons = false,
+    this.showDarkModeButton = false,
     this.onLoginPressed,
     this.onRegisterPressed,
+    // this.onDarkModePressed,
   });
 
   @override
@@ -49,6 +53,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(Icons.dark_mode),
             tooltip: 'Car Rent',
           ),
+
+          // ] else if (showDarkModeButton) ...[
+          // IconButton(
+          //   // onPressed: onDarkModePressed,
+          //   icon: const Icon(Icons.dark_mode),
+          //   tooltip: 'Modo oscuro',
+          // )
         ],
       ],
     );
