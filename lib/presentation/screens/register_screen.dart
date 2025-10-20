@@ -183,6 +183,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final colorScheme = Theme.of(context).colorScheme; // último 20/10
+
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text("Registro de Usuario"),
@@ -303,17 +306,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         : null,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _registerUser,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+
+
+
+              // ElevatedButton(
+              //   onPressed: _registerUser,
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: Colors.blue,
+              //     padding: const EdgeInsets.symmetric(vertical: 16),
+              //   ),
+              //   child: const Text(
+              //     "Registrar",
+              //     style: TextStyle(fontSize: 18, color: Colors.white),
+              //   ),
+              // ),
+
+
+
+        // último 20/10
+        FilledButton.icon(
+              onPressed: () => context.push('/login_screen'),
+              // icon: const Icon(
+              //   Icons.directions_car,
+                // size: 45,
+              //),
+             label: Text(
+              'Registrar',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999), // botón tipo píldora
                 ),
-                child: const Text(
-                  "Registrar",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
+                backgroundColor: Theme.of(context).colorScheme.primary, // usa color del theme
               ),
+            ),
+
+
+
+
+
+
+
+
+
+
               if (_errorMessage != null) ...[
                 const SizedBox(height: 10),
                 Text(

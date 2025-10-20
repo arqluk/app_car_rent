@@ -88,7 +88,7 @@ class _HomeView extends StatelessWidget {
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
 
             Image.asset(
               'assets/images/cr_logo.jpg',
@@ -106,7 +106,7 @@ class _HomeView extends StatelessWidget {
         //        ),
  //             ),
  //           ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 5),
 
             // const Text(
             //   'Bienvenido a',
@@ -156,6 +156,19 @@ class _HomeView extends StatelessWidget {
             //     ),
             //   ),
             // ),
+            // ✅ IMAGEN DE VARIOS AUTOS DEBAJO DEL BOTÓN
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: Image.asset(
+                'assets/images/cars_banner.jpg', // <-- agregá esta imagen a tu carpeta assets
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
 
             FilledButton.icon(
               onPressed: () => context.push('/cars_screen'),
@@ -179,18 +192,18 @@ class _HomeView extends StatelessWidget {
             ),
 
 
-            const SizedBox(height: 10),
+            
 
-      // ✅ IMAGEN DE VARIOS AUTOS DEBAJO DEL BOTÓN
-            ClipRRect(
-              borderRadius: BorderRadius.circular(999),
-              child: Image.asset(
-                'assets/images/cars_banner.jpg', // <-- agregá esta imagen a tu carpeta assets
-                width: 150,
-                height: 75,
-                fit: BoxFit.cover,
-              ),
-            ),
+      // // ✅ IMAGEN DE VARIOS AUTOS DEBAJO DEL BOTÓN
+      //       ClipRRect(
+      //         borderRadius: BorderRadius.circular(999),
+      //         child: Image.asset(
+      //           'assets/images/cars_banner.jpg', // <-- agregá esta imagen a tu carpeta assets
+      //           width: 150,
+      //           height: 75,
+      //           fit: BoxFit.cover,
+      //         ),
+      //       ),
 
           ],
         ),
