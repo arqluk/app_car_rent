@@ -93,9 +93,10 @@ class ItemDetailScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: colorScheme.primary, // 🎨 fondo según el tema
+                // color: colorScheme.primary, // 🎨 fondo según el tema
+                color: colorScheme.primaryContainer, // 🎨 fondo según el tema
                 border: Border.all(
-                  color: colorScheme.onPrimary, // 🎨 borde que contraste
+                  color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
                   width: 2,
                 ),
                 // borderRadius: BorderRadius.circular(16),
@@ -108,7 +109,7 @@ class ItemDetailScreen extends StatelessWidget {
               child: Text(
                 '\$ ${formatNumber.format(precio)}.- por día',
                 style: TextStyle(
-                  color: colorScheme.onPrimary, // 🎨 texto según el tema
+                  color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),

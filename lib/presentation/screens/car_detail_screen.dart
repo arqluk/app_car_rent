@@ -88,20 +88,48 @@ class CarDetailScreen extends StatelessWidget {
         //   child: const Text('Reservar'),
         // )
 
-        SizedBox(
-          width: 200,   // 👈 más ancho
-          height: 50,   // 👈 más alto
-          child: FilledButton(
-            onPressed: () => context.push('/reservation_screen', extra: car),
-            style: FilledButton.styleFrom(
-              textStyle: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+        // SizedBox(
+        //   width: 200,   // 👈 más ancho
+        //   height: 50,   // 👈 más alto
+        //   child: FilledButton(
+        //     onPressed: () => context.push('/reservation_screen', extra: car),
+        //     style: FilledButton.styleFrom(
+        //       textStyle: const TextStyle(
+        //         fontSize: 25,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //     child: const Text('Reservar'),
+        //   ),
+        // ),
+
+
+
+
+// último 20/10
+        FilledButton.icon(
+              onPressed: () => context.push('/reservation_screen'),
+              // icon: const Icon(
+              //   Icons.directions_car,
+                // size: 45,
+              //),
+             label: Text(
+              'Reservar',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999), // botón tipo píldora
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary, // usa color del theme
               ),
             ),
-            child: const Text('Reservar'),
-          ),
-        ),
+
+
+
 
 
         ],
