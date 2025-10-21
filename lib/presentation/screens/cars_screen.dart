@@ -1,13 +1,15 @@
 import 'package:app_car_rental/data/car_repository.dart';
 import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+import 'package:app_car_rental/presentation/providers/carsListProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// class CarsScreen extends StatelessWidget {
 class CarsScreen extends StatelessWidget {
   CarsScreen({super.key});
 // final carRepository = CarRepository();
-  
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +17,24 @@ class CarsScreen extends StatelessWidget {
   }
 }
 
-class _CarsScreenView extends StatelessWidget {
-  final carRepository = CarRepository();
+// class _CarsScreenView extends StatelessWidget {
+class _CarsScreenView extends ConsumerWidget {
+  // final carRepository = CarRepository();
+
   _CarsScreenView({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  // Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+
+    List<Car> carsList = ref.watch(carsNotifierProvider);
+
+
+
+
+
     final textStyle = Theme.of(context).textTheme;
     return  Scaffold(
       // appBar: AppBar(
@@ -105,11 +117,29 @@ class _CarsScreenView extends StatelessWidget {
             // const SizedBox(height: 20),
 
             const SizedBox(height: 5),
+
+            if (carsList.isEmpty)
+            const Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+
+            else
+
+
+
+
             // ✅ Lista expandible dentro de la columna
             Expanded(
               child: _CarsListView(
-                carsList: carRepository.getCars(),
+                // carsList: carRepository.getCars(),
+                // carsList: ref.watch(carsNotifierProvider),
+                // carsList: ref.read(carsNotifierProvider),
                 textStyle: textStyle,
+                carsList: ref.read(carsNotifierProvider),
+
+
               ),
             ),
 
@@ -126,6 +156,7 @@ class _CarsScreenView extends StatelessWidget {
 class _CarsListView extends StatelessWidget {
   // final carRepository = CarRepository();
   final List<Car> carsList;
+  
 
   _CarsListView({
     super.key,
