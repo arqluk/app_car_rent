@@ -1,6 +1,6 @@
 // presentation/screens/login_screen.dart
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/usersProvider.dart';
+import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -62,37 +62,46 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: const CustomAppBar(title: 'Car Rent'),
-      body: Center(
-        child: SizedBox(
-          width: 420,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _emailCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: SizedBox(
+            width: 420,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: _emailCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _passCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Contraseña',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _passCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Contraseña',
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
                 ),
-                obscureText: true,
-              ),
-              const SizedBox(height: 18),
-              FilledButton(
-                onPressed: _loading ? null : _onLogin,
-                style: FilledButton.styleFrom(backgroundColor: colorScheme.primary, padding: const EdgeInsets.symmetric(vertical: 14)),
-                child: _loading ? const CircularProgressIndicator() : Text('Login', style: TextStyle(color: colorScheme.onPrimary)),
-              ),
-              const SizedBox(height: 12),
-              TextButton(onPressed: () => context.push('/register_screen'), child: const Text('¿No tenés cuenta? Registrate')),
-            ],
+                const SizedBox(height: 18),
+                FilledButton(
+                  onPressed: _loading ? null : _onLogin,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14)),
+                  child: _loading
+                  ? const CircularProgressIndicator()
+                  : Text(
+                    'Login', style: TextStyle(color: colorScheme.onPrimary)
+                    ),
+                ),
+                const SizedBox(height: 12),
+                TextButton(onPressed: () => context.push('/register_screen'), child: const Text('¿No tenés cuenta? Registrate')),
+              ],
+            ),
           ),
         ),
       ),

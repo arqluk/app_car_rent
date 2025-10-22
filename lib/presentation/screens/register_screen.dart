@@ -1,6 +1,6 @@
 // presentation/screens/register_screen.dart
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/usersProvider.dart';
+import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -160,7 +160,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 ),
                 child: _submitting
                     ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                    : Text('Registrar', style: TextStyle(color: colorScheme.onPrimary)),
+                    : Text(
+                      'Registrar', style: TextStyle(
+                        color: colorScheme.onPrimary
+                        )
+                      ),
               ),
               const SizedBox(height: 8),
               TextButton(
