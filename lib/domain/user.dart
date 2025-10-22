@@ -3,15 +3,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
+  String? id;
   String userName;
   String userEmail;
   String password;
-  // String passport;
   String document;
   String country;
   // String imageUrl;
 
   User({
+    this.id,
     required this.userName,
     required this.userEmail,
     required this.password,
@@ -27,6 +28,7 @@ class User {
     final data = snapshot.data();
     
     return User(
+      id: snapshot.id,
       userName: data?['userName'],
       userEmail: data?['userEmail'],
       password: data?['password'],

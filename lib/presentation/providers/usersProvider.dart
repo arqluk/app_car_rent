@@ -61,109 +61,49 @@ class UsersNotifier extends StateNotifier<List<User>> {
   }
 
 
+  
 
-  /// Intenta loguear con email+password.
-  /// Retorna el User si coincide, o null si no existe / no coincide.
-  Future<User?> loginUser(String email, String password) async {
-    try {
-      final q = await db.collection('users')
-          .where('email', isEqualTo: email)
-          .where('password', isEqualTo: password)
-          .limit(1)
-          .get();
 
-      if (q.docs.isEmpty) return null;
 
-      final data = q.docs.first.data();
-      // Crear instancia User a partir del map (ajustamos nombres de campos)
-      final user = User(
-        userName: (data['name'] as String?) ?? (data['userName'] as String?) ?? '',
-        userEmail: (data['email'] as String?) ?? (data['userEmail'] as String?) ?? '',
-        password: (data['password'] as String?) ?? '',
-        // passport: (data['passport'] as String?) ?? '',
-        document: (data['document'] as String?) ?? '',
-        country: (data['country'] as String?) ?? '',
-      );
 
-      // Podés actualizar el state si querés mantener usuarios en memoria
-      // state = [...state.where((u) => u.userEmail != user.userEmail), user];
 
-      return user;
-    } catch (e) {
-      print('loginUser error: $e');
-      return null;
-    }
+
+
+
+
+
+
+  Future<void> addUser(User user) async {
+    final doc = db.collection('users').doc(); // genera ID automático
+      try {
+        await doc.set(user.toFirestore());
+        state = [...state, user];
+        // state = user;
+      } catch (e) {
+        print (e);
+      }
   }
 
-  /// Opcional: carga todos los usuarios desde Firestore a state
+
   Future<void> getAllUsers() async {
-    try {
-      final col = db.collection('users').withConverter<Map<String, dynamic>>(
-        fromFirestore: (snap, _) => snap.data()!,
-        toFirestore: (map, _) => map,
-      );
-
-      final snapshot = await col.get();
-      final loaded = snapshot.docs.map((d) {
-        final data = d.data();
-        return User(
-          userName: data['name'] ?? data['userName'] ?? '',
-          userEmail: data['email'] ?? data['userEmail'] ?? '',
-          password: data['password'] ?? '',
-          // passport: data['passport'] ?? '',
-          document: data['document'] ?? '',
-          country: data['country'] ?? '',
-        );
-      }).toList();
-
-      state = loaded;
-    } catch (e) {
-      print('getAllUsers error: $e');
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-  // Future<void> addUser(User user) async {
-  //   final doc = db.collection('users').doc(); // genera ID automático
-  //     try {
-  //       await doc.set(user.toFirestore());
-  //       state = [...state, user];
-  //       // state = user;
-  //     } catch (e) {
-  //       print (e);
-  //     }
-  // }
-
-
-  // Future<void> getAllUsers() async {
-  //    try {
-  //     // final docs = db.collection('cars').withConverter(
-  //     final doc = db.collection('users').withConverter(
-  //     fromFirestore: User.fromFirestore,
-  //     toFirestore: (User user, _) => user.toFirestore());
+     try {
+      // final docs = db.collection('cars').withConverter(
+      final doc = db.collection('users').withConverter(
+      fromFirestore: User.fromFirestore,
+      toFirestore: (User user, _) => user.toFirestore());
       
-  //     final users = await doc.get();
-  //     // final user = docSnap.data();
-  //       // state = [...state, ...cars.docs.map((c) => c.data())];
-  //       // ✅ Reemplaza lista, no acumula
-  //      state = users.docs.map((doc) => doc.data()).toList();
-  //     // state = user as User;
-  //     } catch (e) {
-  //       print('Error obteniendo usuarios: $e');
-  //     }
+      final users = await doc.get();
+      // final user = docSnap.data();
+        // state = [...state, ...cars.docs.map((c) => c.data())];
+        // ✅ Reemplaza lista, no acumula
+       state = users.docs.map((doc) => doc.data()).toList();
+      // state = user as User;
+      } catch (e) {
+        print('Error obteniendo usuarios: $e');
+      }
+  }
 
-
-//}
+}
 
 // -----------------------------------------------------------------------------
 
