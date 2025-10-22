@@ -22,6 +22,7 @@ void main() async {
     child: MainApp()
     )
   );
+
 }
 
 class MainApp extends ConsumerWidget {
@@ -40,6 +41,8 @@ class MainApp extends ConsumerWidget {
       // ),
       theme: appTheme.getTheme(),
     );
+
+    
   }
 
   // @override
