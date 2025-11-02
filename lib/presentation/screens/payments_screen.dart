@@ -2,21 +2,21 @@
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class PaymentScreen extends StatelessWidget {
+class PaymentsScreen extends StatelessWidget {
   // final Car car;
   // final Car? car;
   // const ReservationScreen({super.key, required this.car});
-  const PaymentScreen({super.key});
+  const PaymentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     // return _ReservationScreenView(car: car);
-    return _PaymentScreenView();
+    return _PaymentsScreenView();
   }
 }
 
-class _PaymentScreenView extends StatelessWidget {
-  const _PaymentScreenView({
+class _PaymentsScreenView extends StatelessWidget {
+  const _PaymentsScreenView({
     // super.key, required Car car,
     super.key,
   });
@@ -51,7 +51,7 @@ class _PaymentScreenView extends StatelessWidget {
       appBar: const CustomAppBar(title: 'Car Rent'),
 
       body: const Center(
-        child: Text('Aquí se mostrará el formulario para pagar'),
+        child: Text('Aquí se mostrarán los pagos realizados'),
       ),
     );
   }

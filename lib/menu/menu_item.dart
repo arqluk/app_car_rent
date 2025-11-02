@@ -27,19 +27,31 @@ class MenuItem{
       icon: Icons.menu_book,
       link: '/reservations_screen',
     ),
+        MenuItem(
+      title: 'Mis Pagos',
+      subtitle: 'Ver pagos',
+      icon: Icons.payment,
+      link: '/payments_screen',
+    ),
      MenuItem(
       title: 'Configuración',
       subtitle: 'Seleccionar configuraciones',
       icon: Icons.select_all,
       link: '/settings_screen',
     ),
-       MenuItem(
+    MenuItem(
       title: 'Apariencia',
       subtitle: 'Seleccionar apariencia de la aplicación',
       icon: Icons.select_all,
       link: '/theme_selector',
     ),
-      MenuItem(
+    MenuItem(
+      title: 'Administrador',
+      subtitle: 'Acceso administrador',
+      icon: Icons.admin_panel_settings,
+      link: '/admin_screen',
+    ),
+    MenuItem(
       title: 'Logout',
       subtitle: 'Salir de la app',
       icon: Icons.exit_to_app,

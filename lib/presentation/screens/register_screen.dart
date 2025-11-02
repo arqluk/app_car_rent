@@ -17,6 +17,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _roleController = TextEditingController();
   final TextEditingController _documentController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -36,6 +37,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   void dispose() {
     _usernameController.dispose();
     _emailController.dispose();
+    _roleController.dispose();
     _documentController.dispose();
     _countryController.dispose();
     _passwordController.dispose();
@@ -52,6 +54,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       userName: _usernameController.text.trim(),
       userEmail: _emailController.text.trim(),
       password: _passwordController.text.trim(),
+      role: _roleController.text.trim(),
       // passport: '',
       document: _documentController.text.trim(),
       country: _countryController.text.trim(),
@@ -113,6 +116,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   return null;
                 },
               ),
+
+               const SizedBox(height: 12),
+              TextFormField(
+                controller: _roleController,
+                decoration: const InputDecoration(
+                  labelText: 'Rol',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (v) => (v == null || v.isEmpty) ? 'Ingrese rol' : null,
+              ),
+
               const SizedBox(height: 12),
               TextFormField(
                 controller: _documentController,

@@ -79,6 +79,7 @@ class UsersNotifier extends StateNotifier<List<User>> {
       final user = User(
         userName: (data['name'] as String?) ?? (data['userName'] as String?) ?? '',
         userEmail: (data['email'] as String?) ?? (data['userEmail'] as String?) ?? '',
+        role: (data['role'] as String?) ?? (data['role'] as String?) ?? '',
         password: (data['password'] as String?) ?? '',
         // passport: (data['passport'] as String?) ?? '',
         document: (data['document'] as String?) ?? '',
@@ -109,6 +110,7 @@ class UsersNotifier extends StateNotifier<List<User>> {
         return User(
           userName: data['name'] ?? data['userName'] ?? '',
           userEmail: data['email'] ?? data['userEmail'] ?? '',
+          role: data['role'] ?? data['role'] ?? '',
           password: data['password'] ?? '',
           // passport: data['passport'] ?? '',
           document: data['document'] ?? '',

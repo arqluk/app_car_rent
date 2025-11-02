@@ -2,7 +2,7 @@ import '../domain/user.dart';
 
 class UserRepository {
   static final List<User> users = [
-    User(userName: 'Ale', userEmail: 'ale@gmail.com', password: '123', document: 'AE2345', country: 'ESP'),
+    User(userName: 'Ale', userEmail: 'ale@gmail.com', role: 'admin', password: '123', document: 'AE2345', country: 'ESP'),
   ];
 
   static void addUser(User user) {

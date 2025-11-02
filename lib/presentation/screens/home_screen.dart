@@ -171,7 +171,8 @@ class _HomeView extends StatelessWidget {
 
 
             FilledButton.icon(
-              onPressed: () => context.push('/cars_screen'),
+              // onPressed: () => context.push('/cars_screen'),
+              onPressed: () => context.push('/fleet_screen'),
               icon: const Icon(
                 Icons.directions_car,
                 size: 45,
