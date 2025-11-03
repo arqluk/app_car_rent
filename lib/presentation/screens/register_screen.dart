@@ -1,5 +1,6 @@
 // presentation/screens/register_screen.dart
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+import 'package:app_car_rental/presentation/providers/authProvider.dart';
 import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +63,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
 
     // final result = await ref.read(usersProvider.notifier).registerUser(newUser);
-    final result = await ref.read(UsersNotifierProvider.notifier).registerUser(newUser);
+    // final result = await ref.read(UsersNotifierProvider.notifier).registerUser(newUser);
+    // final result = await ref.read(authProvider).registerUser(newUser);
+    final result = await ref.read(authProvider).registerUser(newUser.userEmail, newUser.password, newUser.userName);
+    // final result = await ref.read(AuthNotifier.notifier).registerUser(newUser.userEmail, newUser.password, newUser.userName);
 
     setState(() => _submitting = false);
 

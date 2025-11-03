@@ -1,5 +1,6 @@
 import 'package:app_car_rental/domain/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter_riverpod/legacy.dart';
 
 // final UsersNotifierProvider = StateNotifierProvider<UsersNotifier, User>((ref) {
@@ -38,18 +39,36 @@ class UsersNotifier extends StateNotifier<List<User>> {
       }
 
       // Construir el map a guardar: usar la representación del modelo
-      final Map<String, dynamic> payload = user.toFirestore();
+      // final Map<String, dynamic> payload = user.toFirestore();
 
-      // Aseguramos los campos solicitados por tu schema
-      payload['email'] = user.userEmail;
-      payload['password'] = user.password;
-      payload['name'] = user.userName;
-      payload['document'] = user.document;
-      payload['country'] = user.country;
-      payload['role'] = payload['role'] ?? 'client';
-      payload['createdAt'] = FieldValue.serverTimestamp();
+      // // Aseguramos los campos solicitados por tu schema
+      // payload['email'] = user.userEmail;
+      // payload['password'] = user.password;
+      // payload['name'] = user.userName;
+      // payload['document'] = user.document;
+      // payload['country'] = user.country;
+      // payload['role'] = payload['role'] ?? 'client';
+      // payload['createdAt'] = FieldValue.serverTimestamp();
 
-      await db.collection('users').add(payload);
+      // await db.collection('users').add(payload);
+
+
+      final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: user.userEmail,
+        password: user.password,
+      );
+      final uid = cred.user!.uid;
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'email': user.userEmail,
+        'name': user.userName,
+        'document': user.document,
+        'country': user.country,
+        // 'role': user.role ?? 'user',
+        'role': user.role,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
       
 
       // Actualizar estado local (opcional, aquí añadimos el user localmente)
@@ -60,6 +79,10 @@ class UsersNotifier extends StateNotifier<List<User>> {
       return 'Error al registrar usuario: $e';
     }
   }
+
+
+
+
 
 
 

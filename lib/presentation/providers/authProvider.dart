@@ -11,6 +11,8 @@ class AuthState {
   final Map<String, dynamic>? userDoc; // datos extra (role, passport...)
 
   AuthState({this.firebaseUser, this.userDoc});
+
+  Future registerUser(String userEmail, String password, String userName) async {}
 }
 
 class AuthNotifier extends StateNotifier<AuthState> {
