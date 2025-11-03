@@ -1,6 +1,7 @@
 import 'package:app_car_rental/core/router/app_router.dart';
 import 'package:app_car_rental/core/theme/app_theme.dart';
 import 'package:app_car_rental/presentation/providers/theme_provider.dart';
+import 'package:app_car_rental/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +41,7 @@ class MainApp extends ConsumerWidget {
       //   colorSchemeSeed: Colors.red,
       // ),
       theme: appTheme.getTheme(),
+      // home: const HomeScreen(),
     );
 
     

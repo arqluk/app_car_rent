@@ -50,6 +50,7 @@ class UsersNotifier extends StateNotifier<List<User>> {
       payload['createdAt'] = FieldValue.serverTimestamp();
 
       await db.collection('users').add(payload);
+      
 
       // Actualizar estado local (opcional, aquí añadimos el user localmente)
       state = [...state, user];
@@ -59,6 +60,12 @@ class UsersNotifier extends StateNotifier<List<User>> {
       return 'Error al registrar usuario: $e';
     }
   }
+
+
+
+
+
+
 
 
 

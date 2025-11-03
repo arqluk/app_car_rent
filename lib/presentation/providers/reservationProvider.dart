@@ -13,7 +13,8 @@ class ReservationNotifier extends StateNotifier<List<Reservation>> {
   final String uid;
 
   ReservationNotifier(this.uid): super([]) {
-    _listen();
+    // _listen();
+    _listenUserReservations();
   }
 
 
@@ -28,23 +29,48 @@ class ReservationNotifier extends StateNotifier<List<Reservation>> {
   // }
 
 
-void _listen() {
+// void _listen() {
+//     final reservationsRef = _db.collection('reservations').withConverter<Reservation>(
+//       fromFirestore: Reservation.fromFirestore,
+//       toFirestore: (r, _) => r.toFirestore(),
+//     );
+
+void _listenUserReservations() {
     final reservationsRef = _db.collection('reservations').withConverter<Reservation>(
       fromFirestore: Reservation.fromFirestore,
       toFirestore: (r, _) => r.toFirestore(),
     );
 
-    _sub = reservationsRef
-        .where('userId', isEqualTo: uid)
-        .snapshots()
-        .listen((snap) {
-      state = snap.docs.map((d) => d.data()).toList(); // 👈 ya son Reservation
+    // _sub = reservationsRef
+    //     .where('userId', isEqualTo: uid)
+    //     .snapshots()
+    //     .listen((snap) {
+    //   state = snap.docs.map((d) => d.data()).toList(); // 👈 ya son Reservation
+    // });
+
+        _sub = reservationsRef.where('userId', isEqualTo: uid).snapshots().listen((snapshot) {
+      state = snapshot.docs.map((doc) => doc.data()).toList();
     });
   }
 
-  Future<void> createReservation(Reservation r) async {
-    // await _db.collection('reservations').add(r.toMap());
-    await _db.collection('reservations').add(r.toFirestore());  // 👈 no hace falta toMap ni toFirestore()
+  // Future<void> createReservation(Reservation r) async {
+  //   // await _db.collection('reservations').add(r.toMap());
+  //   await _db.collection('reservations').add(r.toFirestore());  // 👈 no hace falta toMap ni toFirestore()
+  // }
+
+    /// Crear una nueva reserva en Firestore
+  Future<void> createReservation(Reservation reservation) async {
+    final reservationsRef = _db.collection('reservations').withConverter<Reservation>(
+      fromFirestore: Reservation.fromFirestore,
+      toFirestore: (r, _) => r.toFirestore(),
+    );
+
+    await reservationsRef.add(reservation);
+  }
+
+  /// Cambiar el estado de una reserva (por ejemplo, de "pending" a "paid")
+  Future<void> updateReservationStatus(String reservationId, String newStatus) async {
+    await _db.collection('reservations').doc(reservationId).update({'status': newStatus});
   }
 
   @override
@@ -55,6 +81,7 @@ void _listen() {
 }
 
 // provider factory: crear por uid cuando el user loguea
+/// Provider familiar (uno por usuario)
 final reservationProvider = StateNotifierProvider.family<ReservationNotifier, List<Reservation>, String>((ref, uid) {
   return ReservationNotifier(uid);
 });

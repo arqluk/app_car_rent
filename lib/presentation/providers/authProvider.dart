@@ -34,6 +34,26 @@ class AuthNotifier extends StateNotifier<AuthState> {
     });
   }
 
+  
+  Future<void> registerUser(String email, String password, String name) async {
+    // Crear usuario en Firebase Authentication
+    final userCredential = await fb.FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    // Guardar documento en Firestore con rol = 'user' por defecto
+    final uid = userCredential.user!.uid;
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'email': email,
+      'name': name,
+      'role': 'user', // 👈 asignación manual, todos los nuevos son usuarios comunes
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+  }
+ 
+
+
   Future<void> signUpWithEmail(String email, String password, Map<String, dynamic> extraUserData) async {
     final cred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     final uid = cred.user!.uid;
