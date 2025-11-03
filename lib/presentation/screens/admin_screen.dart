@@ -1,6 +1,6 @@
 // import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/authProvider.dart';
+import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/screens/access_denied_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,7 +66,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/authProvider.dart';
+import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/screens/access_denied_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

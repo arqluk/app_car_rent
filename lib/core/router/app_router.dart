@@ -1,5 +1,5 @@
 import 'package:app_car_rental/domain/car.dart';
-import 'package:app_car_rental/presentation/providers/authProvider.dart';
+import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/screens/access_denied_screen.dart';
 import 'package:app_car_rental/presentation/screens/admin_screen.dart';
 import 'package:app_car_rental/presentation/screens/car_detail_screen.dart';
