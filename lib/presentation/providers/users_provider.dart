@@ -52,6 +52,14 @@ class UsersNotifier extends StateNotifier<List<User>> {
         role: user.role,
       );
 
+      // final userData = userWithUid.toFirestore();
+
+      // // 🚫 Eliminamos el campo password antes de guardar
+      // userData.remove('password');
+
+      // await db.collection('users').doc(uid).set(userData);
+
+
       await db.collection('users').doc(uid).set(userWithUid.toFirestore());
 
 

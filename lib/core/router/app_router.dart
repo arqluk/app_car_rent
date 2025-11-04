@@ -1,6 +1,7 @@
 import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/screens/access_denied_screen.dart';
+import 'package:app_car_rental/presentation/screens/add_car_screen.dart';
 import 'package:app_car_rental/presentation/screens/admin_screen.dart';
 import 'package:app_car_rental/presentation/screens/car_detail_screen.dart';
 import 'package:app_car_rental/presentation/screens/cars_screen.dart';
@@ -62,6 +63,12 @@ final appRouter = GoRouter(
       path: '/fleet_screen',
       builder: (context, state) => FleetScreen(),
     ),
+
+      GoRoute(
+      path: '/add_car_screen',
+      builder: (context, state) => AddCarScreen(),
+    ),
+
 
     GoRoute(
       path: '/car_detail_screen',

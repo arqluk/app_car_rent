@@ -51,7 +51,7 @@ class User {
       "userName": userName,
       "userEmail": userEmail,
       "role": role,
-      // "password": password,
+      "password": password,
       "document": document,
       "country": country,
     };

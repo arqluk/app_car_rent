@@ -52,6 +52,12 @@ class MenuItem{
       icon: Icons.admin_panel_settings,
       link: '/admin_screen',
     ),
+      MenuItem(
+      title: 'Agregar auto',
+      subtitle: 'Agregar un auto a la flota',
+      icon: Icons.car_rental,
+      link: '/add_car_screen',
+    ),
     MenuItem(
       title: 'Logout',
       subtitle: 'Salir de la app',
@@ -59,4 +65,5 @@ class MenuItem{
       link: '/home_screen',
     ),
   ];
+
 
