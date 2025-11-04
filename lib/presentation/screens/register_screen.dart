@@ -1,11 +1,10 @@
-// presentation/screens/register_screen.dart
+
+import 'package:app_car_rental/domain/user.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:app_car_rental/domain/user.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -16,179 +15,106 @@ class RegisterScreen extends ConsumerStatefulWidget {
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _roleController = TextEditingController();
-  final TextEditingController _documentController = TextEditingController();
-  final TextEditingController _countryController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmController = TextEditingController();
+  final _nameCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
+  final _passCtrl = TextEditingController();
+  // final _phoneCtrl = TextEditingController();
+  final _countryCtrl = TextEditingController();
+  final _docCtrl = TextEditingController();
 
-  bool _submitting = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Cargar usuarios locales si querés
-    // ref.read(usersProvider.notifier).getAllUsers();
-    ref.read(UsersNotifierProvider.notifier).getAllUsers();
-  }
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    // _roleController.dispose();
-    _documentController.dispose();
-    _countryController.dispose();
-    _passwordController.dispose();
-    _confirmController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _onSubmit() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _submitting = true);
-
-    final newUser = User(
-      userName: _usernameController.text.trim(),
-      userEmail: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-      // role: _roleController.text.trim(),
-      role: 'user',         // 👈 se asigna automáticamente
-      // passport: '',
-      document: _documentController.text.trim(),
-      country: _countryController.text.trim(),
-    );
-
-    // final result = await ref.read(usersProvider.notifier).registerUser(newUser);
-    final result = await ref.read(UsersNotifierProvider.notifier).registerUser(newUser);
-    // final result = await ref.read(authProvider).registerUser(newUser);
-    // final result = await ref.read(authProvider).registerUser(newUser.userEmail, newUser.password, newUser.userName);
-    // final result = await ref.read(AuthNotifier.notifier).registerUser(newUser.userEmail, newUser.password, newUser.userName);
-
-    setState(() => _submitting = false);
-
-    if (result == null) {
-      // éxito
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Registro exitoso. Inicia sesión.')),
-      );
-      // redirigir a login
-      if (context.mounted) context.pushReplacement('/login_screen');
-    } else {
-      // error (email existente o fallo)
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result)),
-      );
-    }
-  }
+  bool _loading = false;
+  String? _error;
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
+      // appBar: AppBar(title: const Text('Registro de Usuario')),
       appBar: const CustomAppBar(title: 'Car Rent'),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
             children: [
               TextFormField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                  labelText: 'Nombre',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (v) => (v == null || v.isEmpty) ? 'Ingrese su nombre' : null,
+                controller: _nameCtrl,
+                decoration: const InputDecoration(labelText: 'Nombre'),
+                validator: (v) =>
+                    v == null || v.isEmpty ? 'Ingrese su nombre' : null,
               ),
-              const SizedBox(height: 12),
               TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (v) {
-                  if (v == null || v.isEmpty) return 'Ingrese su email';
-                  if (!v.contains('@')) return 'Email inválido';
-                  return null;
-                },
+                controller: _emailCtrl,
+                decoration: const InputDecoration(labelText: 'Email'),
+                validator: (v) =>
+                    v != null && v.contains('@') ? null : 'Email inválido',
               ),
-
-              //  const SizedBox(height: 12),
+              TextFormField(
+                controller: _passCtrl,
+                decoration: const InputDecoration(labelText: 'Contraseña'),
+                obscureText: true,
+                validator: (v) =>
+                    v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+              ),
               // TextFormField(
-              //   controller: _roleController,
-              //   decoration: const InputDecoration(
-              //     labelText: 'Rol',
-              //     border: OutlineInputBorder(),
-              //   ),
-              //   validator: (v) => (v == null || v.isEmpty) ? 'Ingrese rol' : null,
+              //   controller: _phoneCtrl,
+              //   decoration:
+              //       const InputDecoration(labelText: 'Teléfono'),
               // ),
+              TextFormField(
+                controller: _countryCtrl,
+                decoration: const InputDecoration(labelText: 'País'),
+              ),
+              TextFormField(
+                controller: _docCtrl,
+                decoration: const InputDecoration(labelText: 'Documento'),
+              ),
+              const SizedBox(height: 20),
+              if (_error != null)
+                Text(_error!,
+                    style: const TextStyle(color: Colors.red, fontSize: 14)),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: _loading
+                    ? null
+                    : () async {
+                        if (!_formKey.currentState!.validate()) return;
 
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _documentController,
-                decoration: const InputDecoration(
-                  labelText: 'Documento',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (v) => (v == null || v.isEmpty) ? 'Ingrese documento' : null,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _countryController,
-                decoration: const InputDecoration(
-                  labelText: 'País',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (v) => (v == null || v.isEmpty) ? 'Ingrese país' : null,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Contraseña',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-                validator: (v) => (v == null || v.length < 3) ? 'Mínimo 3 chars' : null,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _confirmController,
-                decoration: const InputDecoration(
-                  labelText: 'Confirmar contraseña',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-                validator: (v) => v != _passwordController.text ? 'No coincide' : null,
-              ),
-              const SizedBox(height: 18),
-              FilledButton(
-                onPressed: _submitting ? null : _onSubmit,
-                style: FilledButton.styleFrom(
-                  backgroundColor: colorScheme.primary,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                child: _submitting
-                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                    : Text(
-                      'Registrar', style: TextStyle(
-                        color: colorScheme.onPrimary
-                        )
-                      ),
-              ),
-              const SizedBox(height: 8),
-              TextButton(
-                onPressed: () => context.push('/login_screen'),
-                child: const Text('¿Ya tienes cuenta? Iniciar sesión'),
+                        setState(() {
+                          _loading = true;
+                          _error = null;
+                        });
+
+                        final notifier =
+                            ref.read(UsersNotifierProvider.notifier);
+
+                        final newUser = User(
+                          uid: '',
+                          userName: _nameCtrl.text.trim(),
+                          userEmail: _emailCtrl.text.trim(),
+                          password: _passCtrl.text.trim(),
+                          country: _countryCtrl.text.trim(),
+                          document: _docCtrl.text.trim(),
+                        );
+
+                        final err = await notifier.registerUser(newUser);
+
+                        setState(() => _loading = false);
+
+                        if (err == null) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Usuario registrado con éxito')),
+                            );
+                            context.go('/login_screen');
+                          }
+                        } else {
+                          setState(() => _error = err);
+                        }
+                      },
+                child: _loading
+                    ? const CircularProgressIndicator()
+                    : const Text('Registrarse'),
               ),
             ],
           ),
@@ -197,6 +123,420 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+// Hasta ale18
+
+// presentation/screens/register_screen.dart
+// import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+// // import 'package:app_car_rental/presentation/providers/auth_provider.dart';
+// import 'package:app_car_rental/presentation/providers/users_provider.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:go_router/go_router.dart';
+// import 'package:app_car_rental/domain/user.dart';
+
+// class RegisterScreen extends ConsumerStatefulWidget {
+//   const RegisterScreen({super.key});
+
+//   @override
+//   ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
+// }
+
+// class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+//   final _formKey = GlobalKey<FormState>();
+//   final TextEditingController _usernameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   // final TextEditingController _roleController = TextEditingController();
+//   final TextEditingController _documentController = TextEditingController();
+//   final TextEditingController _countryController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmController = TextEditingController();
+
+//   bool _submitting = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Cargar usuarios locales si querés
+//     // ref.read(usersProvider.notifier).getAllUsers();
+//     ref.read(UsersNotifierProvider.notifier).getAllUsers();
+//   }
+
+//   @override
+//   void dispose() {
+//     _usernameController.dispose();
+//     _emailController.dispose();
+//     // _roleController.dispose();
+//     _documentController.dispose();
+//     _countryController.dispose();
+//     _passwordController.dispose();
+//     _confirmController.dispose();
+//     super.dispose();
+//   }
+
+//   Future<void> _onSubmit() async {
+//     if (!_formKey.currentState!.validate()) return;
+
+//     setState(() => _submitting = true);
+
+//     final newUser = User(
+//       userName: _usernameController.text.trim(),
+//       userEmail: _emailController.text.trim(),
+//       password: _passwordController.text.trim(),
+//       // role: _roleController.text.trim(),
+//       role: 'user',         // 👈 se asigna automáticamente
+//       // passport: '',
+//       document: _documentController.text.trim(),
+//       country: _countryController.text.trim(),
+//     );
+
+//     // final result = await ref.read(usersProvider.notifier).registerUser(newUser);
+//     final result = await ref.read(UsersNotifierProvider.notifier).registerUser(newUser);
+//     // final result = await ref.read(authProvider).registerUser(newUser);
+//     // final result = await ref.read(authProvider).registerUser(newUser.userEmail, newUser.password, newUser.userName);
+//     // final result = await ref.read(AuthNotifier.notifier).registerUser(newUser.userEmail, newUser.password, newUser.userName);
+
+//     setState(() => _submitting = false);
+
+//     if (result == null) {
+//       // éxito
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         const SnackBar(content: Text('Registro exitoso. Inicia sesión.')),
+//       );
+//       // redirigir a login
+//       if (context.mounted) context.pushReplacement('/login_screen');
+//     } else {
+//       // error (email existente o fallo)
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text(result)),
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final colorScheme = Theme.of(context).colorScheme;
+
+//     return Scaffold(
+//       appBar: const CustomAppBar(title: 'Car Rent'),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20.0),
+//         child: Form(
+//           key: _formKey,
+//           child: Column(
+//             // mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
+//             children: [
+//               TextFormField(
+//                 controller: _usernameController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Nombre',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (v) => (v == null || v.isEmpty) ? 'Ingrese su nombre' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _emailController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Email',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 keyboardType: TextInputType.emailAddress,
+//                 validator: (v) {
+//                   if (v == null || v.isEmpty) return 'Ingrese su email';
+//                   if (!v.contains('@')) return 'Email inválido';
+//                   return null;
+//                 },
+//               ),
+
+//               //  const SizedBox(height: 12),
+//               // TextFormField(
+//               //   controller: _roleController,
+//               //   decoration: const InputDecoration(
+//               //     labelText: 'Rol',
+//               //     border: OutlineInputBorder(),
+//               //   ),
+//               //   validator: (v) => (v == null || v.isEmpty) ? 'Ingrese rol' : null,
+//               // ),
+
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _documentController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Documento',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (v) => (v == null || v.isEmpty) ? 'Ingrese documento' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _countryController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'País',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (v) => (v == null || v.isEmpty) ? 'Ingrese país' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _passwordController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Contraseña',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 obscureText: true,
+//                 validator: (v) => (v == null || v.length < 3) ? 'Mínimo 3 chars' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _confirmController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Confirmar contraseña',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 obscureText: true,
+//                 validator: (v) => v != _passwordController.text ? 'No coincide' : null,
+//               ),
+//               const SizedBox(height: 18),
+//               FilledButton(
+//                 onPressed: _submitting ? null : _onSubmit,
+//                 style: FilledButton.styleFrom(
+//                   backgroundColor: colorScheme.primary,
+//                   padding: const EdgeInsets.symmetric(vertical: 14),
+//                 ),
+//                 child: _submitting
+//                     ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+//                     : Text(
+//                       'Registrar', style: TextStyle(
+//                         color: colorScheme.onPrimary
+//                         )
+//                       ),
+//               ),
+//               const SizedBox(height: 8),
+//               TextButton(
+//                 onPressed: () => context.push('/login_screen'),
+//                 child: const Text('¿Ya tienes cuenta? Iniciar sesión'),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+// ---------------------------------------------------------------------------------------
+// Hasta ale18
+
+// // presentation/screens/register_screen.dart
+// import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+// import 'package:app_car_rental/presentation/providers/auth_provider.dart';
+// import 'package:app_car_rental/presentation/providers/users_provider.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:go_router/go_router.dart';
+// import 'package:app_car_rental/domain/user.dart';
+
+// class RegisterScreen extends ConsumerStatefulWidget {
+//   const RegisterScreen({super.key});
+
+//   @override
+//   ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
+// }
+
+// class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+//   final _formKey = GlobalKey<FormState>();
+//   final TextEditingController _usernameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   // final TextEditingController _roleController = TextEditingController();
+//   final TextEditingController _documentController = TextEditingController();
+//   final TextEditingController _countryController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmController = TextEditingController();
+
+//   bool _submitting = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Cargar usuarios locales si querés
+//     // ref.read(usersProvider.notifier).getAllUsers();
+//     ref.read(UsersNotifierProvider.notifier).getAllUsers();
+//   }
+
+//   @override
+//   void dispose() {
+//     _usernameController.dispose();
+//     _emailController.dispose();
+//     // _roleController.dispose();
+//     _documentController.dispose();
+//     _countryController.dispose();
+//     _passwordController.dispose();
+//     _confirmController.dispose();
+//     super.dispose();
+//   }
+
+//   Future<void> _onSubmit() async {
+//     if (!_formKey.currentState!.validate()) return;
+
+//     setState(() => _submitting = true);
+
+//     final newUser = User(
+//       userName: _usernameController.text.trim(),
+//       userEmail: _emailController.text.trim(),
+//       password: _passwordController.text.trim(),
+//       // role: _roleController.text.trim(),
+//       role: 'user',         // 👈 se asigna automáticamente
+//       // passport: '',
+//       document: _documentController.text.trim(),
+//       country: _countryController.text.trim(),
+//     );
+
+//     // final result = await ref.read(usersProvider.notifier).registerUser(newUser);
+//     final result = await ref.read(UsersNotifierProvider.notifier).registerUser(newUser);
+//     // final result = await ref.read(authProvider).registerUser(newUser);
+//     // final result = await ref.read(authProvider).registerUser(newUser.userEmail, newUser.password, newUser.userName);
+//     // final result = await ref.read(AuthNotifier.notifier).registerUser(newUser.userEmail, newUser.password, newUser.userName);
+
+//     setState(() => _submitting = false);
+
+//     if (result == null) {
+//       // éxito
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         const SnackBar(content: Text('Registro exitoso. Inicia sesión.')),
+//       );
+//       // redirigir a login
+//       if (context.mounted) context.pushReplacement('/login_screen');
+//     } else {
+//       // error (email existente o fallo)
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text(result)),
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final colorScheme = Theme.of(context).colorScheme;
+
+//     return Scaffold(
+//       appBar: const CustomAppBar(title: 'Car Rent'),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20.0),
+//         child: Form(
+//           key: _formKey,
+//           child: Column(
+//             // mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
+//             children: [
+//               TextFormField(
+//                 controller: _usernameController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Nombre',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (v) => (v == null || v.isEmpty) ? 'Ingrese su nombre' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _emailController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Email',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 keyboardType: TextInputType.emailAddress,
+//                 validator: (v) {
+//                   if (v == null || v.isEmpty) return 'Ingrese su email';
+//                   if (!v.contains('@')) return 'Email inválido';
+//                   return null;
+//                 },
+//               ),
+
+//               //  const SizedBox(height: 12),
+//               // TextFormField(
+//               //   controller: _roleController,
+//               //   decoration: const InputDecoration(
+//               //     labelText: 'Rol',
+//               //     border: OutlineInputBorder(),
+//               //   ),
+//               //   validator: (v) => (v == null || v.isEmpty) ? 'Ingrese rol' : null,
+//               // ),
+
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _documentController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Documento',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (v) => (v == null || v.isEmpty) ? 'Ingrese documento' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _countryController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'País',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 validator: (v) => (v == null || v.isEmpty) ? 'Ingrese país' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _passwordController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Contraseña',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 obscureText: true,
+//                 validator: (v) => (v == null || v.length < 3) ? 'Mínimo 3 chars' : null,
+//               ),
+//               const SizedBox(height: 12),
+//               TextFormField(
+//                 controller: _confirmController,
+//                 decoration: const InputDecoration(
+//                   labelText: 'Confirmar contraseña',
+//                   border: OutlineInputBorder(),
+//                 ),
+//                 obscureText: true,
+//                 validator: (v) => v != _passwordController.text ? 'No coincide' : null,
+//               ),
+//               const SizedBox(height: 18),
+//               FilledButton(
+//                 onPressed: _submitting ? null : _onSubmit,
+//                 style: FilledButton.styleFrom(
+//                   backgroundColor: colorScheme.primary,
+//                   padding: const EdgeInsets.symmetric(vertical: 14),
+//                 ),
+//                 child: _submitting
+//                     ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+//                     : Text(
+//                       'Registrar', style: TextStyle(
+//                         color: colorScheme.onPrimary
+//                         )
+//                       ),
+//               ),
+//               const SizedBox(height: 8),
+//               TextButton(
+//                 onPressed: () => context.push('/login_screen'),
+//                 child: const Text('¿Ya tienes cuenta? Iniciar sesión'),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 

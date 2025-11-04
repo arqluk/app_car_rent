@@ -5,23 +5,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
-  String userName;
-  String userEmail;
-  String role;              // admin | user
-  String password;
+  final String uid;
+  final String userName;
+  final String userEmail;
+  final String role;              // admin | user
+  final String password;
   // String passport;
-  String document;
-  String country;
+  final String document;
+  final String country;
   // String imageUrl;
+  final DateTime? createdAt;
 
   User({
+    required this.uid,
     required this.userName,
     required this.userEmail,
-    required this.role,
+    // required this.role,
+    this.role ='user',
     required this.password,
     // required this.passport,
     required this.document,
     required this.country,
+    this.createdAt
     });
 
     factory User.fromFirestore(
@@ -30,6 +35,7 @@ class User {
   ) {
     final data = snapshot.data();
     return User(
+      uid: snapshot.id,
       userName: data?['userName'],
       userEmail: data?['userEmail'],
       role: data?['role'],
@@ -41,10 +47,11 @@ class User {
 
     Map<String, dynamic> toFirestore() {
     return {
+      "uid": uid,
       "userName": userName,
       "userEmail": userEmail,
       "role": role,
-      "password": password,
+      // "password": password,
       "document": document,
       "country": country,
     };

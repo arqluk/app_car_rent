@@ -1,4 +1,3 @@
-// presentation/screens/login_screen.dart
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,101 +12,194 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _passCtrl = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _emailCtrl = TextEditingController();
+  final _passCtrl = TextEditingController();
+
   bool _loading = false;
-
-  @override
-  void dispose() {
-    _emailCtrl.dispose();
-    _passCtrl.dispose();
-    super.dispose();
-  }
-
-  Future<void> _onLogin() async {
-    final email = _emailCtrl.text.trim();
-    final pass = _passCtrl.text.trim();
-
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Ingrese email')));
-      return;
-    }
-    if (pass.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Ingrese contraseña')));
-      return;
-    }
-
-    setState(() => _loading = true);
-
-    // final user = await ref.read(usersProvider.notifier).loginUser(email, pass);
-    final user = await ref.read(UsersNotifierProvider.notifier).loginUser(email, pass);
-
-    setState(() => _loading = false);
-
-    if (user == null) {
-      // No existe o password incorrecto
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Usuario o contraseña incorrectos')));
-      // Redirigir a registro (opcional)
-      if (context.mounted) context.push('/register_screen');
-      return;
-    }
-
-    // Login correcto: redirigir a home/cars
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login exitoso')));
-    if (context.mounted) context.pushReplacement('/home_screen');
-  }
+  String? _error;
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      // appBar: AppBar(title: const Text('Iniciar sesión')),
       appBar: const CustomAppBar(title: 'Car Rent'),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: SizedBox(
-            width: 420,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextField(
-                  controller: _emailCtrl,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: _passCtrl,
-                  decoration: const InputDecoration(
-                    labelText: 'Contraseña',
-                    border: OutlineInputBorder(),
-                  ),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 18),
-                FilledButton(
-                  onPressed: _loading ? null : _onLogin,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14)),
-                  child: _loading
-                  ? const CircularProgressIndicator()
-                  : Text(
-                    'Login', style: TextStyle(color: colorScheme.onPrimary)
-                    ),
-                ),
-                const SizedBox(height: 12),
-                TextButton(onPressed: () => context.push('/register_screen'), child: const Text('¿No tenés cuenta? Registrate')),
-              ],
-            ),
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _emailCtrl,
+                decoration: const InputDecoration(labelText: 'Email'),
+                validator: (v) =>
+                    v != null && v.contains('@') ? null : 'Email inválido',
+              ),
+              TextFormField(
+                controller: _passCtrl,
+                decoration: const InputDecoration(labelText: 'Contraseña'),
+                obscureText: true,
+                validator: (v) =>
+                    v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+              ),
+              const SizedBox(height: 20),
+              if (_error != null)
+                Text(_error!,
+                    style: const TextStyle(color: Colors.red, fontSize: 14)),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: _loading
+                    ? null
+                    : () async {
+                        if (!_formKey.currentState!.validate()) return;
+                        setState(() {
+                          _loading = true;
+                          _error = null;
+                        });
+
+                        final notifier =
+                            ref.read(UsersNotifierProvider.notifier);
+                        final user = await notifier.loginUser(
+                          _emailCtrl.text.trim(),
+                          _passCtrl.text.trim(),
+                        );
+
+                        setState(() => _loading = false);
+
+                        if (user != null) {
+                          context.go('/home_screen');
+                        } else {
+                          setState(() => _error = 'Email o contraseña incorrectos');
+                        }
+                      },
+                child: _loading
+                    ? const CircularProgressIndicator()
+                    : const Text('Iniciar sesión'),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+
+
+// --------------------------------------------------------------------------------------------
+
+
+// // presentation/screens/login_screen.dart
+// import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+// import 'package:app_car_rental/presentation/providers/users_provider.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:go_router/go_router.dart';
+
+// class LoginScreen extends ConsumerStatefulWidget {
+//   const LoginScreen({super.key});
+
+//   @override
+//   ConsumerState<LoginScreen> createState() => _LoginScreenState();
+// }
+
+// class _LoginScreenState extends ConsumerState<LoginScreen> {
+//   final TextEditingController _emailCtrl = TextEditingController();
+//   final TextEditingController _passCtrl = TextEditingController();
+//   bool _loading = false;
+
+//   @override
+//   void dispose() {
+//     _emailCtrl.dispose();
+//     _passCtrl.dispose();
+//     super.dispose();
+//   }
+
+//   Future<void> _onLogin() async {
+//     final email = _emailCtrl.text.trim();
+//     final pass = _passCtrl.text.trim();
+
+//     if (email.isEmpty) {
+//       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Ingrese email')));
+//       return;
+//     }
+//     if (pass.isEmpty) {
+//       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Ingrese contraseña')));
+//       return;
+//     }
+
+//     setState(() => _loading = true);
+
+//     // final user = await ref.read(usersProvider.notifier).loginUser(email, pass);
+//     final user = await ref.read(UsersNotifierProvider.notifier).loginUser(email, pass);
+
+//     setState(() => _loading = false);
+
+//     if (user == null) {
+//       // No existe o password incorrecto
+//       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Usuario o contraseña incorrectos')));
+//       // Redirigir a registro (opcional)
+//       if (context.mounted) context.push('/register_screen');
+//       return;
+//     }
+
+//     // Login correcto: redirigir a home/cars
+//     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login exitoso')));
+//     if (context.mounted) context.pushReplacement('/home_screen');
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final colorScheme = Theme.of(context).colorScheme;
+//     return Scaffold(
+//       appBar: const CustomAppBar(title: 'Car Rent'),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20.0),
+//         child: Center(
+//           child: SizedBox(
+//             width: 420,
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 TextField(
+//                   controller: _emailCtrl,
+//                   decoration: const InputDecoration(
+//                     labelText: 'Email',
+//                     border: OutlineInputBorder(),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 12),
+//                 TextField(
+//                   controller: _passCtrl,
+//                   decoration: const InputDecoration(
+//                     labelText: 'Contraseña',
+//                     border: OutlineInputBorder(),
+//                   ),
+//                   obscureText: true,
+//                 ),
+//                 const SizedBox(height: 18),
+//                 FilledButton(
+//                   onPressed: _loading ? null : _onLogin,
+//                   style: FilledButton.styleFrom(
+//                     backgroundColor: colorScheme.primary,
+//                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14)),
+//                   child: _loading
+//                   ? const CircularProgressIndicator()
+//                   : Text(
+//                     'Login', style: TextStyle(color: colorScheme.onPrimary)
+//                     ),
+//                 ),
+//                 const SizedBox(height: 12),
+//                 TextButton(onPressed: () => context.push('/register_screen'), child: const Text('¿No tenés cuenta? Registrate')),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 
