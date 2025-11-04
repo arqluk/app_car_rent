@@ -108,7 +108,9 @@ class CarDetailScreen extends StatelessWidget {
 
 // último 20/10
         FilledButton.icon(
-              onPressed: () => context.push('/reservation_screen'),
+              // onPressed: () => context.push('/reservation_screen'),
+              onPressed: () => context.push('/add_reservation_screen',
+              extra: car, ),   // 👈 pasa el auto seleccionado
               // icon: const Icon(
               //   Icons.directions_car,
                 // size: 45,

@@ -6,10 +6,11 @@ class Reservation {
   String id;
   String userId;
   String carId;
-  String startdate;
-  String endDate;
+  // String startdate;
+  // String endDate;
+  int days;
   String status;    // pending, paid, cancelled
-  String paymentId; // opcional
+  String paymentMethod; // tarjetaCredito, Tarjetadebito, transferencia, Efectivo
 
 
   // String imageUrl;
@@ -18,10 +19,11 @@ class Reservation {
     required this.id,
     required this.userId,
     required this.carId,
-    required this.startdate,
-    required this.endDate,
+    // required this.startdate,
+    // required this.endDate,
+    required this.days,
     required this.status,     // pending, paid, cancelled
-    required this.paymentId,  // opcional
+    required this.paymentMethod,  // opcional
     });
 
 
@@ -36,10 +38,11 @@ class Reservation {
       id: snapshot.id,
       userId: data?['userId'],
       carId: data?['carId'],
-      startdate: data?['startdate'],
-      endDate: data?['endDate'],
+      // startdate: data?['startdate'],
+      // endDate: data?['endDate'],
+      days: data?['days'],
       status: data?['status'],
-      paymentId: data?['paymentId'],
+      paymentMethod: data?['paymentMethod'],
     );
   }
 
@@ -65,10 +68,11 @@ class Reservation {
       "id": id,
       "userId": userId,
       "carId": carId,
-      "startdate": startdate,
-      "endDate": endDate,
+      // "startdate": startdate,
+      // "endDate": endDate,
+      "days": days,
       "status": status,
-      "paymentId": paymentId,
+      "paymentMethod": paymentMethod,
     };
   }
 

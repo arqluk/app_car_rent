@@ -12,7 +12,7 @@ import 'package:app_car_rental/presentation/screens/payment_detail.dart';
 import 'package:app_car_rental/presentation/screens/payment_screen.dart';
 import 'package:app_car_rental/presentation/screens/payments_screen.dart';
 import 'package:app_car_rental/presentation/screens/register_screen.dart';
-import 'package:app_car_rental/presentation/screens/reservation_screen.dart';
+import 'package:app_car_rental/presentation/screens/add_reservation_screen.dart';
 import 'package:app_car_rental/presentation/screens/reservations_screen.dart';
 import 'package:app_car_rental/presentation/screens/settings_screen.dart';
 import 'package:app_car_rental/presentation/screens/start_session_screen.dart';
@@ -74,10 +74,12 @@ final appRouter = GoRouter(
       path: '/car_detail_screen',
       builder: (context, state) => CarDetailScreen(car: state.extra as Car),
     ),
-      GoRoute(
-      path: '/reservation_screen',
-      // builder: (context, state) => ReservationScreen(car: state.extra as Car),
-      builder: (context, state) => ReservationScreen(),
+    GoRoute(
+      path: '/add_reservation_screen',
+      builder: (context, state) {
+        final car = state.extra as Car;
+        return AddReservationScreen(car);
+      }
     ),
      GoRoute(
       path: '/reservations_screen',
