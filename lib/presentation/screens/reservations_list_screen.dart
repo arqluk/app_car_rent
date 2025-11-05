@@ -106,10 +106,10 @@ class _ReservationsListScreenView extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'Hacé clic en una reserva para ver detalles',
-                          style: textStyle.bodyMedium,
-                        ),
+                        // Text(
+                        //   'Hacé clic en una reserva para ver detalles',
+                        //   style: textStyle.bodyMedium,
+                        // ),
                         const SizedBox(height: 20),
                         Expanded(
                           child: ListView.builder(

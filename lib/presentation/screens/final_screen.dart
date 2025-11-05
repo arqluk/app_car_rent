@@ -64,33 +64,43 @@ class FinalScreen extends StatelessWidget {
 
 
     body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        // padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            const SizedBox(height: 10),
+            // const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
-              '✅ Operación completada con éxito',
+              // '✅ Operación completada con éxito',
+              'Operación exitosa',
+              textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold, color: Colors.green),
+                  // .headlineSmall
+                  // .headlineLarge
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
             ),
-            const SizedBox(height: 30),
+            // const SizedBox(height: 30),
+            const Divider(height: 10),
 
             // --- Datos del usuario ---
             Text(
               '👤 Datos del Usuario',
-              style: Theme.of(context).textTheme.titleLarge,
+              // style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 8),
-            _infoRow('Nombre', user?.displayName ?? 'No disponible'),
+            // _infoRow('Nombre', user?.displayName ?? 'No disponible'),
             _infoRow('Email', user?.email ?? 'No disponible'),
-            const Divider(height: 30),
+            // const Divider(height: 30),
+            const Divider(height: 10),
 
             // --- Datos del auto ---
             Text(
               '🚗 Datos del Auto',
-              style: Theme.of(context).textTheme.titleLarge,
+               // style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 8),
             _infoRow('Marca', car.marca),
@@ -100,24 +110,28 @@ class FinalScreen extends StatelessWidget {
             _infoRow('Precio por día', '\$${car.precio.toString()}'),
             _infoRow('Aire acondicionado', car.aire ? 'Sí' : 'No'),
             _infoRow('Automático', car.automatico ? 'Sí' : 'No'),
-            const Divider(height: 30),
+            // const Divider(height: 30),
+            const Divider(height: 10),
 
             // --- Datos de la reserva ---
             Text(
               '📅 Datos de la Reserva',
-              style: Theme.of(context).textTheme.titleLarge,
+               // style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 8),
             _infoRow('ID Reserva', reservation.id),
             _infoRow('Estado', reservation.status),
             _infoRow('Método de pago', reservation.paymentMethod),
             _infoRow('Cantidad de días', reservation.days.toString()),
-            const Divider(height: 30),
+            // const Divider(height: 30),
+            const Divider(height: 10),
 
             // --- Datos del pago ---
             Text(
               '💳 Datos del Pago',
-              style: Theme.of(context).textTheme.titleLarge,
+               // style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 8),
             _infoRow('ID Pago', payment.id),
@@ -127,7 +141,9 @@ class FinalScreen extends StatelessWidget {
             // _infoRow('Wi-Fi', payment.wifi ? 'Sí' : 'No'),
             _infoRow('Wi-Fi', payment.accesories),
             _infoRow('Monto', '\$${payment.amount}'),
-            const Divider(height: 30),
+            // const Divider(height: 30),
+            const Divider(height: 10),
+            const SizedBox(height: 10),
 
             // --- Botón de finalización ---
             Center(
@@ -160,11 +176,13 @@ Widget _infoRow(String label, String value) {
         children: [
           Text(label,
               style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  // const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           Flexible(
               child: Text(value,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(fontSize: 16))),
+                  // style: const TextStyle(fontSize: 16))),
+                  style: const TextStyle(fontSize: 13))),
         ],
       ),
     );

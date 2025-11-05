@@ -139,10 +139,10 @@ class _PaymentsListScreenView extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'Hacé clic en un pago para ver detalles',
-                          style: textStyle.bodyMedium,
-                        ),
+                        // Text(
+                        //   'Hacé clic en un pago para ver detalles',
+                        //   style: textStyle.bodyMedium,
+                        // ),
                         const SizedBox(height: 20),
                         Expanded(
                           child: ListView.builder(
