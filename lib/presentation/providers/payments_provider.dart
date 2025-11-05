@@ -105,6 +105,19 @@ final PaymentNotifierProvider = StateNotifierProvider<PaymentNotifier, List<Paym
       }
   }
 
+    Future<void> getPaymentsByUser(String userId) async {
+    try {
+    final docs = db.collection('payments').withConverter(
+      fromFirestore: Payment.fromFirestore,
+      toFirestore: (Payment payment, _) => payment.toFirestore());
+
+      final payments = await docs.where('userId', isEqualTo: userId).get();
+      state = payments.docs.map((doc) => doc.data()).toList();
+    } catch (e) {
+      print('Error obteniendo pagos: $e');
+    }
+}
+
 
 
 

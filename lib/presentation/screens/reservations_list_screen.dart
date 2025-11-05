@@ -19,7 +19,7 @@ class ReservationsListScreen extends ConsumerStatefulWidget {
        return _ReservationsListScreenView();
   }
 
-    @override
+  @override
   ConsumerState<ReservationsListScreen> createState() {
     return ReservationsListScreenState();
   }
@@ -54,8 +54,6 @@ class _ReservationsListScreenView extends ConsumerWidget {
 
 
 
-
-
    @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = fb.FirebaseAuth.instance.currentUser;
@@ -65,6 +63,7 @@ class _ReservationsListScreenView extends ConsumerWidget {
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'Car Rent'),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -148,10 +147,10 @@ class _ReservationItemView extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text('Auto: ${reservation.carId}\nCantidad de días: ${reservation.days}'),
-        trailing: const Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          context.push('/reservation_detail_screen', extra: reservation);
-        },
+        // trailing: const Icon(Icons.arrow_forward_ios),
+        // onTap: () {
+        //   context.push('/reservation_detail_screen', extra: reservation);
+        // },
       ),
     );
   }
