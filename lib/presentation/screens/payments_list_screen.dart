@@ -2,21 +2,21 @@
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class PaymentsScreen extends StatelessWidget {
+class PaymentsListScreen extends StatelessWidget {
   // final Car car;
   // final Car? car;
   // const ReservationScreen({super.key, required this.car});
-  const PaymentsScreen({super.key});
+  const PaymentsListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     // return _ReservationScreenView(car: car);
-    return _PaymentsScreenView();
+    return _PaymentsListScreenView();
   }
 }
 
-class _PaymentsScreenView extends StatelessWidget {
-  const _PaymentsScreenView({
+class _PaymentsListScreenView extends StatelessWidget {
+  const _PaymentsListScreenView({
     // super.key, required Car car,
     super.key,
   });

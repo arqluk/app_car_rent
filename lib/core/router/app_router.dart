@@ -85,9 +85,9 @@ final appRouter = GoRouter(
       }
     ),
      GoRoute(
-      path: '/reservations_screen',
+      path: '/reservations_list_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
-      builder: (context, state) => ReservationsScreen(),
+      builder: (context, state) => ReservationsListScreen(),
     ),
     GoRoute(
       path: '/add_payment_screen',
@@ -103,9 +103,9 @@ final appRouter = GoRouter(
       builder: (context, state) => PaymentDetailScreen(),
     ),
     GoRoute(
-        path: '/payments_screen',
+        path: '/payments_list_screen',
         // builder: (context, state) => ReservationScreen(car: state.extra as Car),
-        builder: (context, state) => PaymentsScreen(),
+        builder: (context, state) => PaymentsListScreen(),
     ),
     //   GoRoute(
     //     path: '/final_screen',

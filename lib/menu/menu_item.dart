@@ -26,13 +26,13 @@ class MenuItem{
       title: 'Mis Reservas',
       subtitle: 'Ver reservas',
       icon: Icons.menu_book,
-      link: '/reservations_screen',
+      link: '/reservations_list_screen',
     ),
         MenuItem(
       title: 'Mis Pagos',
       subtitle: 'Ver pagos',
       icon: Icons.payment,
-      link: '/payments_screen',
+      link: '/payments_list_screen',
     ),
      MenuItem(
       title: 'Configuración',

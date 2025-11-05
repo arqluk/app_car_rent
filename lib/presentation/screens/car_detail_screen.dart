@@ -135,12 +135,31 @@ class CarDetailScreen extends ConsumerWidget {
                   ),
                 );
               } else {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Text(
-                    'Iniciá sesión para reservar este auto.',
-                    style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                  ),
+                return Column(
+                  // padding: const EdgeInsets.all(8.0),
+                  children: [
+                    const Text(
+                      'Iniciá sesión para reservar este auto.',
+                      style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                    ),
+
+
+
+                  // const SizedBox(height: 20),
+
+                    TextButton.icon(
+                      onPressed: () => context.push('/login_screen'),
+                      icon: const Icon(Icons.login, color: Colors.blue),
+                      label: const Text(
+                        'Ir a Iniciar Sesión',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ],
+
+
+
+
                 );
               }
             },

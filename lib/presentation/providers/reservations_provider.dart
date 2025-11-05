@@ -104,6 +104,20 @@ final ReservationNotifierProvider = StateNotifierProvider<ReservationNotifier, L
       }
   }
 
+  Future<void> getReservationsByUser(String userId) async {
+    try {
+    final docs = db.collection('reservations').withConverter(
+      fromFirestore: Reservation.fromFirestore,
+      toFirestore: (Reservation reservation, _) => reservation.toFirestore());
+
+      final reservations = await docs.where('userId', isEqualTo: userId).get();
+      state = reservations.docs.map((doc) => doc.data()).toList();
+    } catch (e) {
+      print('Error obteniendo reservas: $e');
+    }
+}
+
+
 
 
 
