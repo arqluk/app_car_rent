@@ -1,3 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// Proveedor que expone el estado de autenticación actual
+final authStateProvider = StreamProvider<User?>(
+  (ref) => FirebaseAuth.instance.authStateChanges(),
+);
+
+
+// /// Proveedor que expone las funciones de autenticación
+// final authProvider = Provider<AuthService>((ref) {
+//   final auth = FirebaseAuth.instance;
+//   return AuthService(auth);
+// });
+
+
+//---------------------------------------------------------------------------------
+
+
+
 // // data/auth_notifier.dart
 // import 'dart:async';
 

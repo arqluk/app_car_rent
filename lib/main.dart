@@ -1,6 +1,7 @@
 import 'package:app_car_rental/core/router/app_router.dart';
 import 'package:app_car_rental/core/theme/app_theme.dart';
 import 'package:app_car_rental/presentation/providers/theme_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseAuth.instance.signOut(); // 👈 fuerza que no haya usuario logueado
 
 
   // 👇 Test simple para confirmar la conexión
