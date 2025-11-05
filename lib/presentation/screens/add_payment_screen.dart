@@ -9,6 +9,19 @@ import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+
+enum Protection {
+  todo_riesgo_sin_franquicia,
+  todo_riesgo_con_franquicia,
+  terceros
+}
+
+enum Accesories {
+  wifi_y_auxilio_mecanico,
+  wifi,
+  auxilio_mecanico,
+}
 
 class AddPaymentScreen extends ConsumerStatefulWidget {
   // final Car car;
@@ -29,15 +42,26 @@ class AddPaymentScreen extends ConsumerStatefulWidget {
 }
 
 class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
+
+  Protection? selectedProtection = Protection.todo_riesgo_sin_franquicia;
+  Accesories? selectedAccesories = Accesories.wifi_y_auxilio_mecanico;
+
   final _formKey = GlobalKey<FormState>();
-  final _protectionCtrl = TextEditingController();
-  final _wifiCtrl = TextEditingController();
+  // final _protectionCtrl = TextEditingController();
+  // final _wifiCtrl = TextEditingController();
 
   bool _loading = false;
   String? _error;
 
   @override
   Widget build(BuildContext context) {
+
+    final textStyle = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    // ✅ Definimos el formateador acá
+    final NumberFormat formatNumber = NumberFormat('#,##0', 'es_AR');
+
     final reservation = widget.reservation; // 👈 obtiene la reserva desde el widget
     return Scaffold(
       //  appBar: AppBar(
@@ -72,18 +96,158 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                controller: _protectionCtrl,
-                decoration: const InputDecoration(labelText: 'Protección'),
-                validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese la protección' : null,
+
+              ExpansionTile(
+                title: const Text('Protección'),
+                subtitle: Text('${selectedProtection?.name}'),
+                children: [
+                  RadioListTile(
+                    title: const Text('Todo Riesgo Sin Franquicia'),
+                    value: Protection.todo_riesgo_sin_franquicia,
+                    groupValue: selectedProtection,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedProtection = value;
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Todo Riesgo Con Franquicia'),
+                    value: Protection.todo_riesgo_con_franquicia,
+                    groupValue: selectedProtection,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedProtection = value;
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Terceros'),
+                    value: Protection.terceros,
+                    groupValue: selectedProtection,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedProtection = value;
+                      });
+                    },
+                  ),
+                ],
               ),
-              TextFormField(
-                controller: _wifiCtrl,
-                decoration: const InputDecoration(labelText: 'Wi-Fi'),
-                validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese Wi-Fi' : null,
+
+              const SizedBox(height: 60),
+
+              ExpansionTile(
+                title: const Text('Accesorios'),
+                subtitle: Text('${selectedAccesories?.name}'),
+                children: [
+                  RadioListTile(
+                    title: const Text('Wi-Fi y Auxilio Mecánico'),
+                    value: Accesories.wifi_y_auxilio_mecanico,
+                    groupValue: selectedAccesories,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedAccesories = value;
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Solo Wi-Fi'),
+                    value: Accesories.wifi,
+                    groupValue: selectedAccesories,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedAccesories = value;
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Solo Auxilio Mecánico'),
+                    value: Accesories.auxilio_mecanico,
+                    groupValue: selectedAccesories,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedAccesories = value;
+                      });
+                    },
+                  ),
+                ],
               ),
+
+              // const SizedBox(height: 20),
+
+              if (_error != null)
+                Text(
+                  _error!,
+                  style: const TextStyle(color: Colors.red, fontSize: 14),
+                ),
+
+              // const SizedBox(height: 12),
+
+
+
+              // ExpansionTile(
+              //   title: const Text('Protección'),
+              //   subtitle: Text('${selectedProtection?.name}'),
+              //   children: [
+              //     RadioListTile(
+              //       title: const Text('Todo Riesgo Sin Franquicia'),
+              //       value: Protection.todo_riesgo_sin_franquicia,
+              //       groupValue: selectedProtection,
+              //       onChanged: (value) {
+              //         selectedProtection = value;
+              //         setState(() {});
+              //       },
+              //     ),
+              //     RadioListTile(
+              //       title: const Text('Accesorios'),
+              //       value: Accesories.wifi_y_auxilio_mecanico,
+              //       groupValue: selectedAccesories,
+              //       onChanged: (value) {
+              //         selectedAccesories = value;
+              //         setState(() {});
+              //       },
+              //     ),
+              //   ]
+              //     // RadioListTile(
+              //     //   title: const Text('Transferencia Bancaria'),
+              //     //   value: PaymentMethod.bankTransfer,
+              //     //   groupValue: selectedPaymentMethod,
+              //     //   onChanged: (value) {
+              //     //     selectedPaymentMethod = value;
+              //     //     setState(() {});
+              //     //   },
+              //     // ),
+              //     // RadioListTile(
+              //     //   title: const Text('Efectivo'),
+              //     //   value: PaymentMethod.cash,
+              //     //   groupValue: selectedPaymentMethod,
+              //     //   onChanged: (value) {
+              //     //     selectedPaymentMethod = value;
+              //     //     setState(() {});
+              //     //   },
+              //     ),
+                // ],
+        //   )
+        // )
+        //       ),
+
+
+
+
+
+
+              // TextFormField(
+              //   controller: _protectionCtrl,
+              //   decoration: const InputDecoration(labelText: 'Protección'),
+              //   validator: (v) =>
+              //       v == null || v.isEmpty ? 'Ingrese la protección' : null,
+              // ),
+              // TextFormField(
+              //   controller: _wifiCtrl,
+              //   decoration: const InputDecoration(labelText: 'Wi-Fi'),
+              //   validator: (v) =>
+              //       v == null || v.isEmpty ? 'Ingrese Wi-Fi' : null,
+              // ),
               // TextFormField(
               //   controller: _brandCtrl,
               //   decoration: const InputDecoration(labelText: 'Marca'),
@@ -151,11 +315,48 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
               // //   controller: _docCtrl,
               // //   decoration: const InputDecoration(labelText: 'Documento'),
               // // ),
-              const SizedBox(height: 20),
-              if (_error != null)
-                Text(_error!,
-                    style: const TextStyle(color: Colors.red, fontSize: 14)),
-              const SizedBox(height: 12),
+              // const SizedBox(height: 20),
+              // if (_error != null)
+              //   Text(_error!,
+              //       style: const TextStyle(color: Colors.red, fontSize: 14)),
+              // const SizedBox(height: 12),
+              
+              const SizedBox(height: 120),
+
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  // color: colorScheme.primary, // 🎨 fondo según el tema
+                  color: colorScheme.primaryContainer, // 🎨 fondo según el tema
+                  border: Border.all(
+                    color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
+                    width: 2,
+                  ),
+                  // borderRadius: BorderRadius.circular(16),
+
+                  borderRadius: const BorderRadius.horizontal(
+                    left: Radius.circular(999),
+                    right: Radius.circular(999),
+                  ),
+                ),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  '\$ ${formatNumber.format(0)}.- importe final a pagar',
+                  style: TextStyle(
+                    color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              
+              
+              
+              const SizedBox(height: 80),
+              
+              
+              
+              
               ElevatedButton(
                 onPressed: _loading
                     ? null
@@ -210,8 +411,10 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                             amount: 0,
                             status: 'paid',
                             timestamp: '', // 👈 valor por defecto
-                            protection: _protectionCtrl.text.trim().toLowerCase() == 'true',
-                            wifi: _wifiCtrl.text.trim().toLowerCase() == 'true',
+                            // protection: _protectionCtrl.text.trim().toLowerCase() == 'true',
+                            protection: selectedProtection!.name,
+                            // wifi: _wifiCtrl.text.trim().toLowerCase() == 'true',
+                            accesories: selectedAccesories!.name,
                           );
 
 
@@ -252,18 +455,21 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                       },
                 child: _loading
                     ? const CircularProgressIndicator()
-                    : const Text('Agregar pago'),
+                    : const Text('Pagar'),
               ),
             ],
-          ),
-        ),
+    ),
+    ),
       ),
+          );
+      //   ),
+      // ),
 
 
       // body: const Center(
       //   child: Text('Aquí se mostrará el formulario para reservar'),
       // ),
-    );
+    // );
   }
 
 }

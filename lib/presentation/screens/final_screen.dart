@@ -122,8 +122,10 @@ class FinalScreen extends StatelessWidget {
             const SizedBox(height: 8),
             _infoRow('ID Pago', payment.id),
             _infoRow('Estado', payment.status),
-            _infoRow('Protección', payment.protection ? 'Sí' : 'No'),
-            _infoRow('Wi-Fi', payment.wifi ? 'Sí' : 'No'),
+            // _infoRow('Protección', payment.protection ? 'Sí' : 'No'),
+            _infoRow('Protección', payment.protection),
+            // _infoRow('Wi-Fi', payment.wifi ? 'Sí' : 'No'),
+            _infoRow('Wi-Fi', payment.accesories),
             _infoRow('Monto', '\$${payment.amount}'),
             const Divider(height: 30),
 

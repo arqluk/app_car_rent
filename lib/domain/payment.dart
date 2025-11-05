@@ -10,8 +10,8 @@ class Payment {
   int amount;
   String status;
   String timestamp;
-  bool protection;
-  bool wifi;
+  String protection;
+  String accesories;
   // String paymentMethod; // tarjetaCredito, Tarjetadebito, transferencia, Efectivo
 
 
@@ -26,7 +26,7 @@ class Payment {
     required this.status,     // pending, paid, cancelled
     required this.timestamp,
     required this.protection,
-    required this.wifi,
+    required this.accesories
     // required this.paymentMethod,  // opcional
     });
 
@@ -47,7 +47,7 @@ class Payment {
       status: data?['status'],
       timestamp: data?['timestamp'],
       protection: data?['protection'],
-      wifi: data?['wifi'],
+      accesories: data?['accesories'],
       // paymentMethod: data?['paymentMethod'],
     );
   }
@@ -79,7 +79,7 @@ class Payment {
       "status": status,
       "timestamp": timestamp,
       "protection": protection,
-      "wifi": wifi,
+      "accesories": accesories,
       // "paymentMethod": paymentMethod,
     };
   }

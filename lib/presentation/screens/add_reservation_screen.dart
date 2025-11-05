@@ -8,6 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+
+enum PaymentMethod {
+  creditCard,
+  debitCard,
+  bankTransfer,
+  cash,
+}
+
 class AddReservationScreen extends ConsumerStatefulWidget {
   final Car car;  // 👈 recibe el auto desde CarDetailScreen
   // final Car? car;
@@ -26,8 +34,12 @@ class AddReservationScreen extends ConsumerStatefulWidget {
 // }
 
 class _AddReservationScreenState extends ConsumerState<AddReservationScreen>  {
+
+  PaymentMethod? selectedPaymentMethod = PaymentMethod.creditCard;
+  // int selectedPaymentMethod;
+
   final _formKey = GlobalKey<FormState>();
-  final _payMethodCtrl = TextEditingController();
+  // final _payMethodCtrl = TextEditingController();
   final _daysCtrl = TextEditingController();
   // final _brandCtrl = TextEditingController();
   // // final _phoneCtrl = TextEditingController();
@@ -79,15 +91,120 @@ body: Padding(
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                controller: _payMethodCtrl,
-                decoration: const InputDecoration(labelText: 'Método de Pago'),
-                validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese el método de pago' : null,
+
+              ExpansionTile(
+                title: const Text('Método de Pago'),
+                subtitle: Text('${selectedPaymentMethod?.name}'),
+                children: [
+                  RadioListTile(
+                    title: const Text('Tarjeta de Crédito'),
+                    value: PaymentMethod.creditCard,
+                    groupValue: selectedPaymentMethod,
+                    onChanged: (value) {
+                      selectedPaymentMethod = value;
+                      setState(() {});
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Tarjeta de Débito'),
+                    value: PaymentMethod.debitCard,
+                    groupValue: selectedPaymentMethod,
+                    onChanged: (value) {
+                      selectedPaymentMethod = value;
+                      setState(() {});
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Transferencia Bancaria'),
+                    value: PaymentMethod.bankTransfer,
+                    groupValue: selectedPaymentMethod,
+                    onChanged: (value) {
+                      selectedPaymentMethod = value;
+                      setState(() {});
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Efectivo'),
+                    value: PaymentMethod.cash,
+                    groupValue: selectedPaymentMethod,
+                    onChanged: (value) {
+                      selectedPaymentMethod = value;
+                      setState(() {});
+                    },
+                  ),
+                ],
               ),
+
+              // RadioListTile(
+              //   title: const Text('Tarjeta de Crédito'),
+              //   // value: 'Tarjeta de Crédito',
+              //   // value: PaymentMethod.creditCard.name,
+              //   value: PaymentMethod.creditCard,
+              //   // groupValue: _payMethodCtrl.text,
+              //   // ignore: deprecated_member_use
+              //   // groupValue: _selectedPaymentMethod?.name,
+              //   groupValue: selectedPaymentMethod,
+              //   onChanged: (value) {
+              //     // _selectedPaymentMethod = PaymentMethod.values.firstWhere((e) => e.name == value);
+              //     selectedPaymentMethod = value;
+              //     setState(() {
+              //       // _payMethodCtrl.text = value!;
+              //     });
+              //   },
+              // ),
+
+              // RadioListTile(
+              //   title: const Text('Tarjeta de Débito'),
+              //   // value: 'Tarjeta de Débito',
+              //   value: PaymentMethod.debitCard,
+              //   groupValue: selectedPaymentMethod,
+              //   onChanged: (value) {
+              //     selectedPaymentMethod = value;
+              //     setState(() {
+                    
+              //     });
+              //   },
+              // ),
+
+              // RadioListTile(
+              //   title: const Text('Transferencia Bancaria'),
+              //   // value: 'Transferencia Bancaria',
+              //   value: PaymentMethod.bankTransfer,
+              //   groupValue: selectedPaymentMethod,
+              //   onChanged: (value) {
+              //     selectedPaymentMethod = value;
+              //     setState(() {
+              //       // _payMethodCtrl.text = value;
+              //     });
+              //   },
+              // ),
+
+              //    RadioListTile(
+              //   title: const Text('Efectivo'),
+              //   // value: 'Efectivo',
+              //   value: PaymentMethod.cash,
+              //   groupValue: selectedPaymentMethod,
+              //   onChanged: (value) {
+              //     selectedPaymentMethod = value;
+              //     setState(() {
+                    
+              //     });
+              //   },
+              // ),
+
+
+              // TextFormField(
+              //   controller: _payMethodCtrl,
+              //   decoration: const InputDecoration(labelText: 'Método de Pago'),
+              //   validator: (v) =>
+              //       v == null || v.isEmpty ? 'Ingrese el método de pago' : null,
+              // ),
+
+              const SizedBox(height: 80),
+
               TextFormField(
                 controller: _daysCtrl,
-                decoration: const InputDecoration(labelText: 'Días'),
+                decoration: const InputDecoration(labelText: 'Cantidad de días'),
                 validator: (v) =>
                     v == null || v.isEmpty ? 'Ingrese la cantidad de días' : null,
               ),
@@ -158,11 +275,12 @@ body: Padding(
               // //   controller: _docCtrl,
               // //   decoration: const InputDecoration(labelText: 'Documento'),
               // // ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 120),
               if (_error != null)
                 Text(_error!,
                     style: const TextStyle(color: Colors.red, fontSize: 14)),
-              const SizedBox(height: 12),
+              // const SizedBox(height: 12),
+
               ElevatedButton(
                 onPressed: _loading
                     ? null
@@ -214,7 +332,8 @@ body: Padding(
                             userId: currentUser.uid,
                             carId: car.id,
                             status: 'pending', // 👈 valor por defecto
-                            paymentMethod: _payMethodCtrl.text.trim(),
+                            // paymentMethod: _payMethodCtrl.text.trim(),
+                            paymentMethod: selectedPaymentMethod!.name,
                             days: int.tryParse(_daysCtrl.text.trim()) ?? 0,
   );
 
