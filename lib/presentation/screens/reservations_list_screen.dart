@@ -82,7 +82,7 @@ class _ReservationsListScreenView extends ConsumerWidget {
                     ),
                     const SizedBox(height: 20),
                     TextButton.icon(
-                      onPressed: () => context.go('/login_screen'),
+                      onPressed: () => context.push('/login_screen'),
                       icon: const Icon(Icons.login, color: Colors.blue),
                       label: const Text(
                         'Ir a Iniciar Sesión',
