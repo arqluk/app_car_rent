@@ -1,15 +1,18 @@
 import 'package:app_car_rental/domain/car.dart';
+import 'package:app_car_rental/domain/payment.dart';
+import 'package:app_car_rental/domain/reservation.dart';
 import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/screens/access_denied_screen.dart';
 import 'package:app_car_rental/presentation/screens/add_car_screen.dart';
 import 'package:app_car_rental/presentation/screens/admin_screen.dart';
 import 'package:app_car_rental/presentation/screens/car_detail_screen.dart';
 import 'package:app_car_rental/presentation/screens/cars_screen.dart';
+import 'package:app_car_rental/presentation/screens/final_screen.dart';
 import 'package:app_car_rental/presentation/screens/fleet_screen.dart';
 import 'package:app_car_rental/presentation/screens/home_screen.dart';
 import 'package:app_car_rental/presentation/screens/login_screen.dart';
 import 'package:app_car_rental/presentation/screens/payment_detail.dart';
-import 'package:app_car_rental/presentation/screens/payment_screen.dart';
+import 'package:app_car_rental/presentation/screens/add_payment_screen.dart';
 import 'package:app_car_rental/presentation/screens/payments_screen.dart';
 import 'package:app_car_rental/presentation/screens/register_screen.dart';
 import 'package:app_car_rental/presentation/screens/add_reservation_screen.dart';
@@ -87,20 +90,46 @@ final appRouter = GoRouter(
       builder: (context, state) => ReservationsScreen(),
     ),
     GoRoute(
-      path: '/payment_screen',
+      path: '/add_payment_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
-      builder: (context, state) => PaymentScreen(),
+      builder: (context, state) {
+        final reservation = state.extra as Reservation;
+        return AddPaymentScreen(reservation);
+      },
     ),
     GoRoute(
       path: '/payment_detail_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
       builder: (context, state) => PaymentDetailScreen(),
     ),
-      GoRoute(
+    GoRoute(
         path: '/payments_screen',
         // builder: (context, state) => ReservationScreen(car: state.extra as Car),
         builder: (context, state) => PaymentsScreen(),
-      ),
+    ),
+    //   GoRoute(
+    //     path: '/final_screen',
+    //     // builder: (context, state) => ReservationScreen(car: state.extra as Car),
+    //     builder: (context, state) {
+    //       final car = state.extra as Car;
+    //       final reservation = state.extra as Reservation;
+    //       final payment = state.extra as Payment;
+    //       return FinalScreen(car: car, reservation: reservation, payment: payment);
+    //     },
+    // ),
+
+    GoRoute(
+      path: '/final_screen',
+      builder: (context, state) {
+        final extras = state.extra as Map<String, dynamic>;
+        return FinalScreen(
+          car: extras['car'],
+          reservation: extras['reservation'],
+          payment: extras['payment'],
+        );
+      },
+    ),
+
 
     //   GoRoute(
     //   path: '/admin_screen',
@@ -108,7 +137,7 @@ final appRouter = GoRouter(
     //   builder: (context, state) => AdminScreen(),
     // ),
 
-       GoRoute(
+    GoRoute(
       path: '/access_denied_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
       builder: (context, state) => AccessDeniedScreen(),

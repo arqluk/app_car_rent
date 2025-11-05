@@ -1,51 +1,44 @@
 // import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/domain/car.dart';
+import 'package:app_car_rental/domain/payment.dart';
 import 'package:app_car_rental/domain/reservation.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/reservations_provider.dart';
+import 'package:app_car_rental/presentation/providers/payments_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class AddReservationScreen extends ConsumerStatefulWidget {
-  final Car car;  // 👈 recibe el auto desde CarDetailScreen
+class AddPaymentScreen extends ConsumerStatefulWidget {
+  // final Car car;
   // final Car? car;
-  // const AddReservationScreen(Car car, {super.key, required this.car});
-  const AddReservationScreen(this.car, {super.key});
+  // const ReservationScreen({super.key, required this.car});
+  
+  final Reservation reservation; // 👈 recibe la reserva desde AddReservationScreen
+  const AddPaymentScreen(this.reservation, {super.key});
 
   @override
-  ConsumerState<AddReservationScreen> createState() => _AddReservationScreenState();
+  ConsumerState<AddPaymentScreen> createState() => _AddPaymentScreenState();
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   // return _ReservationScreenView(car: car);
+  //   return _AddPaymentScreenView();
+  // }
 }
 
-// class _AddReservationScreenState extends ConsumerState<AddReservationScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return _AddReservationScreenView();
-//   }
-// }
-
-class _AddReservationScreenState extends ConsumerState<AddReservationScreen>  {
+class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _payMethodCtrl = TextEditingController();
-  final _daysCtrl = TextEditingController();
-  // final _brandCtrl = TextEditingController();
-  // // final _phoneCtrl = TextEditingController();
-  // final _modelCtrl = TextEditingController();
-  // final _colorCtrl = TextEditingController();
-  // final _capacityCtrl = TextEditingController();
-  // final _luggageCtrl = TextEditingController();
-  // final _automaticCtrl = TextEditingController();
-  // final _airCtrl = TextEditingController();
-  // final _priceCtrl = TextEditingController();
-  // final _imageUrlCtrl = TextEditingController();
+  final _protectionCtrl = TextEditingController();
+  final _wifiCtrl = TextEditingController();
 
   bool _loading = false;
   String? _error;
 
   @override
   Widget build(BuildContext context) {
-    final car = widget.car;  // 👈 obtiene el auto desde el widget
+    final reservation = widget.reservation; // 👈 obtiene la reserva desde el widget
     return Scaffold(
       //  appBar: AppBar(
       //     title: Row(
@@ -73,23 +66,23 @@ class _AddReservationScreenState extends ConsumerState<AddReservationScreen>  {
       //   ),
       appBar: const CustomAppBar(title: 'Car Rent'),
 
-body: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: ListView(
             children: [
               TextFormField(
-                controller: _payMethodCtrl,
-                decoration: const InputDecoration(labelText: 'Método de Pago'),
+                controller: _protectionCtrl,
+                decoration: const InputDecoration(labelText: 'Protección'),
                 validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese el método de pago' : null,
+                    v == null || v.isEmpty ? 'Ingrese la protección' : null,
               ),
               TextFormField(
-                controller: _daysCtrl,
-                decoration: const InputDecoration(labelText: 'Días'),
+                controller: _wifiCtrl,
+                decoration: const InputDecoration(labelText: 'Wi-Fi'),
                 validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese la cantidad de días' : null,
+                    v == null || v.isEmpty ? 'Ingrese Wi-Fi' : null,
               ),
               // TextFormField(
               //   controller: _brandCtrl,
@@ -175,7 +168,7 @@ body: Padding(
                         });
 
                         final notifier =
-                            ref.read(ReservationNotifierProvider.notifier);
+                            ref.read(PaymentNotifierProvider.notifier);
 
                         // final newReservation = Reservation(
                         //   id: '', // se asigna automáticamente
@@ -203,30 +196,27 @@ body: Padding(
                         final currentUser = fb.FirebaseAuth.instance.currentUser;
                           if (currentUser == null) {
                             setState(() {
-                              _error = 'Debes iniciar sesión para reservar un auto.';
+                              _error = 'Debes iniciar sesión para pagar una reserva.';
                               _loading = false;
                             });
                             return;
                           }
 
-                          final newReservation = Reservation(
-                            id: '', // se asigna automáticamente en Firestore
+                          final newPayment = Payment(
+                            id: '',     // se asigna automáticamente en Firestore
                             userId: currentUser.uid,
-                            carId: car.id,
-                            status: 'pending', // 👈 valor por defecto
-                            paymentMethod: _payMethodCtrl.text.trim(),
-                            days: int.tryParse(_daysCtrl.text.trim()) ?? 0,
-  );
+                            carId: reservation.carId,
+                            reservationId: reservation.id,
+                            amount: 0,
+                            status: 'paid',
+                            timestamp: '', // 👈 valor por defecto
+                            protection: _protectionCtrl.text.trim().toLowerCase() == 'true',
+                            wifi: _wifiCtrl.text.trim().toLowerCase() == 'true',
+                          );
 
 
 
-
-
-
-
-
-
-                        final err = await notifier.addReservation(newReservation);
+                        final err = await notifier.addPayment(newPayment);
 
                         setState(() => _loading = false);
 
@@ -234,14 +224,27 @@ body: Padding(
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Reserva agregada con éxito')),
+                                  content: Text('Pago agregado con éxito')),
                             );
                             // context.go('/home_screen');
-                            context.push('/add_payment_screen', extra: newReservation);
-                            // context.push('/add_payment_screen', extra: {
-                            //   'car': car,
-                            //   'reservation': newReservation
-                            //  });
+                            // context.push('/final_screen');
+
+                            final carDoc = await FirebaseFirestore.instance
+                              .collection('cars')
+                              .doc(reservation.carId)
+                              .get();
+
+                          final car = Car.fromFirestore(carDoc, null);
+
+                            context.push(
+                              '/final_screen',
+                              extra: {
+                                'car': car,       
+                                'reservation': reservation,
+                                'payment': newPayment,
+                              },
+                            );
+
                           }
                         } else {
                           setState(() => _error = err);
@@ -249,7 +252,7 @@ body: Padding(
                       },
                 child: _loading
                     ? const CircularProgressIndicator()
-                    : const Text('Agregar reserva'),
+                    : const Text('Agregar pago'),
               ),
             ],
           ),
@@ -262,68 +265,5 @@ body: Padding(
       // ),
     );
   }
+
 }
-
-
-
-// --------------------------------------------------------------------
-
-// // import 'package:app_car_rental/domain/car.dart';
-// import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-// import 'package:flutter/material.dart';
-
-// class ReservationScreen extends StatelessWidget {
-//   // final Car car;
-//   // final Car? car;
-//   // const ReservationScreen({super.key, required this.car});
-//   const ReservationScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // return _ReservationScreenView(car: car);
-//     return _ReservationScreenView();
-//   }
-// }
-
-// class _ReservationScreenView extends StatelessWidget {
-//   const _ReservationScreenView({
-//     // super.key, required Car car,
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       //  appBar: AppBar(
-//       //     title: Row(
-//       //       children: [
-//       //         Image.asset(
-//       //           'assets/images/cr_logo.jpg',
-//       //           width: 40,
-//       //           height: 40,
-//       //         ),
-//       //         const SizedBox(width: 8),
-//       //         const Text('Car Rent'),
-//       //       ],
-//       //     ),
-//       //     backgroundColor: Colors.blue,
-//       //     foregroundColor: Colors.white,
-//       //     actions: [
-//       //       IconButton(
-//       //         onPressed: () {
-//       //           // TODO: Agregar funcionalidad del ícono de auto
-//       //         },
-//       //         icon: const Icon(Icons.directions_car),
-//       //         tooltip: 'Car Rent',
-//       //       ),
-//       //     ],
-//       //   ),
-//       appBar: const CustomAppBar(title: 'Car Rent'),
-
-//       body: const Center(
-//         child: Text('Aquí se mostrará el formulario para reservar'),
-//       ),
-//     );
-//   }
-// }
-

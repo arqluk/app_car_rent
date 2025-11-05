@@ -5,10 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Payment {
   String id;
   String userId;
+  String carId;
   String reservationId;
   int amount;
   String status;
   String timestamp;
+  bool protection;
+  bool wifi;
+  // String paymentMethod; // tarjetaCredito, Tarjetadebito, transferencia, Efectivo
 
 
   // String imageUrl;
@@ -16,10 +20,14 @@ class Payment {
   Payment({
     required this.id,
     required this.userId,
+    required this.carId,
     required this.reservationId,
     required this.amount,
     required this.status,     // pending, paid, cancelled
-    required this.timestamp,  // opcional
+    required this.timestamp,
+    required this.protection,
+    required this.wifi,
+    // required this.paymentMethod,  // opcional
     });
 
 
@@ -30,12 +38,17 @@ class Payment {
     final data = snapshot.data();
     
     return Payment(
-      id: data?['id'],
+      // id: data?['id'],
+      id: snapshot.id,
       userId: data?['userId'],
+      carId: data?['carId'],
       reservationId: data?['reservationId'],
       amount: data?['amount'],
       status: data?['status'],
       timestamp: data?['timestamp'],
+      protection: data?['protection'],
+      wifi: data?['wifi'],
+      // paymentMethod: data?['paymentMethod'],
     );
   }
 
@@ -60,10 +73,14 @@ class Payment {
     return {
       "id": id,
       "userId": userId,
+      "carId": carId,
       "reservationId": reservationId,
       "amount": amount,
       "status": status,
       "timestamp": timestamp,
+      "protection": protection,
+      "wifi": wifi,
+      // "paymentMethod": paymentMethod,
     };
   }
 
