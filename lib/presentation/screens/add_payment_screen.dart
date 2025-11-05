@@ -427,7 +427,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Pago agregado con éxito')),
+                                  content: Text('Pago realizado con éxito')),
                             );
                             // context.go('/home_screen');
                             // context.push('/final_screen');

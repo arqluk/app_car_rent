@@ -353,7 +353,7 @@ body: Padding(
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Reserva agregada con éxito')),
+                                  content: Text('Reserva realizada con éxito')),
                             );
                             // context.go('/home_screen');
                             context.push('/add_payment_screen', extra: newReservation);
@@ -368,7 +368,7 @@ body: Padding(
                       },
                 child: _loading
                     ? const CircularProgressIndicator()
-                    : const Text('Agregar reserva'),
+                    : const Text('Reservar'),
               ),
             ],
           ),
