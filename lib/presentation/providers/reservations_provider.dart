@@ -120,6 +120,26 @@ final ReservationNotifierProvider = StateNotifierProvider<ReservationNotifier, L
 
 
 
+  // static Future<void> updateReservationStatus(String reservationId, String newStatus) async {
+  Future<void> updateReservationStatus(String reservationId, String newStatus) async {
+    // final db = FirebaseFirestore.instance;
+    try {
+      await db.collection('reservations').doc(reservationId).update({'status': newStatus});
+
+      // 🔄 Actualizar el estado local también
+    state = [
+      for (final r in state)
+        if (r.id == reservationId) r.copyWith(status: newStatus) else r
+    ];
+
+    } catch (e) {
+      print('Error al actualizar estado de la reserva: $e');
+    }
+  }
+
+
+
+
 
   // Future<void> createReservation(Reservation r) async {
   //   // await _db.collection('reservations').add(r.toMap());

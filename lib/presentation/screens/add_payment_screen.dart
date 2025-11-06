@@ -1,9 +1,12 @@
 // import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/domain/car.dart';
+import 'package:app_car_rental/domain/enums/payment_enums.dart';
 import 'package:app_car_rental/domain/payment.dart';
 import 'package:app_car_rental/domain/reservation.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+import 'package:app_car_rental/presentation/providers/payment_ui_provider.dart';
 import 'package:app_car_rental/presentation/providers/payments_provider.dart';
+import 'package:app_car_rental/presentation/providers/reservations_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
@@ -11,25 +14,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-enum Protection {
-  todo_riesgo_sin_franquicia,
-  todo_riesgo_con_franquicia,
-  terceros
-}
+// enum Protection {
+//   todo_riesgo_sin_franquicia,
+//   todo_riesgo_con_franquicia,
+//   terceros
+// }
 
-enum Accesories {
-  wifi_y_auxilio_mecanico,
-  wifi,
-  auxilio_mecanico,
-}
+// enum Accesories {
+//   wifi_y_auxilio_mecanico,
+//   wifi,
+//   auxilio_mecanico,
+// }
 
 class AddPaymentScreen extends ConsumerStatefulWidget {
   // final Car car;
   // final Car? car;
   // const ReservationScreen({super.key, required this.car});
-  
   final Reservation reservation; // 👈 recibe la reserva desde AddReservationScreen
-  const AddPaymentScreen(this.reservation, {super.key});
+  
+
+  const AddPaymentScreen(this.reservation,{super.key});
 
   @override
   ConsumerState<AddPaymentScreen> createState() => _AddPaymentScreenState();
@@ -43,8 +47,8 @@ class AddPaymentScreen extends ConsumerStatefulWidget {
 
 class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
 
-  Protection? selectedProtection = Protection.todo_riesgo_sin_franquicia;
-  Accesories? selectedAccesories = Accesories.wifi_y_auxilio_mecanico;
+  // Protection? selectedProtection = Protection.todo_riesgo_sin_franquicia;
+  // Accesories? selectedAccesories = Accesories.wifi_y_auxilio_mecanico;
 
   final _formKey = GlobalKey<FormState>();
   // final _protectionCtrl = TextEditingController();
@@ -53,16 +57,86 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
   bool _loading = false;
   String? _error;
 
+  int totalAmount = 0; // MONTO TOTAL CALCULADO (visible en el widget)
+  bool _loadingAmount = true;
+
+
+
+
+
+  @override
+    void initState() {
+      super.initState();
+      _loadCarAndCalculateAmount();
+    }
+
+  //   Future<void> _loadCarAndCalculateAmount() async {
+  //     final r = widget.reservation;
+
+  //     final carDoc = await FirebaseFirestore.instance
+  //         .collection('cars')
+  //         .doc(r.carId)
+  //         .get();
+
+  //     final car = Car.fromFirestore(carDoc, null);
+
+  //     setState(() {
+  //       totalAmount = r.days * car.precio;
+  //     });
+  //   }
+
+
+Future<void> _loadCarAndCalculateAmount() async {
+  final r = widget.reservation;
+
+  final carDoc = await FirebaseFirestore.instance
+      .collection('cars')
+      .doc(r.carId)
+      .get();
+
+  final car = Car.fromFirestore(carDoc, null);
+
+  setState(() {
+    totalAmount = r.days * car.precio;
+    _loadingAmount = false;
+  });
+}
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
-    final textStyle = Theme.of(context).textTheme;
+    final ui = ref.watch(PaymentUiNotifierProvider);
+
+    // loader inicial
+  if (_loadingAmount) {
+    return Scaffold(
+      appBar: const CustomAppBar(title: 'Car Rent'),
+      body: const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+    // final textStyle = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
     // ✅ Definimos el formateador acá
     final NumberFormat formatNumber = NumberFormat('#,##0', 'es_AR');
 
-    final reservation = widget.reservation; // 👈 obtiene la reserva desde el widget
+    final reservation = widget.reservation;
+    
+
+    // 1️⃣ Calcular el monto total
+    // final totalAmount = reservation.days * car.precio;
+     if (totalAmount == 0) {
+      return const Center(child: CircularProgressIndicator());
+}
+             
+                   
+    // final car = widget.car; // 👈 obtiene el auto desde el widget
     return Scaffold(
       //  appBar: AppBar(
       //     title: Row(
@@ -99,227 +173,126 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
 
               ExpansionTile(
                 title: const Text('Protección'),
-                subtitle: Text('${selectedProtection?.name}'),
-                children: [
-                  RadioListTile(
-                    title: const Text('Todo Riesgo Sin Franquicia'),
-                    value: Protection.todo_riesgo_sin_franquicia,
-                    groupValue: selectedProtection,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedProtection = value;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Text('Todo Riesgo Con Franquicia'),
-                    value: Protection.todo_riesgo_con_franquicia,
-                    groupValue: selectedProtection,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedProtection = value;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Text('Terceros'),
-                    value: Protection.terceros,
-                    groupValue: selectedProtection,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedProtection = value;
-                      });
-                    },
-                  ),
-                ],
+                // subtitle: Text('${selectedProtection?.name}'),
+                subtitle: Text(ui.protection.name),
+                   children: Protection.values.map((p) {
+                    return RadioListTile(
+                      title: Text(p.name.replaceAll("_", " ").toUpperCase()),
+                      value: p,
+                      groupValue: ui.protection,
+                      // onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setProtection(v!),
+                      onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setProtection(p),
+                    );
+                }).toList(),
               ),
 
               const SizedBox(height: 60),
 
+
               ExpansionTile(
-                title: const Text('Accesorios'),
-                subtitle: Text('${selectedAccesories?.name}'),
-                children: [
-                  RadioListTile(
-                    title: const Text('Wi-Fi y Auxilio Mecánico'),
-                    value: Accesories.wifi_y_auxilio_mecanico,
-                    groupValue: selectedAccesories,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedAccesories = value;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Text('Solo Wi-Fi'),
-                    value: Accesories.wifi,
-                    groupValue: selectedAccesories,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedAccesories = value;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Text('Solo Auxilio Mecánico'),
-                    value: Accesories.auxilio_mecanico,
-                    groupValue: selectedAccesories,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedAccesories = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-
-              // const SizedBox(height: 20),
-
-              if (_error != null)
-                Text(
-                  _error!,
-                  style: const TextStyle(color: Colors.red, fontSize: 14),
-                ),
-
-              // const SizedBox(height: 12),
+              title: const Text("Accesorios"),
+              subtitle: Text(ui.accessories.name),
+              children: Accesories.values.map((a) {
+                return RadioListTile(
+                  // title: Text(a.name.replaceAll("_", " ").toUpperCase()),
+                  title: Text(a.name.replaceAll("_", " ")),
+                  value: a,
+                  groupValue: ui.accessories,
+                  // onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setAccessories(v!),
+                  onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setAccessories(a),
+                );
+              }).toList(),
+            ),
 
 
+
+
+
+                // children: [
+                //   RadioListTile(
+                //     title: const Text('Todo Riesgo Sin Franquicia'),
+                //     value: Protection.todo_riesgo_sin_franquicia,
+                //     groupValue: selectedProtection,
+                //     onChanged: (value) {
+                //       setState(() {
+                //         selectedProtection = value;
+                //       });
+                //     },
+                  
+
+                  // RadioListTile(
+                  //   title: const Text('Todo Riesgo Con Franquicia'),
+                  //   value: Protection.todo_riesgo_con_franquicia,
+                  //   groupValue: selectedProtection,
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       selectedProtection = value;
+                  //     });
+                  //   },
+                  // ),
+                  // RadioListTile(
+                  //   title: const Text('Terceros'),
+                  //   value: Protection.terceros,
+                  //   groupValue: selectedProtection,
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       selectedProtection = value;
+                  //     });
+                  //   },
+                  // ),
+              //   ],
+              // ),
+
+              // const SizedBox(height: 60),
 
               // ExpansionTile(
-              //   title: const Text('Protección'),
-              //   subtitle: Text('${selectedProtection?.name}'),
+              //   title: const Text('Accesorios'),
+              //   subtitle: Text('${selectedAccesories?.name}'),
               //   children: [
               //     RadioListTile(
-              //       title: const Text('Todo Riesgo Sin Franquicia'),
-              //       value: Protection.todo_riesgo_sin_franquicia,
-              //       groupValue: selectedProtection,
-              //       onChanged: (value) {
-              //         selectedProtection = value;
-              //         setState(() {});
-              //       },
-              //     ),
-              //     RadioListTile(
-              //       title: const Text('Accesorios'),
+              //       title: const Text('Wi-Fi y Auxilio Mecánico'),
               //       value: Accesories.wifi_y_auxilio_mecanico,
               //       groupValue: selectedAccesories,
               //       onChanged: (value) {
-              //         selectedAccesories = value;
-              //         setState(() {});
+              //         setState(() {
+              //           selectedAccesories = value;
+              //         });
               //       },
               //     ),
-              //   ]
-              //     // RadioListTile(
-              //     //   title: const Text('Transferencia Bancaria'),
-              //     //   value: PaymentMethod.bankTransfer,
-              //     //   groupValue: selectedPaymentMethod,
-              //     //   onChanged: (value) {
-              //     //     selectedPaymentMethod = value;
-              //     //     setState(() {});
-              //     //   },
-              //     // ),
-              //     // RadioListTile(
-              //     //   title: const Text('Efectivo'),
-              //     //   value: PaymentMethod.cash,
-              //     //   groupValue: selectedPaymentMethod,
-              //     //   onChanged: (value) {
-              //     //     selectedPaymentMethod = value;
-              //     //     setState(() {});
-              //     //   },
+              //     RadioListTile(
+              //       title: const Text('Solo Wi-Fi'),
+              //       value: Accesories.wifi,
+              //       groupValue: selectedAccesories,
+              //       onChanged: (value) {
+              //         setState(() {
+              //           selectedAccesories = value;
+              //         });
+              //       },
               //     ),
-                // ],
-        //   )
-        // )
-        //       ),
+              //     RadioListTile(
+              //       title: const Text('Solo Auxilio Mecánico'),
+              //       value: Accesories.auxilio_mecanico,
+              //       groupValue: selectedAccesories,
+              //       onChanged: (value) {
+              //         setState(() {
+              //           selectedAccesories = value;
+              //         });
+              //       },
+              //     ),
+              //   ],
+              // ),
 
-
-
-
-
-
-              // TextFormField(
-              //   controller: _protectionCtrl,
-              //   decoration: const InputDecoration(labelText: 'Protección'),
-              //   validator: (v) =>
-              //       v == null || v.isEmpty ? 'Ingrese la protección' : null,
-              // ),
-              // TextFormField(
-              //   controller: _wifiCtrl,
-              //   decoration: const InputDecoration(labelText: 'Wi-Fi'),
-              //   validator: (v) =>
-              //       v == null || v.isEmpty ? 'Ingrese Wi-Fi' : null,
-              // ),
-              // TextFormField(
-              //   controller: _brandCtrl,
-              //   decoration: const InputDecoration(labelText: 'Marca'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la marca' : null,
-              // ),
-              // TextFormField(
-              //   controller: _modelCtrl,
-              //   decoration: const InputDecoration(labelText: 'Modelo'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el modelo' : null,
-              // ),
-              // TextFormField(
-              //   controller: _colorCtrl,
-              //   decoration: const InputDecoration(labelText: 'Color'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el color' : null,
-              // ),
-              // TextFormField(
-              //   controller: _capacityCtrl,
-              //   decoration: const InputDecoration(labelText: 'Capacidad'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la cantidad de personas' : null,
-              // ),
-              // TextFormField(
-              //   controller: _luggageCtrl,
-              //   decoration: const InputDecoration(labelText: 'Equipaje'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la cantidad de equipaje' : null,
-              // ),
-              // TextFormField(
-              //   controller: _automaticCtrl,
-              //   decoration: const InputDecoration(labelText: 'Transmisión'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la transmision' : null,
-              // ),
-              // TextFormField(
-              //   controller: _airCtrl,
-              //   decoration: const InputDecoration(labelText: 'Aire Acondicionado'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el aire acondicionado' : null,
-              // ),
-              // TextFormField(
-              //   controller: _priceCtrl,
-              //   decoration: const InputDecoration(labelText: 'Precio'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el precio' : null,
-              // ),
-              // TextFormField(
-              //   controller: _imageUrlCtrl,
-              //   decoration: const InputDecoration(labelText: 'URL de la Imagen'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la URL de la imagen' : null,
-              // ),
-              // // TextFormField(
-              // //   controller: _phoneCtrl,
-              // //   decoration:
-              // //       const InputDecoration(labelText: 'Teléfono'),
-              // // ),
-              // // TextFormField(
-              // //   controller: _countryCtrl,
-              // //   decoration: const InputDecoration(labelText: 'País'),
-              // // ),
-              // // TextFormField(
-              // //   controller: _docCtrl,
-              // //   decoration: const InputDecoration(labelText: 'Documento'),
-              // // ),
               // const SizedBox(height: 20),
+
               // if (_error != null)
-              //   Text(_error!,
-              //       style: const TextStyle(color: Colors.red, fontSize: 14)),
+              //   Text(
+              //     _error!,
+              //     style: const TextStyle(color: Colors.red, fontSize: 14),
+              //   ),
+
               // const SizedBox(height: 12),
+
+ 
               
               const SizedBox(height: 120),
 
@@ -341,7 +314,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                 ),
                 child: Text(
                   textAlign: TextAlign.center,
-                  '\$ ${formatNumber.format(0)}.- importe final a pagar',
+                  '\$ ${formatNumber.format(totalAmount)}.- importe final a pagar',
                   style: TextStyle(
                     color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
                     fontWeight: FontWeight.bold,
@@ -368,8 +341,8 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                           _error = null;
                         });
 
-                        final notifier =
-                            ref.read(PaymentNotifierProvider.notifier);
+                        // final notifier =
+                        //     ref.read(PaymentNotifierProvider.notifier);
 
                         // final newReservation = Reservation(
                         //   id: '', // se asigna automáticamente
@@ -394,7 +367,29 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
 
 
 
+
+
+                      //  final carDoc = await FirebaseFirestore.instance
+                      //         .collection('cars')
+                      //         .doc(reservation.carId)
+                      //         .get();
+
+                      //     final car = Car.fromFirestore(carDoc, null);
+
+
+                  // // 1️⃣ Calcular el monto total
+                  // final totalAmount = reservation.days * car.precio;
+
+
+
+
+
+
+
+
+                        // final reservation = widget.reservation;
                         final currentUser = fb.FirebaseAuth.instance.currentUser;
+
                           if (currentUser == null) {
                             setState(() {
                               _error = 'Debes iniciar sesión para pagar una reserva.';
@@ -408,37 +403,98 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                             userId: currentUser.uid,
                             carId: reservation.carId,
                             reservationId: reservation.id,
-                            amount: 0,
-                            status: 'paid',
+                            amount: totalAmount, // 2️⃣ Usar el monto total calculado
+                            status: 'Aprobado',
                             timestamp: '', // 👈 valor por defecto
                             // protection: _protectionCtrl.text.trim().toLowerCase() == 'true',
-                            protection: selectedProtection!.name,
+                            protection: ui.protection.name,
                             // wifi: _wifiCtrl.text.trim().toLowerCase() == 'true',
-                            accesories: selectedAccesories!.name,
+                            accesories: ui.accessories.name,
                           );
 
 
 
-                        final err = await notifier.addPayment(newPayment);
+                        final paymentNotifier = ref.read(PaymentNotifierProvider.notifier);
 
-                        setState(() => _loading = false);
 
-                        if (err == null) {
+
+
+
+
+
+
+
+
+
+                        // 3️⃣ Agregar el Payment a Firestore
+                        final err = await paymentNotifier.addPayment(newPayment);
+
+                          if (err != null) {
+                            setState(() {
+                              _error = err;
+                              _loading = false;
+                            });
+                            return;
+                          }
+
+
+
+
+                        // setState(() => _loading = false);
+
+                        // if (err == null) {
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Pago realizado con éxito')),
                             );
+                          }
                             // context.go('/home_screen');
                             // context.push('/final_screen');
 
-                            final carDoc = await FirebaseFirestore.instance
-                              .collection('cars')
-                              .doc(reservation.carId)
-                              .get();
+                          //   final carDoc = await FirebaseFirestore.instance
+                          //     .collection('cars')
+                          //     .doc(reservation.carId)
+                          //     .get();
 
-                          final car = Car.fromFirestore(carDoc, null);
+                          // final car = Car.fromFirestore(carDoc, null);
 
+
+
+
+
+
+                          // ✅ 1) Actualiza Firestore y el estado local
+                        await ref
+                            .read(ReservationNotifierProvider.notifier)
+                            .updateReservationStatus(reservation.id, "Pagado");
+
+                        // ✅ 2) Actualiza el objeto antes de enviarlo
+                        reservation.status = "Pagado";
+
+                        // ✅ 3) Obtengo el auto para final_screen
+                        final carDoc = await FirebaseFirestore.instance
+                            .collection("cars")
+                            .doc(reservation.carId)
+                            .get();
+
+                        final car = Car.fromFirestore(carDoc, null);
+
+                  if (!mounted) return;
+
+                  ref.read(PaymentUiNotifierProvider.notifier).reset();
+
+
+
+                          // // 4️⃣ Actualizar el estado de la reserva
+                          // reservation.status = 'completed';  // opcional: mantener el estado sincronizado
+                          // await ref.read(ReservationNotifierProvider.notifier).updateReservationStatus(reservation.id, 'paid');
+
+
+
+
+
+                          // 5️⃣ Navegar a la pantalla final
                             context.push(
                               '/final_screen',
                               extra: {
@@ -448,10 +504,10 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                               },
                             );
 
-                          }
-                        } else {
-                          setState(() => _error = err);
-                        }
+                        //   }
+                        // } else {
+                        //   setState(() => _error = err);
+                        // }
                       },
                 child: _loading
                     ? const CircularProgressIndicator()
@@ -473,3 +529,6 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
   }
 
 }
+
+
+

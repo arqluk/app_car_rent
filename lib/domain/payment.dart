@@ -84,4 +84,34 @@ class Payment {
     };
   }
 
+
+
+  Payment copyWith({
+  String? id,
+  String? userId,
+  String? carId,
+  String? reservationId,
+  int? amount,
+  String? status,
+  String? timestamp,
+  String? protection,
+  String? accesories,
+}) {
+  return Payment(
+    id: id ?? this.id,
+    userId: userId ?? this.userId,
+    carId: carId ?? this.carId, 
+    reservationId: reservationId ?? this.reservationId,
+    amount: amount ?? this.amount,
+    status: status ?? this.status,
+    timestamp: timestamp ?? this.timestamp,
+    protection: protection ?? this.protection,
+    accesories: accesories ?? this.accesories,
+  );
+}
+
+
+
+
+
 }

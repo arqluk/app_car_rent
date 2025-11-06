@@ -335,7 +335,8 @@ body: Padding(
                             // paymentMethod: _payMethodCtrl.text.trim(),
                             paymentMethod: selectedPaymentMethod!.name,
                             days: int.tryParse(_daysCtrl.text.trim()) ?? 0,
-  );
+                          );
+
 
 
 

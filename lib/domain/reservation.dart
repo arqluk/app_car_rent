@@ -9,8 +9,8 @@ class Reservation {
   // String startdate;
   // String endDate;
   int days;
-  String status;    // pending, paid, cancelled
-  String paymentMethod; // tarjetaCredito, Tarjetadebito, transferencia, Efectivo
+  String status;    // pending, completed, cancelled
+  String paymentMethod; // TarjetaCredito, Tarjetadebito, transferencia, Efectivo
 
 
   // String imageUrl;
@@ -76,7 +76,28 @@ class Reservation {
     };
   }
 
+    
+    Reservation copyWith({
+    String? id,
+    String? userId,
+    String? carId,
+    int? days,
+    String? status,
+    String? paymentMethod,
+  }) {
+    return Reservation(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      carId: carId ?? this.carId,
+      days: days ?? this.days,
+      status: status ?? this.status,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+    );
+  }
+
+
 }
+
 
 
 

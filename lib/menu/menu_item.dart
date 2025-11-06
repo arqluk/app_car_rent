@@ -58,12 +58,12 @@ class MenuItem{
       icon: Icons.car_rental,
       link: '/add_car_screen',
     ),
-    MenuItem(
-      title: 'Logout',
-      subtitle: 'Salir de la app',
-      icon: Icons.exit_to_app,
-      link: '/home_screen',
-    ),
+    // MenuItem(
+    //   title: 'Logout',
+    //   subtitle: 'Salir de la app',
+    //   icon: Icons.exit_to_app,
+    //   link: '/home_screen',
+    // ),
   ];
 
 
