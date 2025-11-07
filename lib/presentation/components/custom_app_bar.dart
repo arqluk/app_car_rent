@@ -47,23 +47,38 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
         // 🔹 Si el usuario está logueado → muestra botón de "Cerrar sesión"
         authState.when(
           data: (user) {
-            if (user != null) {
-              return IconButton(
-                icon: const Icon(Icons.logout),
-                tooltip: 'Cerrar sesión',
-                color: colorScheme.onPrimary,
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
+      if (user != null) {
+              // ✅ Usuario logueado → Logout + DarkMode
+              return Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.logout),
+                    tooltip: 'Cerrar sesión',
+                    color: colorScheme.onPrimary,
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      if (context.mounted) {
+                        context.go('/home_screen');
+                      }
+                    },
+                  ),
 
-                  if (context.mounted) {
-                    // Redirige al login (ajustá la ruta si tu login tiene otro nombre)
-                    // context.go('/login_screen');
-                    context.go('/home_screen');
-                  }
-                },
+                  // ✅ Mostrar dark mode también cuando está logueado
+                  if (showDarkModeButton)
+                    IconButton(
+                      onPressed: onDarkModePressed,
+                      icon: Icon(
+                        isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                        color: colorScheme.onPrimary,
+                      ),
+                      tooltip: isDarkMode
+                          ? 'Cambiar a modo claro'
+                          : 'Cambiar a modo oscuro',
+                    ),
+                ],
               );
             } else {
-              // 🔹 Si no hay usuario logueado → muestra login/register y/o modo oscuro
+              // ✅ Usuario NO logueado → Login/Register + DarkMode
               return Row(
                 children: [
                   if (showAuthButtons) ...[
@@ -78,6 +93,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           style: TextStyle(color: colorScheme.onPrimary)),
                     ),
                   ],
+
                   if (showDarkModeButton)
                     IconButton(
                       onPressed: onDarkModePressed,
@@ -103,6 +119,115 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
+
+// ------------------------------------------------------------------------------
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:app_car_rental/presentation/providers/auth_provider.dart';
+// import 'package:go_router/go_router.dart';
+
+// class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
+//   final String title;
+//   final bool showAuthButtons;
+//   final bool showDarkModeButton;
+//   final bool isDarkMode;
+//   final VoidCallback? onLoginPressed;
+//   final VoidCallback? onRegisterPressed;
+//   final VoidCallback? onDarkModePressed;
+
+//   const CustomAppBar({
+//     super.key,
+//     required this.title,
+//     this.showAuthButtons = false,
+//     this.showDarkModeButton = false,
+//     this.isDarkMode = false,
+//     this.onLoginPressed,
+//     this.onRegisterPressed,
+//     this.onDarkModePressed,
+//   });
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final colorScheme = Theme.of(context).colorScheme;
+//     final authState = ref.watch(authStateProvider);
+
+//     return AppBar(
+//       title: Row(
+//         children: [
+//           Image.asset(
+//             'assets/images/cr_logo.jpg',
+//             width: 40,
+//             height: 40,
+//           ),
+//           const SizedBox(width: 8),
+//           Text(title),
+//         ],
+//       ),
+//       backgroundColor: colorScheme.primary,
+//       foregroundColor: colorScheme.onPrimary,
+//       actions: [
+//         // 🔹 Si el usuario está logueado → muestra botón de "Cerrar sesión"
+//         authState.when(
+//           data: (user) {
+//             if (user != null) {
+//               return IconButton(
+//                 icon: const Icon(Icons.logout),
+//                 tooltip: 'Cerrar sesión',
+//                 color: colorScheme.onPrimary,
+//                 onPressed: () async {
+//                   await FirebaseAuth.instance.signOut();
+
+//                   if (context.mounted) {
+//                     // Redirige al login (ajustá la ruta si tu login tiene otro nombre)
+//                     // context.go('/login_screen');
+//                     context.go('/home_screen');
+//                   }
+//                 },
+//               );
+//             } else {
+//               // 🔹 Si no hay usuario logueado → muestra login/register y/o modo oscuro
+//               return Row(
+//                 children: [
+//                   if (showAuthButtons) ...[
+//                     TextButton(
+//                       onPressed: onLoginPressed,
+//                       child: Text('Login',
+//                           style: TextStyle(color: colorScheme.onPrimary)),
+//                     ),
+//                     TextButton(
+//                       onPressed: onRegisterPressed,
+//                       child: Text('Register',
+//                           style: TextStyle(color: colorScheme.onPrimary)),
+//                     ),
+//                   ],
+//                   if (showDarkModeButton)
+//                     IconButton(
+//                       onPressed: onDarkModePressed,
+//                       icon: Icon(
+//                         isDarkMode ? Icons.light_mode : Icons.dark_mode,
+//                         color: colorScheme.onPrimary,
+//                       ),
+//                       tooltip: isDarkMode
+//                           ? 'Cambiar a modo claro'
+//                           : 'Cambiar a modo oscuro',
+//                     ),
+//                 ],
+//               );
+//             }
+//           },
+//           loading: () => const SizedBox.shrink(),
+//           error: (_, __) => const SizedBox.shrink(),
+//         ),
+//       ],
+//     );
+//   }
+
+//   @override
+//   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+// }
 
 
 
