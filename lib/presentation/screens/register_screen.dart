@@ -18,6 +18,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
+  final _confirmController = TextEditingController();
   // final _phoneCtrl = TextEditingController();
   final _countryCtrl = TextEditingController();
   final _docCtrl = TextEditingController();
@@ -49,19 +50,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 validator: (v) =>
                     v != null && v.contains('@') ? null : 'Email inválido',
               ),
-              TextFormField(
-                controller: _passCtrl,
-                decoration: const InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
-                validator: (v) =>
-                    v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
-              ),
-              // TextFormField(
-              //   controller: _phoneCtrl,
-              //   decoration:
-              //       const InputDecoration(labelText: 'Teléfono'),
-              // ),
-              TextFormField(
+               TextFormField(
                 controller: _countryCtrl,
                 decoration: const InputDecoration(labelText: 'País'),
               ),
@@ -69,6 +58,43 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 controller: _docCtrl,
                 decoration: const InputDecoration(labelText: 'Documento'),
               ),
+
+
+
+
+
+
+
+              TextFormField(
+                controller: _passCtrl,
+                decoration: const InputDecoration(labelText: 'Contraseña'),
+                obscureText: true,
+                validator: (v) =>
+                    v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+              ),
+
+
+
+
+              // const SizedBox(height: 12),
+              TextFormField(
+                controller: _confirmController,
+                decoration: const InputDecoration(
+                  labelText: 'Confirmar contraseña',
+                  // border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+                validator: (v) => v != _passCtrl.text ? 'No coincide' : null,
+              ),
+
+
+
+              // TextFormField(
+              //   controller: _phoneCtrl,
+              //   decoration:
+              //       const InputDecoration(labelText: 'Teléfono'),
+              // ),
+             
               const SizedBox(height: 20),
               if (_error != null)
                 Text(_error!,
