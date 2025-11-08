@@ -1,6 +1,3 @@
-
-// -------------------------------------------------------------------------------------
-
 import 'package:app_car_rental/menu/menu_item.dart';
 import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/providers/auth_user_provider.dart';
@@ -19,7 +16,7 @@ class DrawerMenu extends ConsumerStatefulWidget {
 }
 
 class _DrawerMenuState extends ConsumerState<DrawerMenu> {
-  int selectedItem = 0;
+  int selectedIndex = -1;
 
   bool _needsAdmin(String route) {
     return route == '/admin_screen' || route == '/add_car_screen';
@@ -28,19 +25,15 @@ class _DrawerMenuState extends ConsumerState<DrawerMenu> {
   Future<void> _confirmLogout(BuildContext context) async {
     final result = await showDialog<bool>(
       context: context,
-      // builder: (_) => AlertDialog(
       builder: (dialogContext) => AlertDialog(
         title: const Text("Cerrar sesión"),
         content: const Text("¿Seguro deseas cerrar sesión?"),
         actions: [
           TextButton(
-            // onPressed: () => Navigator.pop(context, false),
             onPressed: () => Navigator.pop(dialogContext, false),
             child: const Text("Cancelar"),
           ),
-          // ElevatedButton(
           FilledButton(
-            // onPressed: () => Navigator.pop(context, true),
             onPressed: () => Navigator.pop(dialogContext, true),
             child: const Text("Cerrar sesión"),
           ),
@@ -64,94 +57,152 @@ class _DrawerMenuState extends ConsumerState<DrawerMenu> {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (_, __) => const Center(child: Text("Error cargando usuario")),
       data: (userDoc) {
-        final colorScheme = Theme.of(context).colorScheme;
         final user = ref.watch(authStateProvider).asData?.value;
         final bool isLogged = user != null;
+        final colorScheme = Theme.of(context).colorScheme;
         final role = userDoc?['role'];
 
-        return Column(
-          children: [
-            _DrawerHeader(userDoc: userDoc),
+        return Drawer(
+          child: Column(
+            children: [
+              _DrawerHeader(userDoc: userDoc),
 
-            Expanded(
-              child: NavigationDrawer(
-                selectedIndex: selectedItem,
-                onDestinationSelected: (index) async {
-                  final item = menuItems[index];
-                  final route = item.link;
+              const Divider(),
 
-                  // ✅ Logout como último ítem
-                  if (item.title == 'Logout') {
-                    if (isLogged) {
-                      Navigator.pop(context);
-                      _confirmLogout(context);
-                    }
-                    return; // evita navegar
-                  }
+              Expanded(
+                child: ListView.builder(
+                  itemCount: menuItems.length,
+                  itemBuilder: (context, index) {
+                    final item = menuItems[index];
 
-                  setState(() => selectedItem = index);
-                  Navigator.pop(context);
+                    // final isLogout = item.title == 'Logout';
+                    // final isDisabled = isLogout && !isLogged;
 
-                  if (_needsAdmin(route)) {
-                    if (role == 'admin') {
-                      context.push(route);
-                    } else {
-                      context.push('/access_denied_screen');
-                    }
-                    return;
-                  }
+                    final isLogout = item.title == 'Logout';
+                      final requiresAdmin = _needsAdmin(item.link);
+                      final isDisabled = 
+                          (isLogout && !isLogged) ||                      // logout sin login
+                          (requiresAdmin && role != 'admin');             // administrador sin rol
 
-                  context.push(route);
-                },
-                children: [
-                  ...menuItems.map(
-                    (item) => NavigationDrawerDestination(
-                      icon: Icon(
+
+                    // return ListTile(
+                    //   leading: Icon(
+                    //     item.icon,
+                    //     color: isDisabled ? colorScheme.outlineVariant : null,
+                    //   ),
+                    //   title: Text(
+                    //     item.title,
+                    //     style: TextStyle(
+                    //       color:
+                    //           isDisabled ? colorScheme.outlineVariant : null,
+                    //     ),
+                    //   ),
+                    //   subtitle: Text(
+                    //     item.subtitle,
+                    //     style: TextStyle(
+                    //       color: isDisabled
+                    //           ? colorScheme.outlineVariant
+                    //           : colorScheme.secondary,
+                    //     ),
+                    //   ),
+                    //   enabled: !isDisabled,
+                    //   selected: selectedIndex == index,
+                    //   onTap: () async {
+                    //     Navigator.pop(context);
+
+                    //     // Logout
+                    //     if (isLogout) {
+                    //       await _confirmLogout(context);
+                    //       return;
+                    //     }
+
+                    //     // Selección visual
+                    //     setState(() => selectedIndex = index);
+
+                    //     // Si requiere admin
+                    //     if (_needsAdmin(item.link)) {
+                    //       if (role == 'admin') {
+                    //         context.push(item.link);
+                    //       } else {
+                    //         context.push('/access_denied_screen');
+                    //       }
+                    //       return;
+                    //     }
+
+                    //     // Navegación normal
+                    //     context.push(item.link);
+                    //   },
+                    // );
+
+
+
+
+
+                    return ListTile(
+                      leading: Icon(
                         item.icon,
-                        color: (item.title == 'Logout' && !isLogged)
-                            ? colorScheme.outlineVariant
-                            : null,
+                        color: isDisabled ? colorScheme.outlineVariant : null,
                       ),
-                      label: Text(
+                      title: Text(
                         item.title,
                         style: TextStyle(
-                          color: (item.title == 'Logout' && !isLogged)
-                              ? colorScheme.outlineVariant
-                              : null,
+                          color: isDisabled ? colorScheme.outlineVariant : null,
                         ),
                       ),
-                    ),
-                  ),
+                      subtitle: Text(
+                        item.subtitle,
+                        style: TextStyle(
+                          color: isDisabled
+                              ? colorScheme.outlineVariant
+                              : colorScheme.secondary,
+                        ),
+                      ),
+                      enabled: !isDisabled,
+                      selected: selectedIndex == index,
+                      onTap: isDisabled
+                          ? null
+                          : () async {
+                              Navigator.pop(context);
 
-                  // ✅ Botón Logout integrado al drawer
-                  // NavigationDrawerDestination(
-                  //   icon: Icon(
-                  //     Icons.logout,
-                  //     color: isLogged
-                  //         ? colorScheme.error
-                  //         : colorScheme.outlineVariant,
-                  //   ),
-                  //   label: Text(
-                  //     "Logout",
-                  //     style: TextStyle(
-                  //       color: isLogged
-                  //           ? colorScheme.error
-                  //           : colorScheme.outlineVariant,
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                              if (isLogout) {
+                                await _confirmLogout(context);
+                                return;
+                              }
+
+                              setState(() => selectedIndex = index);
+
+                              if (requiresAdmin) {
+                                if (role == 'admin') {
+                                  context.push(item.link);
+                                } else {
+                                  context.push('/access_denied_screen');
+                                }
+                                return;
+                              }
+
+                              context.push(item.link);
+                            },
+                    );
+
+
+
+
+
+
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
   }
 }
 
+
 // -----------------------------------------------------------------------------
-// ✅ HEADER DEL DRAWER
+// ✅ HEADER con subtítulo + clic para Perfil/Login
 // -----------------------------------------------------------------------------
 
 class _DrawerHeader extends ConsumerWidget {
@@ -172,23 +223,17 @@ class _DrawerHeader extends ConsumerWidget {
             : context.push('/login_screen');
       },
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
         color: colorScheme.primaryContainer,
+        padding: const EdgeInsets.all(20),
+        width: double.infinity,
         child: Row(
           children: [
             CircleAvatar(
               radius: 28,
               backgroundColor: colorScheme.primary,
-              child: Icon(
-                Icons.person,
-                size: 32,
-                color: colorScheme.onPrimary,
-              ),
+              child: Icon(Icons.person, size: 32, color: colorScheme.onPrimary),
             ),
-
             const SizedBox(width: 16),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,9 +248,7 @@ class _DrawerHeader extends ConsumerWidget {
                       color: colorScheme.onPrimaryContainer,
                     ),
                   ),
-
                   const SizedBox(height: 4),
-
                   Text(
                     isLogged
                         ? (userDoc?['role'] ?? 'user')
@@ -215,18 +258,6 @@ class _DrawerHeader extends ConsumerWidget {
                       color: colorScheme.onPrimaryContainer.withOpacity(0.8),
                     ),
                   ),
-
-                  if (isLogged) ...[
-                    const SizedBox(height: 6),
-                    Text(
-                      "Hacé clic aquí para ver tu perfil",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: colorScheme.primary,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -236,6 +267,247 @@ class _DrawerHeader extends ConsumerWidget {
     );
   }
 }
+
+
+
+
+// -------------------------------------------------------------------------------------
+
+// import 'package:app_car_rental/menu/menu_item.dart';
+// import 'package:app_car_rental/presentation/providers/auth_provider.dart';
+// import 'package:app_car_rental/presentation/providers/auth_user_provider.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:go_router/go_router.dart';
+
+// class DrawerMenu extends ConsumerStatefulWidget {
+//   final GlobalKey<ScaffoldState> scaffoldKey;
+
+//   const DrawerMenu({super.key, required this.scaffoldKey});
+
+//   @override
+//   ConsumerState<DrawerMenu> createState() => _DrawerMenuState();
+// }
+
+// class _DrawerMenuState extends ConsumerState<DrawerMenu> {
+//   int selectedItem = 0;
+
+//   bool _needsAdmin(String route) {
+//     return route == '/admin_screen' || route == '/add_car_screen';
+//   }
+
+//   Future<void> _confirmLogout(BuildContext context) async {
+//     final result = await showDialog<bool>(
+//       context: context,
+//       // builder: (_) => AlertDialog(
+//       builder: (dialogContext) => AlertDialog(
+//         title: const Text("Cerrar sesión"),
+//         content: const Text("¿Seguro deseas cerrar sesión?"),
+//         actions: [
+//           TextButton(
+//             // onPressed: () => Navigator.pop(context, false),
+//             onPressed: () => Navigator.pop(dialogContext, false),
+//             child: const Text("Cancelar"),
+//           ),
+//           // ElevatedButton(
+//           FilledButton(
+//             // onPressed: () => Navigator.pop(context, true),
+//             onPressed: () => Navigator.pop(dialogContext, true),
+//             child: const Text("Cerrar sesión"),
+//           ),
+//         ],
+//       ),
+//     );
+
+//     if (result == true) {
+//       await FirebaseAuth.instance.signOut();
+//       if (context.mounted) {
+//         context.go('/home_screen');
+//       }
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final asyncUserDoc = ref.watch(userDocProvider);
+
+//     return asyncUserDoc.when(
+//       loading: () => const Center(child: CircularProgressIndicator()),
+//       error: (_, __) => const Center(child: Text("Error cargando usuario")),
+//       data: (userDoc) {
+//         final colorScheme = Theme.of(context).colorScheme;
+//         final user = ref.watch(authStateProvider).asData?.value;
+//         final bool isLogged = user != null;
+//         final role = userDoc?['role'];
+
+//         return Column(
+//           children: [
+//             _DrawerHeader(userDoc: userDoc),
+
+//             Expanded(
+//               child: NavigationDrawer(
+//                 selectedIndex: selectedItem,
+//                 onDestinationSelected: (index) async {
+//                   final item = menuItems[index];
+//                   final route = item.link;
+
+//                   // ✅ Logout como último ítem
+//                   if (item.title == 'Logout') {
+//                     if (isLogged) {
+//                       Navigator.pop(context);
+//                       _confirmLogout(context);
+//                     }
+//                     return; // evita navegar
+//                   }
+
+//                   setState(() => selectedItem = index);
+//                   Navigator.pop(context);
+
+//                   if (_needsAdmin(route)) {
+//                     if (role == 'admin') {
+//                       context.push(route);
+//                     } else {
+//                       context.push('/access_denied_screen');
+//                     }
+//                     return;
+//                   }
+
+//                   context.push(route);
+//                 },
+//                 children: [
+//                   ...menuItems.map(
+//                     (item) => NavigationDrawerDestination(
+//                       icon: Icon(
+//                         item.icon,
+//                         color: (item.title == 'Logout' && !isLogged)
+//                             ? colorScheme.outlineVariant
+//                             : null,
+//                       ),
+//                       label: Text(
+//                         item.title,
+//                         style: TextStyle(
+//                           color: (item.title == 'Logout' && !isLogged)
+//                               ? colorScheme.outlineVariant
+//                               : null,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+
+//                   // ✅ Botón Logout integrado al drawer
+//                   // NavigationDrawerDestination(
+//                   //   icon: Icon(
+//                   //     Icons.logout,
+//                   //     color: isLogged
+//                   //         ? colorScheme.error
+//                   //         : colorScheme.outlineVariant,
+//                   //   ),
+//                   //   label: Text(
+//                   //     "Logout",
+//                   //     style: TextStyle(
+//                   //       color: isLogged
+//                   //           ? colorScheme.error
+//                   //           : colorScheme.outlineVariant,
+//                   //     ),
+//                   //   ),
+//                   // ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+
+// // -----------------------------------------------------------------------------
+// // ✅ HEADER DEL DRAWER
+// // -----------------------------------------------------------------------------
+
+// class _DrawerHeader extends ConsumerWidget {
+//   final Map<String, dynamic>? userDoc;
+
+//   const _DrawerHeader({required this.userDoc});
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final colorScheme = Theme.of(context).colorScheme;
+//     final user = ref.watch(authStateProvider).asData?.value;
+//     final bool isLogged = user != null;
+
+//     return InkWell(
+//       onTap: () {
+//         isLogged
+//             ? context.push('/profile_screen')
+//             : context.push('/login_screen');
+//       },
+//       child: Container(
+//         width: double.infinity,
+//         padding: const EdgeInsets.all(20),
+//         color: colorScheme.primaryContainer,
+//         child: Row(
+//           children: [
+//             CircleAvatar(
+//               radius: 28,
+//               backgroundColor: colorScheme.primary,
+//               child: Icon(
+//                 Icons.person,
+//                 size: 32,
+//                 color: colorScheme.onPrimary,
+//               ),
+//             ),
+
+//             const SizedBox(width: 16),
+
+//             Expanded(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     isLogged
+//                         ? (userDoc?['email'] ?? user!.email ?? 'Usuario')
+//                         : 'Invitado',
+//                     style: TextStyle(
+//                       fontSize: 16,
+//                       fontWeight: FontWeight.bold,
+//                       color: colorScheme.onPrimaryContainer,
+//                     ),
+//                   ),
+
+//                   const SizedBox(height: 4),
+
+//                   Text(
+//                     isLogged
+//                         ? (userDoc?['role'] ?? 'user')
+//                         : 'Iniciá sesión para más opciones',
+//                     style: TextStyle(
+//                       fontSize: 14,
+//                       color: colorScheme.onPrimaryContainer.withOpacity(0.8),
+//                     ),
+//                   ),
+
+//                   if (isLogged) ...[
+//                     const SizedBox(height: 6),
+//                     Text(
+//                       "Hacé clic aquí para ver tu perfil",
+//                       style: TextStyle(
+//                         fontSize: 12,
+//                         color: colorScheme.primary,
+//                         fontStyle: FontStyle.italic,
+//                       ),
+//                     ),
+//                   ],
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 

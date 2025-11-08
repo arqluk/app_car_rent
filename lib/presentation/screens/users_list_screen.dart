@@ -31,7 +31,7 @@ class _UsersListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Usuarios registrados'),
+      appBar: const CustomAppBar(title: 'Car Rent'),
 
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('users').snapshots(),

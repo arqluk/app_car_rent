@@ -433,25 +433,25 @@ class _FleetScreenView extends ConsumerWidget {
 
 
 
-    floatingActionButton: FloatingActionButton(
-      onPressed: () async {
-        final newCar = Car (
-          id: 'NK',
-          grupo: 'Econ',
-          marca: 'Nissan',
-          modelo: 'Kicks',
-          color: 'Blanco',
-          capacidad: 5,
-          equipaje: 3,
-          automatico: false,
-          aire: true,
-          precio: 100,
-          imageUrl: 'https://www.localiza.com/argentina-site/geral/Frota/KICA.png' 
-          );
-          await ref.read(fleetNotifierProvider.notifier).addCar(newCar);
-      },
-      child: const Icon(Icons.add),
-      )
+    // floatingActionButton: FloatingActionButton(
+    //   onPressed: () async {
+    //     final newCar = Car (
+    //       id: 'NK',
+    //       grupo: 'Econ',
+    //       marca: 'Nissan',
+    //       modelo: 'Kicks',
+    //       color: 'Blanco',
+    //       capacidad: 5,
+    //       equipaje: 3,
+    //       automatico: false,
+    //       aire: true,
+    //       precio: 100,
+    //       imageUrl: 'https://www.localiza.com/argentina-site/geral/Frota/KICA.png' 
+    //       );
+    //       await ref.read(fleetNotifierProvider.notifier).addCar(newCar);
+    //   },
+    //   child: const Icon(Icons.add),
+    //   )
     );
   }
 }

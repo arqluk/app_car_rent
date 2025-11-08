@@ -48,7 +48,7 @@ class MenuItem{
     ),
     MenuItem(
       title: 'Administrador',
-      subtitle: 'Acceso administrador',
+      subtitle: 'Acceso reservado para administradores',
       icon: Icons.admin_panel_settings,
       link: '/admin_screen',
     ),
