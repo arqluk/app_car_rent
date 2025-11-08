@@ -14,6 +14,7 @@ import 'package:app_car_rental/presentation/screens/login_screen.dart';
 import 'package:app_car_rental/presentation/screens/payment_detail.dart';
 import 'package:app_car_rental/presentation/screens/add_payment_screen.dart';
 import 'package:app_car_rental/presentation/screens/payments_list_screen.dart';
+import 'package:app_car_rental/presentation/screens/profile_screen.dart';
 import 'package:app_car_rental/presentation/screens/register_screen.dart';
 import 'package:app_car_rental/presentation/screens/add_reservation_screen.dart';
 import 'package:app_car_rental/presentation/screens/reservations_list_screen.dart';
@@ -38,7 +39,7 @@ final appRouter = GoRouter(
       path: '/start_session_screen',
       builder: (context, state) => const StartSessionScreen(),
     ),
-     GoRoute(
+    GoRoute(
       path: '/register_screen',
       builder: (context, state) => RegisterScreen(),
     ),
@@ -62,12 +63,17 @@ final appRouter = GoRouter(
     //   builder: (context, state) => CarsScreen(),
     // ),
 
-      GoRoute(
+    GoRoute(
+      path: '/profile_screen',
+      builder: (context, state) => const ProfileScreen(),
+    ),
+
+    GoRoute(
       path: '/fleet_screen',
       builder: (context, state) => FleetScreen(),
     ),
 
-      GoRoute(
+    GoRoute(
       path: '/add_car_screen',
       builder: (context, state) => AddCarScreen(),
     ),
