@@ -171,157 +171,274 @@ Future<void> _loadCarAndCalculateAmount() async {
           child: ListView(
             children: [
 
-              ExpansionTile(
-                title: const Text('Protección'),
-                // subtitle: Text('${selectedProtection?.name}'),
-                subtitle: Text(ui.protection.name),
-                   children: Protection.values.map((p) {
-                    return RadioListTile(
-                      title: Text(p.name.replaceAll("_", " ").toUpperCase()),
-                      value: p,
-                      groupValue: ui.protection,
-                      // onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setProtection(v!),
-                      onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setProtection(p),
-                    );
-                }).toList(),
-              ),
+            //   ExpansionTile(
+            //     title: const Text('Protección'),
+            //     // subtitle: Text('${selectedProtection?.name}'),
+            //     subtitle: Text(ui.protection.name),
+            //        children: Protection.values.map((p) {
+            //         return RadioListTile(
+            //           title: Text(p.name.replaceAll("_", " ").toUpperCase()),
+            //           value: p,
+            //           groupValue: ui.protection,
+            //           // onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setProtection(v!),
+            //           onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setProtection(p),
+            //         );
+            //     }).toList(),
+            //   ),
 
-              const SizedBox(height: 60),
-
-
-              ExpansionTile(
-              title: const Text("Accesorios"),
-              subtitle: Text(ui.accessories.name),
-              children: Accesories.values.map((a) {
-                return RadioListTile(
-                  // title: Text(a.name.replaceAll("_", " ").toUpperCase()),
-                  title: Text(a.name.replaceAll("_", " ")),
-                  value: a,
-                  groupValue: ui.accessories,
-                  // onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setAccessories(v!),
-                  onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setAccessories(a),
-                );
-              }).toList(),
-            ),
+            //   const SizedBox(height: 60),
 
 
+            //   ExpansionTile(
+            //   title: const Text("Accesorios"),
+            //   subtitle: Text(ui.accessories.name),
+            //   children: Accesories.values.map((a) {
+            //     return RadioListTile(
+            //       // title: Text(a.name.replaceAll("_", " ").toUpperCase()),
+            //       title: Text(a.name.replaceAll("_", " ")),
+            //       value: a,
+            //       groupValue: ui.accessories,
+            //       // onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setAccessories(v!),
+            //       onChanged: (v) => ref.read(PaymentUiNotifierProvider.notifier).setAccessories(a),
+            //     );
+            //   }).toList(),
+            // ),
 
 
 
-                // children: [
-                //   RadioListTile(
-                //     title: const Text('Todo Riesgo Sin Franquicia'),
-                //     value: Protection.todo_riesgo_sin_franquicia,
-                //     groupValue: selectedProtection,
-                //     onChanged: (value) {
-                //       setState(() {
-                //         selectedProtection = value;
-                //       });
-                //     },
+
+
+            //     // children: [
+            //     //   RadioListTile(
+            //     //     title: const Text('Todo Riesgo Sin Franquicia'),
+            //     //     value: Protection.todo_riesgo_sin_franquicia,
+            //     //     groupValue: selectedProtection,
+            //     //     onChanged: (value) {
+            //     //       setState(() {
+            //     //         selectedProtection = value;
+            //     //       });
+            //     //     },
                   
 
-                  // RadioListTile(
-                  //   title: const Text('Todo Riesgo Con Franquicia'),
-                  //   value: Protection.todo_riesgo_con_franquicia,
-                  //   groupValue: selectedProtection,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedProtection = value;
-                  //     });
-                  //   },
-                  // ),
-                  // RadioListTile(
-                  //   title: const Text('Terceros'),
-                  //   value: Protection.terceros,
-                  //   groupValue: selectedProtection,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedProtection = value;
-                  //     });
-                  //   },
-                  // ),
-              //   ],
-              // ),
+            //       // RadioListTile(
+            //       //   title: const Text('Todo Riesgo Con Franquicia'),
+            //       //   value: Protection.todo_riesgo_con_franquicia,
+            //       //   groupValue: selectedProtection,
+            //       //   onChanged: (value) {
+            //       //     setState(() {
+            //       //       selectedProtection = value;
+            //       //     });
+            //       //   },
+            //       // ),
+            //       // RadioListTile(
+            //       //   title: const Text('Terceros'),
+            //       //   value: Protection.terceros,
+            //       //   groupValue: selectedProtection,
+            //       //   onChanged: (value) {
+            //       //     setState(() {
+            //       //       selectedProtection = value;
+            //       //     });
+            //       //   },
+            //       // ),
+            //   //   ],
+            //   // ),
 
-              // const SizedBox(height: 60),
+            //   // const SizedBox(height: 60),
 
-              // ExpansionTile(
-              //   title: const Text('Accesorios'),
-              //   subtitle: Text('${selectedAccesories?.name}'),
-              //   children: [
-              //     RadioListTile(
-              //       title: const Text('Wi-Fi y Auxilio Mecánico'),
-              //       value: Accesories.wifi_y_auxilio_mecanico,
-              //       groupValue: selectedAccesories,
-              //       onChanged: (value) {
-              //         setState(() {
-              //           selectedAccesories = value;
-              //         });
-              //       },
-              //     ),
-              //     RadioListTile(
-              //       title: const Text('Solo Wi-Fi'),
-              //       value: Accesories.wifi,
-              //       groupValue: selectedAccesories,
-              //       onChanged: (value) {
-              //         setState(() {
-              //           selectedAccesories = value;
-              //         });
-              //       },
-              //     ),
-              //     RadioListTile(
-              //       title: const Text('Solo Auxilio Mecánico'),
-              //       value: Accesories.auxilio_mecanico,
-              //       groupValue: selectedAccesories,
-              //       onChanged: (value) {
-              //         setState(() {
-              //           selectedAccesories = value;
-              //         });
-              //       },
-              //     ),
-              //   ],
-              // ),
+            //   // ExpansionTile(
+            //   //   title: const Text('Accesorios'),
+            //   //   subtitle: Text('${selectedAccesories?.name}'),
+            //   //   children: [
+            //   //     RadioListTile(
+            //   //       title: const Text('Wi-Fi y Auxilio Mecánico'),
+            //   //       value: Accesories.wifi_y_auxilio_mecanico,
+            //   //       groupValue: selectedAccesories,
+            //   //       onChanged: (value) {
+            //   //         setState(() {
+            //   //           selectedAccesories = value;
+            //   //         });
+            //   //       },
+            //   //     ),
+            //   //     RadioListTile(
+            //   //       title: const Text('Solo Wi-Fi'),
+            //   //       value: Accesories.wifi,
+            //   //       groupValue: selectedAccesories,
+            //   //       onChanged: (value) {
+            //   //         setState(() {
+            //   //           selectedAccesories = value;
+            //   //         });
+            //   //       },
+            //   //     ),
+            //   //     RadioListTile(
+            //   //       title: const Text('Solo Auxilio Mecánico'),
+            //   //       value: Accesories.auxilio_mecanico,
+            //   //       groupValue: selectedAccesories,
+            //   //       onChanged: (value) {
+            //   //         setState(() {
+            //   //           selectedAccesories = value;
+            //   //         });
+            //   //       },
+            //   //     ),
+            //   //   ],
+            //   // ),
 
-              // const SizedBox(height: 20),
+            //   // const SizedBox(height: 20),
 
-              // if (_error != null)
-              //   Text(
-              //     _error!,
-              //     style: const TextStyle(color: Colors.red, fontSize: 14),
-              //   ),
+            //   // if (_error != null)
+            //   //   Text(
+            //   //     _error!,
+            //   //     style: const TextStyle(color: Colors.red, fontSize: 14),
+            //   //   ),
 
-              // const SizedBox(height: 12),
+            //   // const SizedBox(height: 12),
 
  
               
-              const SizedBox(height: 120),
+            //   const SizedBox(height: 120),
 
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  // color: colorScheme.primary, // 🎨 fondo según el tema
-                  color: colorScheme.primaryContainer, // 🎨 fondo según el tema
-                  border: Border.all(
-                    color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
-                    width: 2,
-                  ),
-                  // borderRadius: BorderRadius.circular(16),
+            //   Container(
+            //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            //     decoration: BoxDecoration(
+            //       // color: colorScheme.primary, // 🎨 fondo según el tema
+            //       color: colorScheme.primaryContainer, // 🎨 fondo según el tema
+            //       border: Border.all(
+            //         color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
+            //         width: 2,
+            //       ),
+            //       // borderRadius: BorderRadius.circular(16),
 
-                  borderRadius: const BorderRadius.horizontal(
-                    left: Radius.circular(999),
-                    right: Radius.circular(999),
-                  ),
-                ),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  '\$ ${formatNumber.format(totalAmount)}.- importe final a pagar',
-                  style: TextStyle(
-                    color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
+            //       borderRadius: const BorderRadius.horizontal(
+            //         left: Radius.circular(999),
+            //         right: Radius.circular(999),
+            //       ),
+            //     ),
+            //     child: Text(
+            //       textAlign: TextAlign.center,
+            //       '\$ ${formatNumber.format(totalAmount)}.- importe final a pagar',
+            //       style: TextStyle(
+            //         color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
+            //         fontWeight: FontWeight.bold,
+            //         fontSize: 18,
+            //       ),
+            //     ),
+            //   ),
+
+
+
+              // ------------------- PROTECCIÓN -------------------
+SizedBox(
+  width: MediaQuery.of(context).size.width * 0.75,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surface,
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Theme.of(context).shadowColor.withOpacity(0.1),
+          blurRadius: 4,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
+    child: Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        iconColor: Theme.of(context).colorScheme.primary,
+        collapsedIconColor: Theme.of(context).colorScheme.primary,
+
+        title: Text(
+          'Protección',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
               ),
+        ),
+
+        subtitle: Text(
+          ui.protection.name.replaceAll("_", " "),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+
+        children: Protection.values.map((p) {
+          return RadioListTile(
+            title: Text(
+              p.name.replaceAll("_", " "),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            value: p,
+            groupValue: ui.protection,
+            activeColor: Theme.of(context).colorScheme.primary,
+            onChanged: (value) {
+              ref.read(PaymentUiNotifierProvider.notifier).setProtection(p);
+            },
+          );
+        }).toList(),
+      ),
+    ),
+  ),
+),
+
+const SizedBox(height: 60),
+
+// ------------------- ACCESORIOS -------------------
+SizedBox(
+  width: MediaQuery.of(context).size.width * 0.75,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surface,
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Theme.of(context).shadowColor.withOpacity(0.1),
+          blurRadius: 4,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
+    child: Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        iconColor: Theme.of(context).colorScheme.primary,
+        collapsedIconColor: Theme.of(context).colorScheme.primary,
+
+        title: Text(
+          'Accesorios',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+        ),
+
+        subtitle: Text(
+          ui.accessories.name.replaceAll("_", " "),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+
+        children: Accesories.values.map((a) {
+          return RadioListTile(
+            title: Text(
+              a.name.replaceAll("_", " "),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            value: a,
+            groupValue: ui.accessories,
+            activeColor: Theme.of(context).colorScheme.primary,
+            onChanged: (value) {
+              ref.read(PaymentUiNotifierProvider.notifier).setAccessories(a);
+            },
+          );
+        }).toList(),
+      ),
+    ),
+  ),
+),
+
               
               
               

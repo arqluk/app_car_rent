@@ -99,50 +99,127 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               if (_error != null)
                 Text(_error!,
                     style: const TextStyle(color: Colors.red, fontSize: 14)),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: _loading
-                    ? null
-                    : () async {
-                        if (!_formKey.currentState!.validate()) return;
+              const SizedBox(height: 50),
 
-                        setState(() {
-                          _loading = true;
-                          _error = null;
-                        });
 
-                        final notifier =
-                            ref.read(UsersNotifierProvider.notifier);
 
-                        final newUser = User(
-                          uid: '',
-                          userName: _nameCtrl.text.trim(),
-                          userEmail: _emailCtrl.text.trim(),
-                          password: _passCtrl.text.trim(),
-                          country: _countryCtrl.text.trim(),
-                          document: _docCtrl.text.trim(),
-                        );
 
-                        final err = await notifier.registerUser(newUser);
+              // ElevatedButton(
+              //   onPressed: _loading
+              //       ? null
+              //       : () async {
+              //           if (!_formKey.currentState!.validate()) return;
 
-                        setState(() => _loading = false);
+              //           setState(() {
+              //             _loading = true;
+              //             _error = null;
+              //           });
 
-                        if (err == null) {
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Usuario registrado con éxito')),
-                            );
-                            context.go('/login_screen');
-                          }
-                        } else {
-                          setState(() => _error = err);
-                        }
-                      },
-                child: _loading
-                    ? const CircularProgressIndicator()
-                    : const Text('Registrarse'),
+              //           final notifier =
+              //               ref.read(UsersNotifierProvider.notifier);
+
+              //           final newUser = User(
+              //             uid: '',
+              //             userName: _nameCtrl.text.trim(),
+              //             userEmail: _emailCtrl.text.trim(),
+              //             password: _passCtrl.text.trim(),
+              //             country: _countryCtrl.text.trim(),
+              //             document: _docCtrl.text.trim(),
+              //           );
+
+              //           final err = await notifier.registerUser(newUser);
+
+              //           setState(() => _loading = false);
+
+              //           if (err == null) {
+              //             if (mounted) {
+              //               ScaffoldMessenger.of(context).showSnackBar(
+              //                 const SnackBar(
+              //                     content: Text('Usuario registrado con éxito')),
+              //               );
+              //               context.go('/login_screen');
+              //             }
+              //           } else {
+              //             setState(() => _error = err);
+              //           }
+              //         },
+              //   child: _loading
+              //       ? const CircularProgressIndicator()
+              //       : const Text('Registrarse'),
+              // ),
+
+
+            FilledButton(
+  onPressed: _loading
+      ? null
+      : () async {
+          if (!_formKey.currentState!.validate()) return;
+
+          setState(() {
+            _loading = true;
+            _error = null;
+          });
+
+          final notifier = ref.read(UsersNotifierProvider.notifier);
+
+          final newUser = User(
+            uid: '',
+            userName: _nameCtrl.text.trim(),
+            userEmail: _emailCtrl.text.trim(),
+            password: _passCtrl.text.trim(),
+            country: _countryCtrl.text.trim(),
+            document: _docCtrl.text.trim(),
+          );
+
+          final err = await notifier.registerUser(newUser);
+
+          setState(() => _loading = false);
+
+          if (err == null) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Usuario registrado con éxito'),
+                ),
+              );
+              context.go('/login_screen');
+            }
+          } else {
+            setState(() => _error = err);
+          }
+        },
+  style: FilledButton.styleFrom(
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(999),
+    ),
+    backgroundColor: Theme.of(context).colorScheme.primary,
+  ),
+  child: _loading
+      ? SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+            valueColor: AlwaysStoppedAnimation(
+              Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        )
+      : Text(
+          'Registrarse',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
               ),
+        ),
+)
+  
+
+
+
+
+
             ],
           ),
         ),

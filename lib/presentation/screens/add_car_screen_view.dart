@@ -108,6 +108,31 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
                 validator: (v) =>
                      v == null || v.isEmpty ? 'Ingrese la URL de la imagen' : null,
               ),
+
+
+
+
+
+
+              Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextField(
+                controller: _imageUrlCtrl,
+                decoration: InputDecoration(
+                  hintText: 'Enter your username',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  // errorText: _imageUrlError, // 👈 mensaje debajo
+                ),
+              ),
+            ),
+
+
+
+
+
+
               // TextFormField(
               //   controller: _phoneCtrl,
               //   decoration:
@@ -126,55 +151,138 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
                 Text(_error!,
                     style: const TextStyle(color: Colors.red, fontSize: 14)),
               const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: _loading
-                    ? null
-                    : () async {
-                        if (!_formKey.currentState!.validate()) return;
 
-                        setState(() {
-                          _loading = true;
-                          _error = null;
-                        });
 
-                        final notifier =
-                            ref.read(CarsNotifierProvider.notifier);
 
-                        final newCar = Car(
-                          id: '',
-                          grupo: _brandCtrl.text.trim(),
-                          marca: _brandCtrl.text.trim(),
-                          modelo: _modelCtrl.text.trim(),
-                          // year: int.tryParse(_yearCtrl.text.trim()) ?? 0,
-                          color: _colorCtrl.text.trim(),
-                          capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
-                          equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
-                          automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
-                          aire: _airCtrl.text.trim().toLowerCase() == 'true',
-                          precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
-                          imageUrl: _imageUrlCtrl.text.trim(),
-                        );
+              // ElevatedButton(
+              //   onPressed: _loading
+              //       ? null
+              //       : () async {
+              //           if (!_formKey.currentState!.validate()) return;
 
-                        final err = await notifier.addCar(newCar);
+              //           setState(() {
+              //             _loading = true;
+              //             _error = null;
+              //           });
 
-                        setState(() => _loading = false);
+              //           final notifier =
+              //               ref.read(CarsNotifierProvider.notifier);
 
-                        if (err == null) {
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Auto agregado con éxito')),
-                            );
-                            context.go('/home_screen');
-                          }
-                        } else {
-                          setState(() => _error = err);
-                        }
-                      },
-                child: _loading
-                    ? const CircularProgressIndicator()
-                    : const Text('Agregar auto'),
+              //           final newCar = Car(
+              //             id: '',
+              //             grupo: _brandCtrl.text.trim(),
+              //             marca: _brandCtrl.text.trim(),
+              //             modelo: _modelCtrl.text.trim(),
+              //             // year: int.tryParse(_yearCtrl.text.trim()) ?? 0,
+              //             color: _colorCtrl.text.trim(),
+              //             capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
+              //             equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
+              //             automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
+              //             aire: _airCtrl.text.trim().toLowerCase() == 'true',
+              //             precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
+              //             imageUrl: _imageUrlCtrl.text.trim(),
+              //           );
+
+              //           final err = await notifier.addCar(newCar);
+
+              //           setState(() => _loading = false);
+
+              //           if (err == null) {
+              //             if (mounted) {
+              //               ScaffoldMessenger.of(context).showSnackBar(
+              //                 const SnackBar(
+              //                     content: Text('Auto agregado con éxito')),
+              //               );
+              //               context.go('/home_screen');
+              //             }
+              //           } else {
+              //             setState(() => _error = err);
+              //           }
+              //         },
+              //   child: _loading
+              //       ? const CircularProgressIndicator()
+              //       : const Text('Agregar auto'),
+              // ),
+
+
+
+            FilledButton(
+  onPressed: _loading
+      ? null
+      : () async {
+          if (!_formKey.currentState!.validate()) return;
+
+          setState(() {
+            _loading = true;
+            _error = null;
+          });
+
+          final notifier = ref.read(CarsNotifierProvider.notifier);
+
+          final newCar = Car(
+            id: '',
+            grupo: _brandCtrl.text.trim(),
+            marca: _brandCtrl.text.trim(),
+            modelo: _modelCtrl.text.trim(),
+            color: _colorCtrl.text.trim(),
+            capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
+            equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
+            automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
+            aire: _airCtrl.text.trim().toLowerCase() == 'true',
+            precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
+            imageUrl: _imageUrlCtrl.text.trim(),
+          );
+
+          final err = await notifier.addCar(newCar);
+
+          setState(() => _loading = false);
+
+          if (err == null) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Auto agregado con éxito'),
+                ),
+              );
+              context.go('/home_screen');
+            }
+          } else {
+            setState(() => _error = err);
+          }
+        },
+  style: FilledButton.styleFrom(
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(999),
+    ),
+    backgroundColor: Theme.of(context).colorScheme.primary,
+  ),
+  child: _loading
+      ? SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+            valueColor: AlwaysStoppedAnimation(
+              Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        )
+      : Text(
+          'Agregar auto',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
               ),
+        ),
+)
+  
+
+
+
+
+
+
             ],
           ),
         ),
