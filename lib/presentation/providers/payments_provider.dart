@@ -5,9 +5,15 @@ import 'package:app_car_rental/domain/payment.dart';
 // import 'package:app_car_rental/domain/reservation.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 // import '../domain/reservation.dart';
 
+
+// ✅ Estado global de carga para payments
+final PaymentLoadingProvider = StateProvider<bool>((ref) => true);
+
+// ✅ StateNotifier con la lista de pagos
 final PaymentNotifierProvider = StateNotifierProvider<PaymentNotifier, List<Payment>>((ref) {
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
   // StreamSubscription? _sub;
@@ -105,7 +111,9 @@ final PaymentNotifierProvider = StateNotifierProvider<PaymentNotifier, List<Paym
       }
   }
 
-    Future<void> getPaymentsByUser(String userId) async {
+    // Future<void> getPaymentsByUser(String userId) async {
+    Future<void> getPaymentsByUser(String userId, WidgetRef ref) async {
+      ref.read(PaymentLoadingProvider.notifier).state = true;
     try {
     final docs = db.collection('payments').withConverter(
       fromFirestore: Payment.fromFirestore,
@@ -116,6 +124,8 @@ final PaymentNotifierProvider = StateNotifierProvider<PaymentNotifier, List<Paym
     } catch (e) {
       print('Error obteniendo pagos: $e');
     }
+
+    ref.read(PaymentLoadingProvider.notifier).state = false;
 }
 
 

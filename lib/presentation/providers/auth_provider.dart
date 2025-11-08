@@ -7,6 +7,14 @@ final authStateProvider = StreamProvider<User?>(
 );
 
 
+
+
+
+
+
+
+
+
 // /// Proveedor que expone las funciones de autenticación
 // final authProvider = Provider<AuthService>((ref) {
 //   final auth = FirebaseAuth.instance;

@@ -47,7 +47,22 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
         // 🔹 Si el usuario está logueado → muestra botón de "Cerrar sesión"
         authState.when(
           data: (user) {
-      if (user != null) {
+
+            // final location = GoRouter.of(context).location;
+            //   final isLogin = location == '/login_screen';
+            //   final isRegister = location == '/register_screen';
+
+            final currentLocation = GoRouterState.of(context).uri.toString();
+              final isLogin = currentLocation == '/login_screen';
+              final isRegister = currentLocation == '/register_screen';
+
+
+
+
+
+
+      // if (user != null) {
+      if (!isLogin && !isRegister && user != null) {
               // ✅ Usuario logueado → Logout + DarkMode
               return Row(
                 children: [
@@ -79,6 +94,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
               );
             } else {
               // ✅ Usuario NO logueado → Login/Register + DarkMode
+              // ✅ // Usuario no logueado → mostrar login/register en pantallas que lo pidan
               return Row(
                 children: [
                   if (showAuthButtons) ...[

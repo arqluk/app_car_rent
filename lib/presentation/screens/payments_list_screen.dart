@@ -28,18 +28,39 @@ class PaymentsListScreen extends ConsumerStatefulWidget {
 
 
 class PaymentsListScreenState extends ConsumerState<PaymentsListScreen>{
-  @override
- void initState() {
+//   @override
+//  void initState() {
+//   super.initState();
+//   final currentUser = fb.FirebaseAuth.instance.currentUser;
+//   if (currentUser != null) {
+//     // ref.read(PaymentNotifierProvider.notifier).getPaymentsByUser(currentUser.uid);
+//     ref.read(PaymentNotifierProvider.notifier).getPaymentsByUser(currentUser.uid, ref);
+//   }
+//  }
+
+@override
+void initState() {
   super.initState();
-  final currentUser = fb.FirebaseAuth.instance.currentUser;
-  if (currentUser != null) {
-    ref.read(PaymentNotifierProvider.notifier).getPaymentsByUser(currentUser.uid);
-  }
- }
+
+  Future.microtask(() {
+    final currentUser = fb.FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      ref.read(PaymentNotifierProvider.notifier)
+          .getPaymentsByUser(currentUser.uid, ref);
+    }
+  });
+}
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
     List<Payment> paymentList = ref.watch(PaymentNotifierProvider);
+    // bool loading = ref.watch(PaymentLoadingProvider);
     // return _ReservationsListScreenView(reservationList: reservationList, textStyle: Theme.of(context).textTheme);
     return _PaymentsListScreenView();
   }
@@ -60,6 +81,7 @@ class _PaymentsListScreenView extends ConsumerWidget {
 
     final currentUser = fb.FirebaseAuth.instance.currentUser;
     final paymentList = ref.watch(PaymentNotifierProvider);
+    bool loading = ref.watch(PaymentLoadingProvider);
 
     final textStyle = Theme.of(context).textTheme;
 
@@ -100,6 +122,12 @@ class _PaymentsListScreenView extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
+
+
+
+
+
+
           child: currentUser == null
               // 🔹 Caso SIN usuario logueado
               ? Column(
@@ -112,6 +140,12 @@ class _PaymentsListScreenView extends ConsumerWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
+
+
+
+
+
                     const SizedBox(height: 20),
                     TextButton.icon(
                       onPressed: () => context.push('/login_screen'),
@@ -125,24 +159,59 @@ class _PaymentsListScreenView extends ConsumerWidget {
                 )
 
               // 🔹 Caso CON usuario logueado
-              : paymentList.isEmpty
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tus pagos',
-                          style: textStyle.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
+              // : paymentList.isEmpty
+              //     ? const Center(
+              //         child: CircularProgressIndicator(),
+              //       )
+              //     : Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             'Tus pagos',
+              //             style: textStyle.headlineSmall?.copyWith(
+              //               fontWeight: FontWeight.bold,
+              //             ),
+                        // ),
+                        // const SizedBox(height: 10),
                         // Text(
                         //   'Hacé clic en un pago para ver detalles',
                         //   style: textStyle.bodyMedium,
                         // ),
+               : loading
+                  ? const CircularProgressIndicator()         
+                        
+              : paymentList.isEmpty
+                ? Center(
+                    child: Text(
+                      "No tenés pagos registrados",
+                      style: textStyle.bodyLarge,
+                    ),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tus pagos',
+                        style: textStyle.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                      ),            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         const SizedBox(height: 20),
                         Expanded(
                           child: ListView.builder(

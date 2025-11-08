@@ -51,7 +51,7 @@ class _AceessDeniedScreenView extends StatelessWidget {
       appBar: const CustomAppBar(title: 'Car Rent'),
 
       body: const Center(
-        child: Text('Aquí se mostrará la pantalla de acceso denegado'),
+        child: Text('Acceso denegado'),
       ),
     );
   }

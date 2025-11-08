@@ -7,6 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/legacy.dart';
 // import '../domain/reservation.dart';
 
+// ✅ Estado global de carga para reservations
+final ReservationLoadingProvider= StateProvider<bool>((ref) => true);
+
 final ReservationNotifierProvider = StateNotifierProvider<ReservationNotifier, List<Reservation>>((ref) {
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
   // StreamSubscription? _sub;
@@ -104,7 +107,8 @@ final ReservationNotifierProvider = StateNotifierProvider<ReservationNotifier, L
       }
   }
 
-  Future<void> getReservationsByUser(String userId) async {
+  Future<void> getReservationsByUser(String userId, ref) async {
+    ref.read(ReservationLoadingProvider.notifier).state = true;
     try {
     final docs = db.collection('reservations').withConverter(
       fromFirestore: Reservation.fromFirestore,
@@ -115,6 +119,8 @@ final ReservationNotifierProvider = StateNotifierProvider<ReservationNotifier, L
     } catch (e) {
       print('Error obteniendo reservas: $e');
     }
+
+    ref.read(ReservationLoadingProvider.notifier).state = false;
 }
 
 

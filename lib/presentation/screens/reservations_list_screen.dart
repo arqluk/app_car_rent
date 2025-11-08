@@ -30,14 +30,33 @@ class ReservationsListScreen extends ConsumerStatefulWidget {
 }
 
 class ReservationsListScreenState extends ConsumerState<ReservationsListScreen>{
-  @override
- void initState() {
+//   @override
+//  void initState() {
+//   super.initState();
+//   final currentUser = fb.FirebaseAuth.instance.currentUser;
+//   if (currentUser != null) {
+//     ref.read(ReservationNotifierProvider.notifier).getReservationsByUser(currentUser.uid, ref);
+//   }
+//  }
+
+
+
+ @override
+void initState() {
   super.initState();
-  final currentUser = fb.FirebaseAuth.instance.currentUser;
-  if (currentUser != null) {
-    ref.read(ReservationNotifierProvider.notifier).getReservationsByUser(currentUser.uid);
-  }
- }
+
+  Future.microtask(() {
+    final currentUser = fb.FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      ref.read(ReservationNotifierProvider.notifier)
+          .getReservationsByUser(currentUser.uid, ref);
+    }
+  });
+}
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +77,7 @@ class _ReservationsListScreenView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = fb.FirebaseAuth.instance.currentUser;
     final reservationList = ref.watch(ReservationNotifierProvider);
+    bool loading = ref.watch(ReservationLoadingProvider);
 
     final textStyle = Theme.of(context).textTheme;
 
@@ -92,20 +112,52 @@ class _ReservationsListScreenView extends ConsumerWidget {
                 )
 
               // 🔹 Caso CON usuario logueado
+              // : reservationList.isEmpty
+              //     ? const Center(
+              //         child: CircularProgressIndicator(),
+              //       )
+              //     : Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             'Tus reservas',
+              //             style: textStyle.headlineSmall?.copyWith(
+              //               fontWeight: FontWeight.bold,
+              //             ),
+              //           ),
+
+
+              : loading
+                  ? const CircularProgressIndicator()
+
+
               : reservationList.isEmpty
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tus reservas',
-                          style: textStyle.headlineSmall?.copyWith(
+                ? Center(
+                    child: Text(
+                      "No tenés reservas registradas",
+                      style: textStyle.bodyLarge,
+                    ),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tus reservas',
+                        style: textStyle.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        const SizedBox(height: 10),
+                      ),      
+
+
+
+
+
+
+
+
+
+
+                        // const SizedBox(height: 10),
                         // Text(
                         //   'Hacé clic en una reserva para ver detalles',
                         //   style: textStyle.bodyMedium,

@@ -30,6 +30,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return Scaffold(
       // appBar: AppBar(title: const Text('Registro de Usuario')),
       appBar: const CustomAppBar(title: 'Car Rent'),
+      
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -123,6 +124,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
   }
 }
+
 
 
 

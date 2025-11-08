@@ -24,6 +24,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       // appBar: AppBar(title: const Text('Iniciar sesión')),
       appBar: const CustomAppBar(title: 'Car Rent'),
+      
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -84,6 +85,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 }
+
 
 
 

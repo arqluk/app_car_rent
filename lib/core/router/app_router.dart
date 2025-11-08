@@ -131,11 +131,11 @@ final appRouter = GoRouter(
     ),
 
 
-    //   GoRoute(
-    //   path: '/admin_screen',
-    //   // builder: (context, state) => ReservationScreen(car: state.extra as Car),
-    //   builder: (context, state) => AdminScreen(),
-    // ),
+      GoRoute(
+      path: '/admin_screen',
+      // builder: (context, state) => ReservationScreen(car: state.extra as Car),
+      builder: (context, state) => AdminScreen(),
+    ),
 
     GoRoute(
       path: '/access_denied_screen',
