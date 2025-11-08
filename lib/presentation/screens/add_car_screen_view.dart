@@ -44,9 +44,9 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
             children: [
               TextFormField(
                 controller: _idCtrl,
-                decoration: const InputDecoration(labelText: 'ID'),
+                decoration: const InputDecoration(labelText: 'Código'),
                 validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese el ID' : null,
+                    v == null || v.isEmpty ? 'Ingrese el código' : null,
               ),
               TextFormField(
                 controller: _groupCtrl,
