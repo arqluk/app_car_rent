@@ -17,6 +17,7 @@ class CarDetailScreen extends ConsumerWidget {
 
     final authState = ref.watch(authStateProvider);
     final colorScheme = Theme.of(context).colorScheme;
+    final textStyle = Theme.of(context).textTheme;
     return Scaffold(
       // appBar: AppBar(
       //   title: Row(
@@ -138,23 +139,65 @@ class CarDetailScreen extends ConsumerWidget {
                 return Column(
                   // padding: const EdgeInsets.all(8.0),
                   children: [
-                    const Text(
-                      'Iniciá sesión para reservar este auto.',
-                      style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-                    ),
+                    // const Text(
+                    //   'Iniciá sesión para reservar este auto.',
+                    //   style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                    // ),
+
+                  //   Text(
+                  //   'Iniciá sesión para reservar este auto.',
+                  //   textAlign: TextAlign.center,
+                  //   // style: textStyle.bodyLarge?.copyWith(
+                  //   style: textStyle.bodyLarge?.copyWith(
+                  //     fontSize: 16, fontWeight: FontWeight.normal,
+                  //     // color: Colors.black87,
+                  //   ),
+                  // ),
+
+
+                  Text(
+                  'Iniciá sesión para reservar este auto.',
+                  textAlign: TextAlign.center,
+                  style: textStyle.bodyLarge?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
 
 
 
                   // const SizedBox(height: 20),
 
+                    // TextButton.icon(
+                    //   onPressed: () => context.push('/login_screen'),
+                    //   icon: const Icon(Icons.login, color: Colors.blue),
+                    //   label: const Text(
+                    //     // 'Ir a Iniciar Sesión',
+                    //     'Iniciar Sesión',
+                    //     style: TextStyle(color: Colors.blue),
+                    //   ),
+                    // ),
+
+
                     TextButton.icon(
                       onPressed: () => context.push('/login_screen'),
-                      icon: const Icon(Icons.login, color: Colors.blue),
-                      label: const Text(
-                        'Ir a Iniciar Sesión',
-                        style: TextStyle(color: Colors.blue),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Theme.of(context).colorScheme.primary,
                       ),
+                      // icon: const Icon(Icons.login),
+                      icon: Icon(Icons.login,
+                      size: Theme.of( context).textTheme.titleMedium!.fontSize! * 1.6,
                     ),
+                      // label: const Text('Iniciar Sesión'),
+                      label: Text('Iniciar Sesión',
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    ),
+
+
+
+
                   ],
 
 

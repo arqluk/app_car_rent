@@ -318,7 +318,102 @@ body: Padding(
                     style: const TextStyle(color: Colors.red, fontSize: 14)),
               // const SizedBox(height: 12),
 
-              ElevatedButton(
+              // ElevatedButton(
+              //   onPressed: _loading
+              //       ? null
+              //       : () async {
+              //           if (!_formKey.currentState!.validate()) return;
+
+              //           setState(() {
+              //             _loading = true;
+              //             _error = null;
+              //           });
+
+              //           final notifier =
+              //               ref.read(ReservationNotifierProvider.notifier);
+
+              //           // final newReservation = Reservation(
+              //           //   id: '', // se asigna automáticamente
+              //           //   userId: user.uid,
+              //           //   carId: car.id,
+              //           //   status: 'pending', // 👈 valor por defecto
+              //           //   paymentMethod: _payMethodCtrl.text.trim(),
+              //           //   days: int.tryParse(_daysCtrl.text.trim()) ?? 0, 
+              //           //   // modelo: _modelCtrl.text.trim(),
+              //           //   // // year: int.tryParse(_yearCtrl.text.trim()) ?? 0,
+              //           //   // color: _colorCtrl.text.trim(),
+              //           //   // capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
+              //           //   // equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
+              //           //   // automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
+              //           //   // aire: _airCtrl.text.trim().toLowerCase() == 'true',
+              //           //   // precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
+              //           //   // imageUrl: _imageUrlCtrl.text.trim(),
+              //           // );
+
+
+
+
+
+
+              //           final currentUser = fb.FirebaseAuth.instance.currentUser;
+              //             if (currentUser == null) {
+              //               setState(() {
+              //                 _error = 'Debes iniciar sesión para reservar un auto.';
+              //                 _loading = false;
+              //               });
+              //               return;
+              //             }
+
+              //             final newReservation = Reservation(
+              //               id: '', // se asigna automáticamente en Firestore
+              //               userId: currentUser.uid,
+              //               carId: car.id,
+              //               status: 'pending', // 👈 valor por defecto
+              //               // paymentMethod: _payMethodCtrl.text.trim(),
+              //               paymentMethod: selectedPaymentMethod!.name,
+              //               // days: int.tryParse(_daysCtrl.text.trim()) ?? 0,
+              //               days: selectedDays ?? 0,
+
+              //             );
+
+
+
+
+
+
+
+
+
+
+              //           final err = await notifier.addReservation(newReservation);
+
+              //           setState(() => _loading = false);
+
+              //           if (err == null) {
+              //             if (mounted) {
+              //               ScaffoldMessenger.of(context).showSnackBar(
+              //                 const SnackBar(
+              //                     content: Text('Reserva realizada con éxito')),
+              //               );
+              //               // context.go('/home_screen');
+              //               context.push('/add_payment_screen', extra: newReservation);
+              //               // context.push('/add_payment_screen', extra: {
+              //               //   'car': car,
+              //               //   'reservation': newReservation
+              //               //  });
+              //             }
+              //           } else {
+              //             setState(() => _error = err);
+              //           }
+              //         },
+              //   child: _loading
+              //       ? const CircularProgressIndicator()
+              //       : const Text('Reservar'),
+              // ),
+
+
+
+              FilledButton(
                 onPressed: _loading
                     ? null
                     : () async {
@@ -332,58 +427,23 @@ body: Padding(
                         final notifier =
                             ref.read(ReservationNotifierProvider.notifier);
 
-                        // final newReservation = Reservation(
-                        //   id: '', // se asigna automáticamente
-                        //   userId: user.uid,
-                        //   carId: car.id,
-                        //   status: 'pending', // 👈 valor por defecto
-                        //   paymentMethod: _payMethodCtrl.text.trim(),
-                        //   days: int.tryParse(_daysCtrl.text.trim()) ?? 0, 
-                        //   // modelo: _modelCtrl.text.trim(),
-                        //   // // year: int.tryParse(_yearCtrl.text.trim()) ?? 0,
-                        //   // color: _colorCtrl.text.trim(),
-                        //   // capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
-                        //   // equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
-                        //   // automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
-                        //   // aire: _airCtrl.text.trim().toLowerCase() == 'true',
-                        //   // precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
-                        //   // imageUrl: _imageUrlCtrl.text.trim(),
-                        // );
-
-
-
-
-
-
                         final currentUser = fb.FirebaseAuth.instance.currentUser;
-                          if (currentUser == null) {
-                            setState(() {
-                              _error = 'Debes iniciar sesión para reservar un auto.';
-                              _loading = false;
-                            });
-                            return;
-                          }
+                        if (currentUser == null) {
+                          setState(() {
+                            _error = 'Debes iniciar sesión para reservar un auto.';
+                            _loading = false;
+                          });
+                          return;
+                        }
 
-                          final newReservation = Reservation(
-                            id: '', // se asigna automáticamente en Firestore
-                            userId: currentUser.uid,
-                            carId: car.id,
-                            status: 'pending', // 👈 valor por defecto
-                            // paymentMethod: _payMethodCtrl.text.trim(),
-                            paymentMethod: selectedPaymentMethod!.name,
-                            // days: int.tryParse(_daysCtrl.text.trim()) ?? 0,
-                            days: selectedDays ?? 0,
-
-                          );
-
-
-
-
-
-
-
-
-
+                        final newReservation = Reservation(
+                          id: '', 
+                          userId: currentUser.uid,
+                          carId: car.id,
+                          status: 'pending',
+                          paymentMethod: selectedPaymentMethod!.name,
+                          days: selectedDays ?? 0,
+                        );
 
                         final err = await notifier.addReservation(newReservation);
 
@@ -393,23 +453,47 @@ body: Padding(
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Reserva realizada con éxito')),
+                                content: Text('Reserva realizada con éxito'),
+                              ),
                             );
-                            // context.go('/home_screen');
+
                             context.push('/add_payment_screen', extra: newReservation);
-                            // context.push('/add_payment_screen', extra: {
-                            //   'car': car,
-                            //   'reservation': newReservation
-                            //  });
                           }
                         } else {
                           setState(() => _error = err);
                         }
                       },
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
                 child: _loading
-                    ? const CircularProgressIndicator()
-                    : const Text('Reservar'),
-              ),
+                    ? SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          valueColor: AlwaysStoppedAnimation(
+                            Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        'Reservar',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+              )
+
+
+
+
+
             ],
           ),
         ),

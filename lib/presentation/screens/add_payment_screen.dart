@@ -329,190 +329,112 @@ Future<void> _loadCarAndCalculateAmount() async {
               
               
               
-              
-              ElevatedButton(
-                onPressed: _loading
-                    ? null
-                    : () async {
-                        if (!_formKey.currentState!.validate()) return;
 
+             FilledButton(
+              onPressed: _loading
+                  ? null
+                  : () async {
+                      if (!_formKey.currentState!.validate()) return;
+
+                      setState(() {
+                        _loading = true;
+                        _error = null;
+                      });
+
+                      final currentUser = fb.FirebaseAuth.instance.currentUser;
+
+                      if (currentUser == null) {
                         setState(() {
-                          _loading = true;
-                          _error = null;
+                          _error = 'Debes iniciar sesión para pagar una reserva.';
+                          _loading = false;
                         });
-
-                        // final notifier =
-                        //     ref.read(PaymentNotifierProvider.notifier);
-
-                        // final newReservation = Reservation(
-                        //   id: '', // se asigna automáticamente
-                        //   userId: user.uid,
-                        //   carId: car.id,
-                        //   status: 'pending', // 👈 valor por defecto
-                        //   paymentMethod: _payMethodCtrl.text.trim(),
-                        //   days: int.tryParse(_daysCtrl.text.trim()) ?? 0, 
-                        //   // modelo: _modelCtrl.text.trim(),
-                        //   // // year: int.tryParse(_yearCtrl.text.trim()) ?? 0,
-                        //   // color: _colorCtrl.text.trim(),
-                        //   // capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
-                        //   // equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
-                        //   // automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
-                        //   // aire: _airCtrl.text.trim().toLowerCase() == 'true',
-                        //   // precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
-                        //   // imageUrl: _imageUrlCtrl.text.trim(),
-                        // );
-
-
-
-
-
-
-
-
-                      //  final carDoc = await FirebaseFirestore.instance
-                      //         .collection('cars')
-                      //         .doc(reservation.carId)
-                      //         .get();
-
-                      //     final car = Car.fromFirestore(carDoc, null);
-
-
-                  // // 1️⃣ Calcular el monto total
-                  // final totalAmount = reservation.days * car.precio;
-
-
-
-
-
-
-
-
-                        // final reservation = widget.reservation;
-                        final currentUser = fb.FirebaseAuth.instance.currentUser;
-
-                          if (currentUser == null) {
-                            setState(() {
-                              _error = 'Debes iniciar sesión para pagar una reserva.';
-                              _loading = false;
-                            });
-                            return;
-                          }
-
-                          final newPayment = Payment(
-                            id: '',     // se asigna automáticamente en Firestore
-                            userId: currentUser.uid,
-                            carId: reservation.carId,
-                            reservationId: reservation.id,
-                            amount: totalAmount, // 2️⃣ Usar el monto total calculado
-                            status: 'Aprobado',
-                            timestamp: '', // 👈 valor por defecto
-                            // protection: _protectionCtrl.text.trim().toLowerCase() == 'true',
-                            protection: ui.protection.name,
-                            // wifi: _wifiCtrl.text.trim().toLowerCase() == 'true',
-                            accesories: ui.accessories.name,
-                          );
-
-
-
-                        final paymentNotifier = ref.read(PaymentNotifierProvider.notifier);
-
-
-
-
-
-
-
-
-
-
-
-                        // 3️⃣ Agregar el Payment a Firestore
-                        final err = await paymentNotifier.addPayment(newPayment);
-
-                          if (err != null) {
-                            setState(() {
-                              _error = err;
-                              _loading = false;
-                            });
-                            return;
-                          }
-
-
-
-
-                        // setState(() => _loading = false);
-
-                        // if (err == null) {
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Pago realizado con éxito')),
-                            );
-                          }
-                            // context.go('/home_screen');
-                            // context.push('/final_screen');
-
-                          //   final carDoc = await FirebaseFirestore.instance
-                          //     .collection('cars')
-                          //     .doc(reservation.carId)
-                          //     .get();
-
-                          // final car = Car.fromFirestore(carDoc, null);
-
-
-
-
-
-
-                          // ✅ 1) Actualiza Firestore y el estado local
-                        await ref
-                            .read(ReservationNotifierProvider.notifier)
-                            .updateReservationStatus(reservation.id, "Pagado");
-
-                        // ✅ 2) Actualiza el objeto antes de enviarlo
-                        reservation.status = "Pagado";
-
-                        // ✅ 3) Obtengo el auto para final_screen
-                        final carDoc = await FirebaseFirestore.instance
-                            .collection("cars")
-                            .doc(reservation.carId)
-                            .get();
-
-                        final car = Car.fromFirestore(carDoc, null);
-
-                  if (!mounted) return;
-
-                  ref.read(PaymentUiNotifierProvider.notifier).reset();
-
-
-
-                          // // 4️⃣ Actualizar el estado de la reserva
-                          // reservation.status = 'completed';  // opcional: mantener el estado sincronizado
-                          // await ref.read(ReservationNotifierProvider.notifier).updateReservationStatus(reservation.id, 'paid');
-
-
-
-
-
-                          // 5️⃣ Navegar a la pantalla final
-                            context.push(
-                              '/final_screen',
-                              extra: {
-                                'car': car,       
-                                'reservation': reservation,
-                                'payment': newPayment,
-                              },
-                            );
-
-                        //   }
-                        // } else {
-                        //   setState(() => _error = err);
-                        // }
-                      },
-                child: _loading
-                    ? const CircularProgressIndicator()
-                    : const Text('Pagar'),
+                        return;
+                      }
+
+                      final newPayment = Payment(
+                        id: '',
+                        userId: currentUser.uid,
+                        carId: reservation.carId,
+                        reservationId: reservation.id,
+                        amount: totalAmount,
+                        status: 'Aprobado',
+                        timestamp: '',
+                        protection: ui.protection.name,
+                        accesories: ui.accessories.name,
+                      );
+
+                      final paymentNotifier =
+                          ref.read(PaymentNotifierProvider.notifier);
+
+                      final err = await paymentNotifier.addPayment(newPayment);
+
+                      if (err != null) {
+                        setState(() {
+                          _error = err;
+                          _loading = false;
+                        });
+                        return;
+                      }
+
+                      await ref
+                          .read(ReservationNotifierProvider.notifier)
+                          .updateReservationStatus(reservation.id, "Pagado");
+
+                      reservation.status = "Pagado";
+
+                      final carDoc = await FirebaseFirestore.instance
+                          .collection("cars")
+                          .doc(reservation.carId)
+                          .get();
+
+                      final car = Car.fromFirestore(carDoc, null);
+
+                      if (!mounted) return;
+
+                      ref.read(PaymentUiNotifierProvider.notifier).reset();
+
+                      context.push(
+                        '/final_screen',
+                        extra: {
+                          'car': car,
+                          'reservation': reservation,
+                          'payment': newPayment,
+                        },
+                      );
+                    },
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary,
               ),
+              child: _loading
+                  ? SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        valueColor: AlwaysStoppedAnimation(
+                          Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      'Pagar',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),          
+
+
+
+
+
+
+
             ],
     ),
     ),
