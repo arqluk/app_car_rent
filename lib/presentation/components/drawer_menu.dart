@@ -1,4 +1,6 @@
 
+// -------------------------------------------------------------------------------------
+
 import 'package:app_car_rental/menu/menu_item.dart';
 import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 import 'package:app_car_rental/presentation/providers/auth_user_provider.dart';

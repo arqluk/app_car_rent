@@ -21,6 +21,7 @@ import 'package:app_car_rental/presentation/screens/reservations_list_screen.dar
 import 'package:app_car_rental/presentation/screens/settings_screen.dart';
 import 'package:app_car_rental/presentation/screens/start_session_screen.dart';
 import 'package:app_car_rental/presentation/screens/theme_selector_screen.dart';
+import 'package:app_car_rental/presentation/screens/users_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
@@ -137,7 +138,7 @@ final appRouter = GoRouter(
     ),
 
 
-      GoRoute(
+    GoRoute(
       path: '/admin_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
       builder: (context, state) => AdminScreen(),
@@ -147,6 +148,12 @@ final appRouter = GoRouter(
       path: '/access_denied_screen',
       // builder: (context, state) => ReservationScreen(car: state.extra as Car),
       builder: (context, state) => AccessDeniedScreen(),
+    ),
+
+      GoRoute(
+      path: '/users_list_screen',
+      // builder: (context, state) => ReservationScreen(car: state.extra as Car),
+      builder: (context, state) => UsersListScreen(),
     ),
 
 
