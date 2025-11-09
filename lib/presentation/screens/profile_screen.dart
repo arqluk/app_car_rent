@@ -47,16 +47,50 @@ class ProfileScreen extends ConsumerWidget {
                   const SizedBox(height: 10),
                   Text("Rol: ${userDoc?['role'] ?? 'user'}"),
               
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 80),
               
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
-                      if (context.mounted) context.go('/home_screen');
-                    },
-                    icon: const Icon(Icons.logout),
-                    label: const Text("Cerrar sesión"),
+                  // ElevatedButton.icon(
+                  //   onPressed: () async {
+                  //     await FirebaseAuth.instance.signOut();
+                  //     if (context.mounted) context.go('/home_screen');
+                  //   },
+                  //   icon: const Icon(Icons.logout),
+                  //   label: const Text("Cerrar sesión"),
+                  // ),
+
+                  // 
+                  
+
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      icon: const Icon(Icons.logout, size: 25),
+                      label: Text(
+                        'Cerrar sesión',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                      ),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+
+                      
+                      onPressed: () async {
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                        await FirebaseAuth.instance.signOut();
+                        ref.invalidate(userDocProvider);
+                        if (context.mounted) context.go('/home_screen');
+                      },
+                    ),
                   ),
+
+
                 ],
               ),
             ),
