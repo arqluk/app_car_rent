@@ -320,7 +320,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-            )
+
+                    
+            
+            ),
+
+            const SizedBox(height: 8),
+
+              TextButton(
+                onPressed: () => context.push('/login_screen'),
+                child: const Text('¿Ya tienes cuenta? Iniciar sesión'),
+              ),
   
 
 
