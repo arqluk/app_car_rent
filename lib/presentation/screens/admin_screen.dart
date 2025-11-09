@@ -33,27 +33,110 @@ class _AdminScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Car Rent - Admin'),
+      appBar: const CustomAppBar(title: ' Administrador'),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // FilledButton.icon(
+            //   onPressed: () => context.push('/add_car_screen'),
+            //   icon: const Icon(Icons.car_rental),
+            //   label: const Text("Agregar auto a la flota"),
+            // ),
+
+            
+
+            // FilledButton.icon(
+            //   onPressed: () => context.push('/users_list_screen'),
+            //   icon: const Icon(Icons.people),
+            //   // label: const Text("Ver usuarios registrados"),
+            //   label: const Text("Ver usuarios registrados"),
+            // ),
+
+
             FilledButton.icon(
               onPressed: () => context.push('/add_car_screen'),
-              icon: const Icon(Icons.add_circle),
-              label: const Text("Agregar auto a la flota"),
+                 icon: const Icon(
+                    Icons.directions_car,
+                    size: 25,
+                  ),
+                 label: Text(
+                  'Agregar auto a la flota',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                ),
+
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ),
+                // style: FilledButton.styleFrom(
+                //     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(999), // botón tipo píldora
+                //     ),
+                //     backgroundColor: Theme.of(context).colorScheme.primary, // usa color del theme
+                //   ),
+              // children: [
+              //         Text(
+              //           'Agregar auto a la flota',
+              //           style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              //                 color: Theme.of(context).colorScheme.onPrimary,
+              //                 fontWeight: FontWeight.bold,
+              //               ),
+              //         ),
+              //       ],
             ),
 
-            const SizedBox(height: 80),
+const SizedBox(height: 80),
+
 
             FilledButton.icon(
               onPressed: () => context.push('/users_list_screen'),
-              icon: const Icon(Icons.people),
-              // label: const Text("Ver usuarios registrados"),
-              label: const Text("Ver usuarios registrados"),
+                 icon: const Icon(
+                    Icons.people,
+                    size: 25,
+                  ),
+                 label: Text(
+                  'Ver usuarios registrados',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                ),
+
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ),
+                // style: FilledButton.styleFrom(
+                //     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(999), // botón tipo píldora
+                //     ),
+                //     backgroundColor: Theme.of(context).colorScheme.primary, // usa color del theme
+                //   ),
+              // children: [
+              //         Text(
+              //           'Agregar auto a la flota',
+              //           style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              //                 color: Theme.of(context).colorScheme.onPrimary,
+              //                 fontWeight: FontWeight.bold,
+              //               ),
+              //         ),
+              //       ],
             ),
+
+
+
           ],
         ),
       ),
