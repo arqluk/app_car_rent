@@ -51,6 +51,7 @@ class _AdminScreenView extends StatelessWidget {
             FilledButton.icon(
               onPressed: () => context.push('/users_list_screen'),
               icon: const Icon(Icons.people),
+              // label: const Text("Ver usuarios registrados"),
               label: const Text("Ver usuarios registrados"),
             ),
           ],

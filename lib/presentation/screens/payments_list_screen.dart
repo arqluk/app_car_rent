@@ -82,8 +82,9 @@ class _PaymentsListScreenView extends ConsumerWidget {
     final currentUser = fb.FirebaseAuth.instance.currentUser;
     final paymentList = ref.watch(PaymentNotifierProvider);
     bool loading = ref.watch(PaymentLoadingProvider);
-
+    final colorScheme = Theme.of(context).colorScheme;
     final textStyle = Theme.of(context).textTheme;
+
 
     return Scaffold(
       //  appBar: AppBar(
@@ -110,7 +111,7 @@ class _PaymentsListScreenView extends ConsumerWidget {
       //       ),
       //     ],
       //   ),
-      appBar: const CustomAppBar(title: 'Car Rent'),
+      appBar: const CustomAppBar(title: ' Tus pagos'),
 
     //   body: const Center(
     //     child: Text('Aquí se mostrarán los pagos realizados'),
@@ -133,28 +134,42 @@ class _PaymentsListScreenView extends ConsumerWidget {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Inicia sesión para ver tus pagos',
-                      style: textStyle.bodyLarge?.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                       Text(
+                    'Iniciá sesión para ver tus pagos.',
+                    textAlign: TextAlign.center,
+                    style: textStyle.bodyLarge?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: colorScheme.onSurface,
                     ),
-
-
-
-
-
+                  ),
 
                     const SizedBox(height: 20),
-                    TextButton.icon(
-                      onPressed: () => context.push('/login_screen'),
-                      icon: const Icon(Icons.login, color: Colors.blue),
-                      label: const Text(
-                        'Ir a Iniciar Sesión',
-                        style: TextStyle(color: Colors.blue),
+
+                    // TextButton.icon(
+                    //   onPressed: () => context.push('/login_screen'),
+                    //   icon: const Icon(Icons.login, color: Colors.blue),
+                    //   label: const Text(
+                    //     'Ir a Iniciar Sesión',
+                    //     style: TextStyle(color: Colors.blue),
+                    //   ),
+                    // ),
+
+
+                     TextButton.icon(
+                        onPressed: () => context.push('/login_screen'),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Theme.of(context).colorScheme.primary,
+                        ),
+                        // icon: const Icon(Icons.login),
+                        icon: Icon(Icons.login,
+                        size: Theme.of( context).textTheme.titleMedium!.fontSize! * 1.6,
                       ),
-                    ),
+                        // label: const Text('Iniciar Sesión'),
+                        label: Text('Iniciar Sesión',
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      ),
                   ],
                 )
 

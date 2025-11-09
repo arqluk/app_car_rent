@@ -34,15 +34,15 @@ class MenuItem{
       icon: Icons.payment,
       link: '/payments_list_screen',
     ),
-     MenuItem(
-      title: 'Configuración',
-      subtitle: 'Seleccionar configuraciones',
-      icon: Icons.select_all,
-      link: '/settings_screen',
-    ),
+    //  MenuItem(
+    //   title: 'Configuración',
+    //   subtitle: 'Seleccionar configuraciones',
+    //   icon: Icons.select_all,
+    //   link: '/settings_screen',
+    // ),
     MenuItem(
-      title: 'Apariencia',
-      subtitle: 'Seleccionar apariencia de la aplicación',
+      title: 'Configuración',
+      subtitle: 'Seleccioná el tema de la aplicación',
       icon: Icons.select_all,
       link: '/theme_selector',
     ),

@@ -43,7 +43,7 @@ class _SettingsScreenView extends StatelessWidget {
       //   ],
       // ),
 
-      appBar: const CustomAppBar(title: 'Car Rent'),
+      appBar: const CustomAppBar(title: ' Seleccioná la apariencia'),
 
       body: Center(
         child: Column(

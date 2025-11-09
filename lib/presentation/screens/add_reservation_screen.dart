@@ -1,3 +1,4 @@
+
 import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/domain/reservation.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
@@ -29,7 +30,8 @@ class _AddReservationScreenState
   final _formKey = GlobalKey<FormState>();
 
   PaymentMethod? selectedPaymentMethod = PaymentMethod.creditCard;
-  int? selectedDays;
+  int? selectedDays = 1;
+  // int? selectedDays;
 
   bool _loading = false;
   String? _error;
@@ -39,7 +41,7 @@ Widget build(BuildContext context) {
   final car = widget.car;
 
   return Scaffold(
-    appBar: const CustomAppBar(title: 'Car Rent'),
+    appBar: const CustomAppBar(title: ' Formulario de Reserva'),
 
     body: Padding(
       padding: const EdgeInsets.all(16),

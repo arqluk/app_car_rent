@@ -343,7 +343,7 @@ class _FleetScreenView extends ConsumerWidget {
       //   ],
       // ),
 
-      appBar: const CustomAppBar(title: 'Car Rent'),
+      appBar: const CustomAppBar(title: ' Nuestra Flota'),
       // body: _CarsListView(carsList: carRepository.getCars(), textStyle: textStyle),
             // ✅ Cuerpo con texto arriba + lista centrada
       body: Center(

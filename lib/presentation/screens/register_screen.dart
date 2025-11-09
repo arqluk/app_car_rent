@@ -30,61 +30,164 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: const Text('Registro de Usuario')),
-      appBar: const CustomAppBar(title: 'Car Rent'),
+      // appBar: const CustomAppBar(title: 'Car Rent - Ingresá tus datos'),
+      appBar: const CustomAppBar(title: ' Completá tus datos'),
       
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: const InputDecoration(labelText: 'Nombre'),
-                validator: (v) =>
-                    v == null || v.isEmpty ? 'Ingrese su nombre' : null,
-              ),
-              TextFormField(
-                controller: _emailCtrl,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (v) =>
-                    v != null && v.contains('@') ? null : 'Email inválido',
-              ),
-               TextFormField(
-                controller: _countryCtrl,
-                decoration: const InputDecoration(labelText: 'País'),
-              ),
-              TextFormField(
-                controller: _docCtrl,
-                decoration: const InputDecoration(labelText: 'Documento'),
-              ),
 
+              // TextFormField(
+              //   controller: _nameCtrl,
+              //   decoration: const InputDecoration(labelText: 'Nombre'),
+              //   validator: (v) =>
+              //       v == null || v.isEmpty ? 'Ingrese su nombre' : null,
+              // ),
 
-
-
-
-
-
-              TextFormField(
-                controller: _passCtrl,
-                decoration: const InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
-                validator: (v) =>
-                    v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _nameCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Nombre',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el nombre' : null,
+                ),
               ),
 
 
+              // TextFormField(
+              //   controller: _emailCtrl,
+              //   decoration: const InputDecoration(labelText: 'Email'),
+              //   validator: (v) =>
+              //       v != null && v.contains('@') ? null : 'Email inválido',
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _emailCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el email' : null,
+                ),
+              ),
+
+
+              //  TextFormField(
+              //   controller: _countryCtrl,
+              //   decoration: const InputDecoration(labelText: 'País'),
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _countryCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'País',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el país' : null,
+                ),
+              ),
+
+
+              // TextFormField(
+              //   controller: _docCtrl,
+              //   decoration: const InputDecoration(labelText: 'Documento'),
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _docCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Documento',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el documento' : null,
+                ),
+              ),
+
+
+              // TextFormField(
+              //   controller: _passCtrl,
+              //   decoration: const InputDecoration(labelText: 'Contraseña'),
+              //   obscureText: true,
+              //   validator: (v) =>
+              //       v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _passCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Contraseña',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                 //   obscureText: true,
+              //   validator: (v) =>
+              //       v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+                  obscureText: true,
+                  validator: (v) => v != null && v.length >= 6
+                      ? null
+                      : 'Mínimo 6 caracteres',
+                ),
+              ),
 
 
               // const SizedBox(height: 12),
-              TextFormField(
-                controller: _confirmController,
-                decoration: const InputDecoration(
-                  labelText: 'Confirmar contraseña',
-                  // border: OutlineInputBorder(),
-                ),
-                obscureText: true,
+              // TextFormField(
+              //   controller: _confirmController,
+              //   decoration: const InputDecoration(
+              //     labelText: 'Confirmar contraseña',
+              //     // border: OutlineInputBorder(),
+              //   ),
+              //   obscureText: true,
+              //   validator: (v) => v != _passCtrl.text ? 'No coincide' : null,
+              // ),
+
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _confirmController,
+                  decoration: InputDecoration(
+                    hintText: 'Confirmar contraseña',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                 obscureText: true,
                 validator: (v) => v != _passCtrl.text ? 'No coincide' : null,
+                ),
               ),
 
 
@@ -96,9 +199,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               // ),
              
               const SizedBox(height: 20),
+
               if (_error != null)
                 Text(_error!,
-                    style: const TextStyle(color: Colors.red, fontSize: 14)),
+                    // style: const TextStyle(color: Colors.red, fontSize: 14)),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 14)),
+              
+              
               const SizedBox(height: 50),
 
 
@@ -150,70 +257,70 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
 
             FilledButton(
-  onPressed: _loading
-      ? null
-      : () async {
-          if (!_formKey.currentState!.validate()) return;
+              onPressed: _loading
+                  ? null
+                  : () async {
+                      if (!_formKey.currentState!.validate()) return;
 
-          setState(() {
-            _loading = true;
-            _error = null;
-          });
+                      setState(() {
+                        _loading = true;
+                        _error = null;
+                      });
 
-          final notifier = ref.read(UsersNotifierProvider.notifier);
+                      final notifier = ref.read(UsersNotifierProvider.notifier);
 
-          final newUser = User(
-            uid: '',
-            userName: _nameCtrl.text.trim(),
-            userEmail: _emailCtrl.text.trim(),
-            password: _passCtrl.text.trim(),
-            country: _countryCtrl.text.trim(),
-            document: _docCtrl.text.trim(),
-          );
+                      final newUser = User(
+                        uid: '',
+                        userName: _nameCtrl.text.trim(),
+                        userEmail: _emailCtrl.text.trim(),
+                        password: _passCtrl.text.trim(),
+                        country: _countryCtrl.text.trim(),
+                        document: _docCtrl.text.trim(),
+                      );
 
-          final err = await notifier.registerUser(newUser);
+                      final err = await notifier.registerUser(newUser);
 
-          setState(() => _loading = false);
+                      setState(() => _loading = false);
 
-          if (err == null) {
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Usuario registrado con éxito'),
+                      if (err == null) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Usuario registrado con éxito'),
+                            ),
+                          );
+                          context.go('/login_screen');
+                        }
+                      } else {
+                        setState(() => _error = err);
+                      }
+                    },
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
                 ),
-              );
-              context.go('/login_screen');
-            }
-          } else {
-            setState(() => _error = err);
-          }
-        },
-  style: FilledButton.styleFrom(
-    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(999),
-    ),
-    backgroundColor: Theme.of(context).colorScheme.primary,
-  ),
-  child: _loading
-      ? SizedBox(
-          width: 22,
-          height: 22,
-          child: CircularProgressIndicator(
-            strokeWidth: 2.5,
-            valueColor: AlwaysStoppedAnimation(
-              Theme.of(context).colorScheme.onPrimary,
-            ),
-          ),
-        )
-      : Text(
-          'Registrarse',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.bold,
+                backgroundColor: Theme.of(context).colorScheme.primary,
               ),
-        ),
-)
+              child: _loading
+                  ? SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        valueColor: AlwaysStoppedAnimation(
+                          Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      'Registrarse',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+            )
   
 
 
@@ -231,7 +338,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
 
 
-
+// ---------------------------------------------------------------------------------------
 
 
 

@@ -31,6 +31,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
             'assets/images/cr_logo.jpg',
@@ -38,7 +39,11 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             height: 40,
           ),
           const SizedBox(width: 8),
-          Text(title),
+          // Text(title),
+          Text(
+            // textAlign: TextAlign.center,
+            title, style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            ),
         ],
       ),
       backgroundColor: colorScheme.primary,

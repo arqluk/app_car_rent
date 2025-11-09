@@ -1,4 +1,5 @@
 
+import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app_car_rental/presentation/providers/auth_user_provider.dart';
@@ -18,9 +19,7 @@ class ProfileScreen extends ConsumerWidget {
         final user = FirebaseAuth.instance.currentUser;
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text("Perfil"),
-          ),
+          appBar: const CustomAppBar(title: 'Car Rent'),
 
           body: Padding(
             padding: const EdgeInsets.all(20),

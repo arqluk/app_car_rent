@@ -23,31 +23,77 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: const Text('Iniciar sesión')),
-      appBar: const CustomAppBar(title: 'Car Rent'),
+      appBar: const CustomAppBar(title: ' Ingresá tus datos'),
       
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center ,
             children: [
-              TextFormField(
-                controller: _emailCtrl,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (v) =>
+
+              // TextFormField(
+              //   controller: _emailCtrl,
+              //   decoration: const InputDecoration(labelText: 'Email'),
+              //   validator: (v) =>
+              //       v != null && v.contains('@') ? null : 'Email inválido',
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _emailCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                  validator: (v) =>
                     v != null && v.contains('@') ? null : 'Email inválido',
+                ),
               ),
-              TextFormField(
-                controller: _passCtrl,
-                decoration: const InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
-                validator: (v) =>
-                    v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+
+
+              // TextFormField(
+              //   controller: _passCtrl,
+              //   decoration: const InputDecoration(labelText: 'Contraseña'),
+              //   obscureText: true,
+              //   validator: (v) =>
+              //       v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _passCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Contraseña',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // errorText: _imageUrlError, // 👈 mensaje debajo
+                  ),
+                 //   obscureText: true,
+              //   validator: (v) =>
+              //       v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+                  obscureText: true,
+                  validator: (v) => v != null && v.length >= 6
+                      ? null
+                      : 'Mínimo 6 caracteres',
+                ),
               ),
+
+
               const SizedBox(height: 20),
               if (_error != null)
                 Text(_error!,
-                    style: const TextStyle(color: Colors.red, fontSize: 14)),
+                    // style: const TextStyle(color: Colors.red, fontSize: 14)),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 14)),
+              
+              
               const SizedBox(height: 12),
 
 
@@ -82,62 +128,122 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             //         ? const CircularProgressIndicator()
             //         : const Text('Iniciar sesión'),
             //  ),
+            const SizedBox(height: 120),
+
+            //  FilledButton(
+            //   onPressed: _loading
+            //       ? null
+            //       : () async {
+            //           if (!_formKey.currentState!.validate()) return;
+
+            //           setState(() {
+            //             _loading = true;
+            //             _error = null;
+            //           });
+
+            //           final notifier = ref.read(UsersNotifierProvider.notifier);
+
+            //           final user = await notifier.loginUser(
+            //             _emailCtrl.text.trim(),
+            //             _passCtrl.text.trim(),
+            //           );
+
+            //           setState(() => _loading = false);
+
+            //           if (user != null) {
+            //             context.go('/home_screen');
+            //           } else {
+            //             setState(() => _error = 'Email o contraseña incorrectos');
+            //           }
+            //         },
+
+            //   style: FilledButton.styleFrom(
+            //     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(999),
+            //     ),
+            //     backgroundColor: Theme.of(context).colorScheme.primary,
+            //   ),
+
+            //   child: _loading
+            //       ? SizedBox(
+            //           height: 22,
+            //           width: 22,
+            //           child: CircularProgressIndicator(
+            //             strokeWidth: 2.5,
+            //             valueColor: AlwaysStoppedAnimation(
+            //               Theme.of(context).colorScheme.onPrimary,
+            //             ),
+            //           ),
+            //         )
+            //       : Text(
+            //           'Iniciar sesión',
+            //           style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            //                 color: Theme.of(context).colorScheme.onPrimary,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //         ),
+            // )
 
 
-             FilledButton(
-              onPressed: _loading
-                  ? null
-                  : () async {
-                      if (!_formKey.currentState!.validate()) return;
+            const SizedBox(height: 120),
 
-                      setState(() {
-                        _loading = true;
-                        _error = null;
-                      });
+              SizedBox(
+                width: double.infinity,   // ✅ hace que abarque todo el ancho
+                child: FilledButton(
+                  onPressed: _loading
+                      ? null
+                      : () async {
+                          if (!_formKey.currentState!.validate()) return;
 
-                      final notifier = ref.read(UsersNotifierProvider.notifier);
+                          setState(() {
+                            _loading = true;
+                            _error = null;
+                          });
 
-                      final user = await notifier.loginUser(
-                        _emailCtrl.text.trim(),
-                        _passCtrl.text.trim(),
-                      );
+                          final notifier = ref.read(UsersNotifierProvider.notifier);
 
-                      setState(() => _loading = false);
+                          final user = await notifier.loginUser(
+                            _emailCtrl.text.trim(),
+                            _passCtrl.text.trim(),
+                          );
 
-                      if (user != null) {
-                        context.go('/home_screen');
-                      } else {
-                        setState(() => _error = 'Email o contraseña incorrectos');
-                      }
-                    },
+                          setState(() => _loading = false);
 
-              style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999),
+                          if (user != null) {
+                            context.go('/home_screen');
+                          } else {
+                            setState(() => _error = 'Email o contraseña incorrectos');
+                          }
+                        },
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  child: _loading
+                      ? SizedBox(
+                          height: 22,
+                          width: 22,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.5,
+                            valueColor: AlwaysStoppedAnimation(
+                              Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          'Iniciar sesión',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                 ),
-                backgroundColor: Theme.of(context).colorScheme.primary,
               ),
 
-              child: _loading
-                  ? SizedBox(
-                      height: 22,
-                      width: 22,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
-                        valueColor: AlwaysStoppedAnimation(
-                          Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ),
-                    )
-                  : Text(
-                      'Iniciar sesión',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-            )
 
 
 

@@ -18,7 +18,7 @@ class ThemeSelectorScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Car Rent',
+        title: ' Configuración',
         showDarkModeButton: true,
         isDarkMode: appTheme.isDarkMode,
         onDarkModePressed: () {
@@ -44,34 +44,48 @@ class _ThemeSelectorView extends ConsumerWidget {
     this.colorsList = const [],
   });
 
-  @override
-  Widget build(BuildContext context, ref) {
+@override
+Widget build(BuildContext context, WidgetRef ref) {
+  final selectedColor = ref.watch(selectedColorProvider);
 
-    int selectedColor = ref.watch(selectedColorProvider);
-
-    return ListView.builder(
-      itemCount: colorsList.length,
-      itemBuilder: (context, index) {
-        return RadioListTile(
-          title: Text(
-            'Color $index',
+  return Center(
+    child: SizedBox(
+      width: 400,   // opcional para desktop / podés quitarlo en mobile
+      child: Column(
+        mainAxisSize: MainAxisSize.min,  // ✅ hace que la columna tome solo su altura necesaria
+        children: [
+          Text(
+            'Selecciona un color para el tema:',
+            textAlign: TextAlign.center,
             style: TextStyle(
-              color:  colorsList[index]
+              color: Theme.of(context).colorScheme.onBackground,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+          const SizedBox(height: 50),
+
+          // ✅ la lista se adapta automáticamente y ya no colapsa
+          for (int index = 0; index < colorsList.length; index++)
+            RadioListTile(
+              title: Text(
+                'Color $index',
+                style: TextStyle(color: colorsList[index]),
+              ),
+              value: index,
+              groupValue: selectedColor,
+              onChanged: (value) {
+                ref.read(themeNotifierProvider.notifier).selectColor(value!);
+                ref.read(selectedColorProvider.notifier).state = value;
+              },
             ),
-          value: index,
-          groupValue: selectedColor,
-          onChanged: (value) {
-            // selectedColor = value!;
-            ref.read(themeNotifierProvider.notifier).selectColor(value!);
-            ref.read(selectedColorProvider.notifier).state = value;
-          },
-        );
-      }
-      
-    );
-  }
+        ],
+      ),
+    ),
+  );
 }
+
+  }
 
 
 
