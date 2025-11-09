@@ -19,7 +19,7 @@ class ProfileScreen extends ConsumerWidget {
         final user = FirebaseAuth.instance.currentUser;
 
         return Scaffold(
-          appBar: const CustomAppBar(title: 'Car Rent'),
+          appBar: const CustomAppBar(title: ' Mi perfil'),
 
           body: Padding(
             padding: const EdgeInsets.all(20),
@@ -33,6 +33,11 @@ class ProfileScreen extends ConsumerWidget {
                     child: Icon(Icons.person, size: 45, color: colorScheme.onPrimary),
                   ),
                   const SizedBox(height: 20),
+
+                  Text(
+                    userDoc?['userName']  ?? 'Sin nombre',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
               
                   Text(
                     userDoc?['email'] ?? user?.email ?? 'Sin email',

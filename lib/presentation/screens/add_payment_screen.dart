@@ -104,7 +104,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
         PaymentPriceRules.accessoriesPrices[ui.accessories] ?? 0;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: " Cargá adicionales"),
+      appBar: const CustomAppBar(title: " Adicionales"),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -147,7 +147,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
 
               // ---------------- ACCESORIOS ----------------
               _styledBox(
@@ -195,7 +195,10 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Desglose del importe",
-                          style: Theme.of(context).textTheme.titleMedium),
+                          // style: Theme.of(context).textTheme.titleMedium),
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: colorScheme.primary),
+                      ),
                       const SizedBox(height: 12),
                       Text(
                           "Precio base (${widget.reservation.days} días): \$${numberFormat.format(baseImporte)}"),
@@ -203,14 +206,14 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                           "Protección: \$${numberFormat.format(protectionImporte)}"),
                       Text(
                           "Accesorios: \$${numberFormat.format(accessoriesImporte)}"),
-                      const SizedBox(height: 12),
-                      Divider(color: colorScheme.primary),
+                      // const SizedBox(height: 12),
+                      // Divider(color: colorScheme.primary),
                     ],
                   ),
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 60),
 
               // ---------------- TOTAL A PAGAR ----------------
               Container(
