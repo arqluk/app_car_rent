@@ -55,10 +55,10 @@ final appRouter = GoRouter(
     //     return PerfilScreen(user: user);
     //   },
     // ),
-    GoRoute(
-      path: '/settings_screen',
-      builder: (context, state) => const SettingsScreen(),
-    ),
+    // GoRoute(
+    //   path: '/settings_screen',
+    //   builder: (context, state) => const SettingsScreen(),
+    // ),
     // GoRoute(
     //   path: '/cars_screen',
     //   builder: (context, state) => CarsScreen(),

@@ -41,7 +41,7 @@ Widget build(BuildContext context) {
   final car = widget.car;
 
   return Scaffold(
-    appBar: const CustomAppBar(title: ' Formulario de Reserva'),
+    appBar: const CustomAppBar(title: ' Seleccioná items'),
 
     body: Padding(
       padding: const EdgeInsets.all(16),
@@ -271,6 +271,7 @@ Widget build(BuildContext context) {
   );
 }
 }
+
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

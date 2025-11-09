@@ -92,7 +92,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
 
     if (_loadingAmount) {
       return const Scaffold(
-        appBar: CustomAppBar(title: "Car Rent"),
+        appBar: CustomAppBar(title: " Cargá adicionales"),
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -104,7 +104,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
         PaymentPriceRules.accessoriesPrices[ui.accessories] ?? 0;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Car Rent"),
+      appBar: const CustomAppBar(title: " Cargá adicionales"),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
