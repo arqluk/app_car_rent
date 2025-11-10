@@ -298,10 +298,13 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                             .read(ReservationNotifierProvider.notifier)
                             .updateReservationStatus(
                               widget.reservation.id,
-                              // widget.reservation.status,
                               "Pagado",
                             );
 
+                        // Actualizo el objeto local antes de navegar
+                        widget.reservation.status = "Pagado";
+
+                        // Reset UI Provider
                         ref.read(PaymentUiNotifierProvider.notifier).reset();
 
                         if (!mounted) return;
