@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 
+final List<Color> availableColors = [
+  Colors.blue,
+  Colors.green,
+  Colors.purple,
+  Colors.orange,
+  Colors.red,
+  Colors.teal,
+  Colors.indigo,
+  Colors.pink,
+];
 
-  final List<Color> availableColors = [
-    Colors.blue,
-    Colors.green,
-    Colors.purple,
-    Colors.orange,
-    Colors.red,
-    Colors.teal,
-    Colors.indigo,
-    Colors.pink,
-  ];
 class AppTheme {
-  // final Color selectedColor;
   final int selectedColor; // índice en availableColors
   final bool isDarkMode;
 
-  AppTheme({
-    // this.selectedColor = Colors.blue,
-    this.selectedColor = 0,
-    this.isDarkMode = false,
-  });
+  AppTheme({this.selectedColor = 0, this.isDarkMode = false});
 
-    ThemeData getTheme() {
+  ThemeData getTheme() {
     final seed = availableColors[selectedColor];
 
     final colorScheme = ColorScheme.fromSeed(
@@ -40,87 +35,15 @@ class AppTheme {
         contentTextStyle: TextStyle(color: colorScheme.onPrimaryContainer),
         behavior: SnackBarBehavior.floating,
         elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
 
-  
-
-//   ThemeData getTheme() {
-//     return ThemeData(
-//       // colorSchemeSeed: selectedColor,
-//       colorSchemeSeed: availableColors[selectedColor],
-//       brightness: isDarkMode ? Brightness.dark : Brightness.light,
-//       useMaterial3: true,
-      
-//     );
-//   }
-
-//   AppTheme copyWith({
-//     int? selectedColor,
-//     bool? isDarkMode,
-//   }) {
-//     return AppTheme(
-//       selectedColor: selectedColor ?? this.selectedColor,
-//       isDarkMode: isDarkMode ?? this.isDarkMode,
-//     );
-//   }
-// }
-
-
-
-
-// ----------------------------------------------------------------------------
-
-
-// import 'package:flutter/material.dart';
-
-
-//   final List<Color> availableColors = [
-//     Colors.blue,
-//     Colors.green,
-//     Colors.purple,
-//     Colors.orange,
-//     Colors.red,
-//     Colors.teal,
-//     Colors.indigo,
-//     Colors.pink,
-//   ];
-// class AppTheme {
-//   // final Color selectedColor;
-//   final int selectedColor; // índice en availableColors
-//   final bool isDarkMode;
-
-//   AppTheme({
-//     // this.selectedColor = Colors.blue,
-//     this.selectedColor = 0,
-//     this.isDarkMode = false,
-//   });
-
-//   ThemeData getTheme() {
-//     return ThemeData(
-//       // colorSchemeSeed: selectedColor,
-//       colorSchemeSeed: availableColors[selectedColor],
-//       brightness: isDarkMode ? Brightness.dark : Brightness.light,
-//       useMaterial3: true,
-      
-//     );
-//   }
-
-  AppTheme copyWith({
-    int? selectedColor,
-    bool? isDarkMode,
-  }) {
+  AppTheme copyWith({int? selectedColor, bool? isDarkMode}) {
     return AppTheme(
       selectedColor: selectedColor ?? this.selectedColor,
       isDarkMode: isDarkMode ?? this.isDarkMode,
     );
   }
-
-
-
 }
-

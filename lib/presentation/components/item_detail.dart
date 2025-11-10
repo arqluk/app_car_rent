@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // 👈 para formatear números
 
+// ignore: must_be_immutable
 class ItemDetailScreen extends StatelessWidget {
   String title;
   String subtitle;
@@ -19,22 +20,12 @@ class ItemDetailScreen extends StatelessWidget {
     required this.subdescription,
     required this.imageUrl,
     required this.precio,
-    });
-
-
-    
+  });
 
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-
-    //   // ✅ Agregá esta línea: crea el formateador de moneda
-    // final formatCurrency = NumberFormat.currency(
-    //   locale: 'es_AR', // formato argentino (podés cambiarlo si querés)
-    //   symbol: '\$', // símbolo del peso
-    //   decimalDigits: 0,
-    // );
 
     // ✅ Definimos el formateador acá
     final NumberFormat formatNumber = NumberFormat('#,##0', 'es_AR');
@@ -44,79 +35,40 @@ class ItemDetailScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(title, style: textStyle.titleLarge),
-          SizedBox(height: 5,),
-          Text(subtitle, style: textStyle.titleMedium,),
-          SizedBox(height: 10,),
+          SizedBox(height: 5),
+          Text(subtitle, style: textStyle.titleMedium),
+          SizedBox(height: 10),
           Text(colorDetail),
           Text(description),
           Text(subdescription),
-          SizedBox(height: 40,),
+          SizedBox(height: 40),
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Image.network(imageUrl, width: 350,)),
+            child: Image.network(imageUrl, width: 350),
+          ),
           SizedBox(height: 20),
-          // Text(precio as String),
-
-          // Text(precio.toString()),
-
-          // // 💰 Texto del precio con formato bonito
-          // Text(
-          //   '${formatCurrency.format(precio)} por día',
-          //   style: textStyle.titleMedium!.copyWith(
-          //     // color: Colors.blueAccent,
-          //     fontWeight: FontWeight.bold,
-          //     fontSize: 20,
-          //   ),
-          // ),
-
-              // 💰 Cuadro azul con borde negro y texto "$100.- por día"
-          // Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          //   decoration: BoxDecoration(
-          //     // color: Colors.blue, // fondo azul
-          //     color: Colors.blue, // fondo azul
-          //     border: Border.all(color: Colors.black, width: 2), // borde negro
-          //     borderRadius: BorderRadius.circular(8),
-          //   ),
-          //   child: Text(
-          //     '\$ ${formatNumber.format(precio)}.- por día',
-          //     style: const TextStyle(
-          //       color: Colors.white, // texto negro
-          //       fontWeight: FontWeight.bold,
-          //       fontSize: 18,
-          //     ),
-          //   ),
-          // ),
-
-          
-//...
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                // color: colorScheme.primary, // 🎨 fondo según el tema
-                color: colorScheme.primaryContainer, // 🎨 fondo según el tema
-                border: Border.all(
-                  color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
-                  width: 2,
-                ),
-                // borderRadius: BorderRadius.circular(16),
-
-                borderRadius: const BorderRadius.horizontal(
-                  left: Radius.circular(999),
-                  right: Radius.circular(999),
-                ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: colorScheme.primaryContainer, // 🎨 fondo según el tema
+              border: Border.all(
+                color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
+                width: 2,
               ),
-              child: Text(
-                '\$ ${formatNumber.format(precio)}.- por día',
-                style: TextStyle(
-                  color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+              borderRadius: const BorderRadius.horizontal(
+                left: Radius.circular(999),
+                right: Radius.circular(999),
               ),
             ),
-
-
+            child: Text(
+              '\$ ${formatNumber.format(precio)}.- por día',
+              style: TextStyle(
+                color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
         ],
       ),
     );

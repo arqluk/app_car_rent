@@ -3,28 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter_riverpod/legacy.dart';
 
-// final UsersNotifierProvider = StateNotifierProvider<UsersNotifier, User>((ref) {
-final UsersNotifierProvider = StateNotifierProvider<UsersNotifier, List<User>>((ref) {
+final UsersNotifierProvider = StateNotifierProvider<UsersNotifier, List<User>>((
+  ref,
+) {
   return UsersNotifier();
 });
 
-// class CarsNotifier extends StateNotifier<List<Car>> {
-//   CarsNotifier() : super([])  {
-//     getAllCars();
-//   }
-
-// class UsersNotifier extends StateNotifier<User> {
 class UsersNotifier extends StateNotifier<List<User>> {
-  // final db = FirebaseFirestore.instance;
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final fb.FirebaseAuth auth = fb.FirebaseAuth.instance;
 
   UsersNotifier() : super([]);
-  // UsersNotifier() : super({} as User);
-
-
-
-  
 
   /// Registra el usuario en Firebase Auth y luego en Firestore.
   /// Retorna `null` si todo fue bien o un mensaje de error si algo falló.
@@ -52,33 +41,22 @@ class UsersNotifier extends StateNotifier<List<User>> {
         role: user.role,
       );
 
-      // final userData = userWithUid.toFirestore();
-
-      // // 🚫 Eliminamos el campo password antes de guardar
-      // userData.remove('password');
-
-      // await db.collection('users').doc(uid).set(userData);
-
-
       await db.collection('users').doc(uid).set(userWithUid.toFirestore());
 
-
       state = [...state, userWithUid];
-        return null;
-      } on fb.FirebaseAuthException catch (e) {
-        if (e.code == 'email-already-in-use') {
-          return 'Ya existe una cuenta con ese correo';
-        } else if (e.code == 'weak-password') {
-          return 'La contraseña es demasiado débil';
-        } else {
-          return 'Error de autenticación: ${e.message}';
-        }
-      } catch (e) {
-        return 'Error al registrar usuario: $e';
+      return null;
+    } on fb.FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        return 'Ya existe una cuenta con ese correo';
+      } else if (e.code == 'weak-password') {
+        return 'La contraseña es demasiado débil';
+      } else {
+        return 'Error de autenticación: ${e.message}';
       }
+    } catch (e) {
+      return 'Error al registrar usuario: $e';
     }
-
-
+  }
 
   /// Loguea un usuario y devuelve la instancia si el login fue exitoso.
   Future<User?> loginUser(String email, String password) async {
@@ -100,8 +78,6 @@ class UsersNotifier extends StateNotifier<List<User>> {
       return null;
     }
   }
-// }
-
 
   /// Carga todos los usuarios desde Firestore y actualiza el state.
   Future<void> getAllUsers() async {

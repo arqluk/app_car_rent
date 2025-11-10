@@ -1,8 +1,8 @@
 import 'package:app_car_rental/domain/car.dart';
-import 'package:app_car_rental/domain/user.dart';
+// import 'package:app_car_rental/domain/user.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:app_car_rental/presentation/providers/cars_provider.dart';
-import 'package:app_car_rental/presentation/providers/users_provider.dart';
+// import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,12 +13,12 @@ class AddCarScreenView extends ConsumerStatefulWidget {
   @override
   ConsumerState<AddCarScreenView> createState() => _AddCarScreenViewState();
 }
+
 class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
   final _formKey = GlobalKey<FormState>();
   final _idCtrl = TextEditingController();
   final _groupCtrl = TextEditingController();
   final _brandCtrl = TextEditingController();
-  // final _phoneCtrl = TextEditingController();
   final _modelCtrl = TextEditingController();
   final _colorCtrl = TextEditingController();
   final _capacityCtrl = TextEditingController();
@@ -34,8 +34,7 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: const Text('Registro de Usuario')),
-      appBar: const CustomAppBar(title: 'Car Rent'),
+      appBar: const CustomAppBar(title: 'Agregar autos'),
 
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,352 +42,170 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
           key: _formKey,
           child: ListView(
             children: [
-              // TextFormField(
-              //   controller: _idCtrl,
-              //   decoration: const InputDecoration(labelText: 'Código'),
-              //   validator: (v) =>
-              //       v == null || v.isEmpty ? 'Ingrese el código' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _idCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Código',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el código' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _groupCtrl,
-              //   decoration: const InputDecoration(labelText: 'Grupo'),
-              //   validator: (v) =>
-              //       v == null || v.isEmpty ? 'Ingrese el grupo' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _groupCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Grupo',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el grupo' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _brandCtrl,
-              //   decoration: const InputDecoration(labelText: 'Marca'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la marca' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _brandCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Marca',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese la marca' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _modelCtrl,
-              //   decoration: const InputDecoration(labelText: 'Modelo'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el modelo' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _modelCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Modelo',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el modelo' : null,
-              ),
-            ),
-
-              
-              // TextFormField(
-              //   controller: _colorCtrl,
-              //   decoration: const InputDecoration(labelText: 'Color'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el color' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _colorCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Color',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el color' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _capacityCtrl,
-              //   decoration: const InputDecoration(labelText: 'Capacidad'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la cantidad de personas' : null,
-              // ),
-
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _capacityCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Capacidad',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese la capacidad' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _luggageCtrl,
-              //   decoration: const InputDecoration(labelText: 'Equipaje'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la cantidad de equipaje' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _luggageCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Equipaje',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el equipaje' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _automaticCtrl,
-              //   decoration: const InputDecoration(labelText: 'Transmisión'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la transmision' : null,
-              // ),
-
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _automaticCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Transmisión',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese la transmisión' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _airCtrl,
-              //   decoration: const InputDecoration(labelText: 'Aire Acondicionado'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el aire acondicionado' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _airCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Aire Acondicionado',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el aire acondicionado' : null,
-              ),
-            ),
-
-
-              // TextFormField(
-              //   controller: _priceCtrl,
-              //   decoration: const InputDecoration(labelText: 'Precio'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese el precio' : null,
-              // ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _priceCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Precio',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                     // errorText: _imageUrlError, // 👈 mensaje debajo
-                ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese el precio' : null,
-              ),
-            ),
-              // TextFormField(
-              //   controller: _imageUrlCtrl,
-              //   decoration: const InputDecoration(labelText: 'URL de la Imagen'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la URL de la imagen' : null,
-              // ),
-
-
-
-
-              //  TextFormField(
-              //   controller: _imageUrlCtrl,
-              //   decoration: const InputDecoration(labelText: 'URL de la Imagen'),
-              //   validator: (v) =>
-              //        v == null || v.isEmpty ? 'Ingrese la URL de la imagen' : null,
-              // ),
-
-
-
               Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: _imageUrlCtrl,
-                decoration: InputDecoration(
-                  hintText: 'URL de la Imagen',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _idCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Código',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  
-                  // errorText: _imageUrlError, // 👈 mensaje debajo
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el código' : null,
                 ),
-                validator: (v) =>
-                     v == null || v.isEmpty ? 'Ingrese la URL de la imagen' : null,
               ),
-            ),
-
-
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _groupCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Grupo',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el grupo' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _brandCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Marca',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese la marca' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _modelCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Modelo',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el modelo' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _colorCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Color',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el color' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _capacityCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Capacidad',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese la capacidad' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _luggageCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Equipaje',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el equipaje' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _automaticCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Transmisión',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese la transmisión' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _airCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Aire Acondicionado',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) => v == null || v.isEmpty
+                      ? 'Ingrese el aire acondicionado'
+                      : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _priceCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'Precio',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Ingrese el precio' : null,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: _imageUrlCtrl,
+                  decoration: InputDecoration(
+                    hintText: 'URL de la Imagen',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  validator: (v) => v == null || v.isEmpty
+                      ? 'Ingrese la URL de la imagen'
+                      : null,
+                ),
+              ),
 
               const SizedBox(height: 20),
               if (_error != null)
-                Text(_error!,
-                    style: const TextStyle(color: Colors.red, fontSize: 14)),
+                Text(
+                  _error!,
+                  style: const TextStyle(color: Colors.red, fontSize: 14),
+                ),
               const SizedBox(height: 12),
-
-
-
-              // ElevatedButton(
-              //   onPressed: _loading
-              //       ? null
-              //       : () async {
-              //           if (!_formKey.currentState!.validate()) return;
-
-              //           setState(() {
-              //             _loading = true;
-              //             _error = null;
-              //           });
-
-              //           final notifier =
-              //               ref.read(CarsNotifierProvider.notifier);
-
-              //           final newCar = Car(
-              //             id: '',
-              //             grupo: _brandCtrl.text.trim(),
-              //             marca: _brandCtrl.text.trim(),
-              //             modelo: _modelCtrl.text.trim(),
-              //             // year: int.tryParse(_yearCtrl.text.trim()) ?? 0,
-              //             color: _colorCtrl.text.trim(),
-              //             capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
-              //             equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
-              //             automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
-              //             aire: _airCtrl.text.trim().toLowerCase() == 'true',
-              //             precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
-              //             imageUrl: _imageUrlCtrl.text.trim(),
-              //           );
-
-              //           final err = await notifier.addCar(newCar);
-
-              //           setState(() => _loading = false);
-
-              //           if (err == null) {
-              //             if (mounted) {
-              //               ScaffoldMessenger.of(context).showSnackBar(
-              //                 const SnackBar(
-              //                     content: Text('Auto agregado con éxito')),
-              //               );
-              //               context.go('/home_screen');
-              //             }
-              //           } else {
-              //             setState(() => _error = err);
-              //           }
-              //         },
-              //   child: _loading
-              //       ? const CircularProgressIndicator()
-              //       : const Text('Agregar auto'),
-              // ),
-
-
 
               FilledButton(
                 onPressed: _loading
@@ -401,7 +218,9 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
                           _error = null;
                         });
 
-                        final notifier = ref.read(CarsNotifierProvider.notifier);
+                        final notifier = ref.read(
+                          CarsNotifierProvider.notifier,
+                        );
 
                         final newCar = Car(
                           id: '',
@@ -409,9 +228,12 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
                           marca: _brandCtrl.text.trim(),
                           modelo: _modelCtrl.text.trim(),
                           color: _colorCtrl.text.trim(),
-                          capacidad: int.tryParse(_capacityCtrl.text.trim()) ?? 0,
+                          capacidad:
+                              int.tryParse(_capacityCtrl.text.trim()) ?? 0,
                           equipaje: int.tryParse(_luggageCtrl.text.trim()) ?? 0,
-                          automatico: _automaticCtrl.text.trim().toLowerCase() == 'true',
+                          automatico:
+                              _automaticCtrl.text.trim().toLowerCase() ==
+                              'true',
                           aire: _airCtrl.text.trim().toLowerCase() == 'true',
                           precio: int.tryParse(_priceCtrl.text.trim()) ?? 0,
                           imageUrl: _imageUrlCtrl.text.trim(),
@@ -435,7 +257,10 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
                         }
                       },
                 style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(999),
                   ),
@@ -454,13 +279,13 @@ class _AddCarScreenViewState extends ConsumerState<AddCarScreenView> {
                       )
                     : Text(
                         'Agregar auto',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
                               color: Theme.of(context).colorScheme.onPrimary,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-              )
-
+              ),
             ],
           ),
         ),

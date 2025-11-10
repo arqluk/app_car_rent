@@ -1,58 +1,24 @@
-// import 'package:app_car_rental/domain/car.dart';
-import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:flutter/material.dart';
+// import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
+// import 'package:flutter/material.dart';
 
-class PaymentDetailScreen extends StatelessWidget {
-  // final Car car;
-  // final Car? car;
-  // const ReservationScreen({super.key, required this.car});
-  const PaymentDetailScreen({super.key});
+// class PaymentDetailScreen extends StatelessWidget {
+//   const PaymentDetailScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    // return _ReservationScreenView(car: car);
-    return _PaymentDetailScreenView();
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return _PaymentDetailScreenView();
+//   }
+// }
 
-class _PaymentDetailScreenView extends StatelessWidget {
-  const _PaymentDetailScreenView({
-    // super.key, required Car car,
-    super.key,
-  });
+// class _PaymentDetailScreenView extends StatelessWidget {
+//   const _PaymentDetailScreenView({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      //  appBar: AppBar(
-      //     title: Row(
-      //       children: [
-      //         Image.asset(
-      //           'assets/images/cr_logo.jpg',
-      //           width: 40,
-      //           height: 40,
-      //         ),
-      //         const SizedBox(width: 8),
-      //         const Text('Car Rent'),
-      //       ],
-      //     ),
-      //     backgroundColor: Colors.blue,
-      //     foregroundColor: Colors.white,
-      //     actions: [
-      //       IconButton(
-      //         onPressed: () {
-      //           // TODO: Agregar funcionalidad del ícono de auto
-      //         },
-      //         icon: const Icon(Icons.directions_car),
-      //         tooltip: 'Car Rent',
-      //       ),
-      //     ],
-      //   ),
-      appBar: const CustomAppBar(title: 'Car Rent'),
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: const CustomAppBar(title: 'Car Rent'),
 
-      body: const Center(
-        child: Text('Aquí se mostrará el detalle del pago'),
-      ),
-    );
-  }
-}
+//       body: const Center(child: Text('Aquí se mostrará el detalle del pago')),
+//     );
+//   }
+// }
