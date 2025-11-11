@@ -72,11 +72,13 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+          // color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.1),
+            // color: Theme.of(context).shadowColor.withOpacity(0.1),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -246,7 +248,8 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).shadowColor.withOpacity(0.1),
+                      // color: Theme.of(context).shadowColor.withOpacity(0.1),
+                      color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),

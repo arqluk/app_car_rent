@@ -11,14 +11,16 @@ final fleetNotifierProvider = StateNotifierProvider<fleetNotifier, List<Car>>((
 
 class fleetNotifier extends StateNotifier<List<Car>> {
   final db = FirebaseFirestore.instance;
-  StreamSubscription? _sub;
+  // StreamSubscription? _sub;
 
   fleetNotifier() : super([]) {
     _listen();
   }
 
   void _listen() {
-    _sub = db.collection('cars').snapshots().listen((snap) {
+    // StreamSubscription? _sub;
+    // _sub = db.collection('cars').snapshots().listen((snap) {
+    db.collection('cars').snapshots().listen((snap) {
       final cars = snap.docs.map((d) => Car.fromFirestore(d, null)).toList();
 
       state = cars;

@@ -25,10 +25,12 @@ class FinalScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: theme.colorScheme.primary.withOpacity(0.4)),
+        // border: Border.all(color: theme.colorScheme.primary.withOpacity(0.4)),
+        border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.4)),
         boxShadow: [
           BoxShadow(
-            color: theme.shadowColor.withOpacity(0.08),
+            // color: theme.shadowColor.withOpacity(0.08),
+            color: theme.shadowColor.withValues(alpha: 0.08),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),

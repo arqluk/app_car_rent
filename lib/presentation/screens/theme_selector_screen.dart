@@ -51,7 +51,8 @@ class _ThemeSelectorView extends ConsumerWidget {
                 'Seleccioná el color que prefieras',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
+                  // color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

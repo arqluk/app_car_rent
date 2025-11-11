@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 class PaymentsListScreen extends ConsumerStatefulWidget {
   const PaymentsListScreen({super.key});
 
-  @override
   Widget build(BuildContext context) {
     return _PaymentsListScreenView();
   }
@@ -37,7 +36,7 @@ class PaymentsListScreenState extends ConsumerState<PaymentsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Payment> paymentList = ref.watch(PaymentNotifierProvider);
+    // List<Payment> paymentList = ref.watch(PaymentNotifierProvider);
     return _PaymentsListScreenView();
   }
 }

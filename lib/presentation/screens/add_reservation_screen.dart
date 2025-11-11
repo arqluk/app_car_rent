@@ -50,11 +50,13 @@ class _AddReservationScreenState extends ConsumerState<AddReservationScreen> {
                     border: Border.all(
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.4),
+                      // ).colorScheme.primary.withOpacity(0.4),
+                      ).colorScheme.primary.withValues(alpha: 0.4),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        // color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -135,11 +137,13 @@ class _AddReservationScreenState extends ConsumerState<AddReservationScreen> {
                     border: Border.all(
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.4),
+                      // ).colorScheme.primary.withOpacity(0.4),
+                      ).colorScheme.primary.withValues(alpha: 0.4),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        // color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),

@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 class ReservationsListScreen extends ConsumerStatefulWidget {
   const ReservationsListScreen({super.key});
 
-  @override
   Widget build(BuildContext context) {
     return _ReservationsListScreenView();
   }
@@ -38,7 +37,7 @@ class ReservationsListScreenState
 
   @override
   Widget build(BuildContext context) {
-    List<Reservation> reservationList = ref.watch(ReservationNotifierProvider);
+    // List<Reservation> reservationList = ref.watch(ReservationNotifierProvider);
     return _ReservationsListScreenView();
   }
 }

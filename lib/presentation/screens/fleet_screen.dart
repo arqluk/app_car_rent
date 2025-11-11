@@ -251,7 +251,7 @@
 // import 'package:app_car_rental/data/car_repository.dart';
 import 'package:app_car_rental/domain/car.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
-import 'package:app_car_rental/presentation/providers/cars_provider.dart';
+// import 'package:app_car_rental/presentation/providers/cars_provider.dart';
 import 'package:app_car_rental/presentation/providers/fleet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -262,7 +262,6 @@ class FleetScreen extends ConsumerStatefulWidget {
   FleetScreen({super.key});
 // final carRepository = CarRepository();
 
-  @override
   Widget build(BuildContext context) {
     return _FleetScreenView();
   }
@@ -282,20 +281,10 @@ class _FleetScreenState extends ConsumerState<FleetScreen>{
  
   @override
   Widget build(BuildContext context) {
-    List<Car> fleetList = ref.watch(fleetNotifierProvider);
+    // List<Car> fleetList = ref.watch(fleetNotifierProvider);
     return _FleetScreenView();
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 // class _CarsScreenView extends StatelessWidget {
 class _FleetScreenView extends ConsumerWidget {
