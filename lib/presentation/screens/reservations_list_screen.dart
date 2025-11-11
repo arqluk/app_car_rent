@@ -37,7 +37,6 @@ class ReservationsListScreenState
 
   @override
   Widget build(BuildContext context) {
-    // List<Reservation> reservationList = ref.watch(ReservationNotifierProvider);
     return _ReservationsListScreenView();
   }
 }
@@ -61,7 +60,7 @@ class _ReservationsListScreenView extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: currentUser == null
-              // 🔹 Caso SIN usuario logueado
+              // Caso SIN usuario logueado
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -94,58 +93,25 @@ class _ReservationsListScreenView extends ConsumerWidget {
                     ),
                   ],
                 )
-              
-              // 🔹 Caso CON usuario logueado
-              // : loading
-              // ? const CircularProgressIndicator()
-              // : reservationList.isEmpty
-              // ? Center(
-              //     child: Text(
-              //       "No tenés reservas registradas",
-              //       style: textStyle.bodyLarge,
-              //     ),
-              //   )
-              // : Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         'Tus reservas',
-              //         style: textStyle.headlineSmall?.copyWith(
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-
-
-
-
-
-
-                    : loading
-                  ? const CircularProgressIndicator()
-
-
+              // Caso CON usuario logueado
+              : loading
+              ? const CircularProgressIndicator()
               : reservationList.isEmpty
-                ? Center(
-                    child: Text(
-                      "No tenés reservas registradas",
-                      style: textStyle.bodyLarge,
+              ? Center(
+                  child: Text(
+                    "No tenés reservas registradas",
+                    style: textStyle.bodyLarge,
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tus reservas',
+                      style: textStyle.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Tus reservas',
-                        style: textStyle.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                      ),      
-
-
-
-
-
-
                     const SizedBox(height: 20),
                     Expanded(
                       child: ListView.builder(

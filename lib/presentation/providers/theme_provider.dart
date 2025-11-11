@@ -1,7 +1,7 @@
 import 'package:app_car_rental/core/theme/app_theme.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
-// Un provider simple para el índice del color seleccionado (opcional)
+// Provider simple para el índice del color seleccionado (opcional)
 StateProvider<int> selectedColorProvider = StateProvider<int>((ref) {
   return 0;
 });

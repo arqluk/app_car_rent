@@ -46,7 +46,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       backgroundColor: colorScheme.primary,
       foregroundColor: colorScheme.onPrimary,
       actions: [
-        // 🔹 Si el usuario está logueado → muestra botón de "Cerrar sesión"
+        // Si el usuario está logueado → muestra botón de "Cerrar sesión"
         authState.when(
           data: (user) {
             final currentLocation = GoRouterState.of(context).uri.toString();
@@ -54,7 +54,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             final isRegister = currentLocation == '/register_screen';
 
             if (!isLogin && !isRegister && user != null) {
-              // ✅ Usuario logueado → Logout + DarkMode
+              // Usuario logueado → Logout + DarkMode
               return Row(
                 children: [
                   IconButton(
@@ -69,7 +69,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     },
                   ),
 
-                  // ✅ Mostrar dark mode también cuando está logueado
+                  // Mostrar dark mode también cuando está logueado
                   if (showDarkModeButton)
                     IconButton(
                       onPressed: onDarkModePressed,
@@ -84,8 +84,8 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 ],
               );
             } else {
-              // ✅ Usuario NO logueado → Login/Register + DarkMode
-              // ✅ // Usuario no logueado → mostrar login/register en pantallas que lo pidan
+              // Usuario NO logueado → Login/Register + DarkMode
+              // Usuario no logueado → mostrar login/register en pantallas que lo pidan
               return Row(
                 children: [
                   if (showAuthButtons) ...[

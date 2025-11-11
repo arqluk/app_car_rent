@@ -4,7 +4,6 @@ import 'package:app_car_rental/presentation/components/item_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_car_rental/presentation/providers/auth_provider.dart';
 
 class CarDetailScreen extends ConsumerWidget {
@@ -39,7 +38,7 @@ class CarDetailScreen extends ConsumerWidget {
             ),
             SizedBox(height: 50),
 
-            // 👇 Botón solo visible si hay un usuario logueado
+            // Botón solo visible si hay un usuario logueado
             authState.when(
               data: (user) {
                 if (user != null) {

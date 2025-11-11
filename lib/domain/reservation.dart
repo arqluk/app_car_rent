@@ -5,9 +5,8 @@ class Reservation {
   String userId;
   String carId;
   int days;
-  String status; // pending, completed, cancelled
-  String
-  paymentMethod; // TarjetaCredito, Tarjetadebito, Transferencia, Efectivo
+  String status;
+  String paymentMethod;
 
   Reservation({
     required this.id,

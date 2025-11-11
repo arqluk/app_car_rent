@@ -71,10 +71,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
 
-              // const SizedBox(height: 12),
-
-              // const SizedBox(height: 120),
-
               const SizedBox(height: 120),
 
               SizedBox(

@@ -23,7 +23,7 @@ class CarsNotifier extends StateNotifier<List<Car>> {
       return null; // éxito
     } catch (e) {
       print('Error al agregar auto: $e');
-      return 'Error al agregar auto: $e'; // devolvés el error
+      return 'Error al agregar auto: $e';
     }
   }
 
@@ -37,7 +37,7 @@ class CarsNotifier extends StateNotifier<List<Car>> {
           );
 
       final cars = await docs.get();
-      // ✅ Reemplaza lista, no acumula
+      // Reemplaza lista, no acumula
       state = cars.docs.map((doc) => doc.data()).toList();
     } catch (e) {
       print('Error obteniendo autos: $e');

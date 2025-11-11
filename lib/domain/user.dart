@@ -4,7 +4,7 @@ class User {
   final String uid;
   final String userName;
   final String userEmail;
-  final String role; // admin | user
+  final String role;
   final String password;
   final String document;
   final String country;

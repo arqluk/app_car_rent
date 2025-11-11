@@ -37,11 +37,11 @@ class _UsersListView extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        // border: Border.all(color: theme.colorScheme.primary.withOpacity(0.4)),
-        border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.4)),
+        border: Border.all(
+          color: theme.colorScheme.primary.withValues(alpha: 0.4),
+        ),
         boxShadow: [
           BoxShadow(
-            // color: theme.shadowColor.withOpacity(0.08),
             color: theme.shadowColor.withValues(alpha: 0.8),
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -102,7 +102,6 @@ class _UsersListView extends StatelessWidget {
               final data = users[index].data() as Map<String, dynamic>;
               final uid = users[index].id;
 
-              // Eliminamos password si existiera
               data.remove('password');
 
               return _styledBox(

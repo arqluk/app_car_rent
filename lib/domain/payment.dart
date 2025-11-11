@@ -17,7 +17,7 @@ class Payment {
     required this.carId,
     required this.reservationId,
     required this.amount,
-    required this.status, // pending, paid, cancelled
+    required this.status,
     required this.timestamp,
     required this.protection,
     required this.accesories,
@@ -52,7 +52,6 @@ class Payment {
       "timestamp": timestamp,
       "protection": protection,
       "accesories": accesories,
-      // "paymentMethod": paymentMethod,
     };
   }
 

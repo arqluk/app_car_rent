@@ -3,7 +3,7 @@ import 'package:app_car_rental/domain/reservation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
-// ✅ Estado global de carga para reservations
+// Estado global de carga para reservations
 final ReservationLoadingProvider = StateProvider<bool>((ref) => true);
 
 final ReservationNotifierProvider =
@@ -25,7 +25,7 @@ class ReservationNotifier extends StateNotifier<List<Reservation>> {
       return null; // éxito
     } catch (e) {
       print('Error al agregar reserva: $e');
-      return 'Error al agregar reserva: $e'; // devolvés el error
+      return 'Error al agregar reserva: $e';
     }
   }
 
@@ -40,7 +40,7 @@ class ReservationNotifier extends StateNotifier<List<Reservation>> {
           );
 
       final reservations = await docs.get();
-      // ✅ Reemplaza lista, no acumula
+      // Reemplaza lista, no acumula
       state = reservations.docs.map((doc) => doc.data()).toList();
     } catch (e) {
       print('Error obteniendo reservas: $e');
@@ -76,7 +76,7 @@ class ReservationNotifier extends StateNotifier<List<Reservation>> {
         'status': newStatus,
       });
 
-      // 🔄 Actualizar el estado local también
+      // Actualizo el estado local también
       state = [
         for (final r in state)
           if (r.id == reservationId) r.copyWith(status: newStatus) else r,

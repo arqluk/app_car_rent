@@ -25,11 +25,11 @@ class FinalScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        // border: Border.all(color: theme.colorScheme.primary.withOpacity(0.4)),
-        border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.4)),
+        border: Border.all(
+          color: theme.colorScheme.primary.withValues(alpha: 0.4),
+        ),
         boxShadow: [
           BoxShadow(
-            // color: theme.shadowColor.withOpacity(0.08),
             color: theme.shadowColor.withValues(alpha: 0.08),
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -52,7 +52,7 @@ class FinalScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            // ✅ DATOS DEL USUARIO
+            // DATOS DEL USUARIO
             _styledBox(
               context,
               child: Column(
@@ -70,7 +70,7 @@ class FinalScreen extends StatelessWidget {
               ),
             ),
 
-            // ✅ DATOS DEL AUTO
+            // DATOS DEL AUTO
             _styledBox(
               context,
               child: Column(
@@ -95,7 +95,7 @@ class FinalScreen extends StatelessWidget {
               ),
             ),
 
-            // ✅ DATOS DE LA RESERVA
+            // DATOS DE LA RESERVA
             _styledBox(
               context,
               child: Column(
@@ -117,7 +117,7 @@ class FinalScreen extends StatelessWidget {
               ),
             ),
 
-            // ✅ DATOS DEL PAGO
+            // DATOS DEL PAGO
             _styledBox(
               context,
               child: Column(
@@ -142,7 +142,7 @@ class FinalScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // ✅ BOTÓN FINAL
+            // BOTÓN FINAL
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
@@ -187,4 +187,3 @@ Widget _infoRow(String label, String value) {
     ),
   );
 }
-

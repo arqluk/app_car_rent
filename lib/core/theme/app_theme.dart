@@ -29,7 +29,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
 
-      // ✅ SnackBar toma automáticamente colores según tema
+      // SnackBar toma automáticamente colores según tema
       snackBarTheme: SnackBarThemeData(
         backgroundColor: colorScheme.primaryContainer,
         contentTextStyle: TextStyle(color: colorScheme.onPrimaryContainer),

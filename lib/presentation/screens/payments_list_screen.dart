@@ -36,7 +36,6 @@ class PaymentsListScreenState extends ConsumerState<PaymentsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // List<Payment> paymentList = ref.watch(PaymentNotifierProvider);
     return _PaymentsListScreenView();
   }
 }
@@ -59,7 +58,7 @@ class _PaymentsListScreenView extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: currentUser == null
-              // 🔹 Caso SIN usuario logueado
+              // Caso SIN usuario logueado
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -94,7 +93,7 @@ class _PaymentsListScreenView extends ConsumerWidget {
                     ),
                   ],
                 )
-              // 🔹 Caso CON usuario logueado
+              // Caso CON usuario logueado
               : loading
               ? const CircularProgressIndicator()
               : paymentList.isEmpty

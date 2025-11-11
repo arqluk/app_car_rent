@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // 👈 para formatear números
+import 'package:intl/intl.dart'; // para formatear números
 
 // ignore: must_be_immutable
 class ItemDetailScreen extends StatelessWidget {
@@ -26,8 +26,6 @@ class ItemDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-
-    // ✅ Definimos el formateador acá
     final NumberFormat formatNumber = NumberFormat('#,##0', 'es_AR');
 
     return Center(
@@ -50,9 +48,9 @@ class ItemDetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: colorScheme.primaryContainer, // 🎨 fondo según el tema
+              color: colorScheme.primaryContainer,
               border: Border.all(
-                color: colorScheme.onPrimaryContainer, // 🎨 borde que contraste
+                color: colorScheme.onPrimaryContainer,
                 width: 2,
               ),
               borderRadius: const BorderRadius.horizontal(
@@ -63,7 +61,7 @@ class ItemDetailScreen extends StatelessWidget {
             child: Text(
               '\$ ${formatNumber.format(precio)}.- por día',
               style: TextStyle(
-                color: colorScheme.onPrimaryContainer, // 🎨 texto según el tema
+                color: colorScheme.onPrimaryContainer,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),

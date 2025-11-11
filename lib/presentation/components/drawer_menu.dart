@@ -123,7 +123,6 @@ class _DrawerMenuState extends ConsumerState<DrawerMenu> {
                                 }
                                 return;
                               }
-
                               context.push(item.link);
                             },
                     );
@@ -138,10 +137,7 @@ class _DrawerMenuState extends ConsumerState<DrawerMenu> {
   }
 }
 
-// -----------------------------------------------------------------------------
-// ✅ HEADER con subtítulo + clic para Perfil/Login
-// -----------------------------------------------------------------------------
-
+// HEADER con subtítulo + clic para Perfil/Login
 class _DrawerHeader extends ConsumerWidget {
   final Map<String, dynamic>? userDoc;
 
@@ -177,7 +173,6 @@ class _DrawerHeader extends ConsumerWidget {
                 children: [
                   Text(
                     isLogged
-                        // ? (userDoc?['email'] ?? user!.email ?? 'Usuario')
                         ? (userDoc?['email'] ?? user.email ?? 'Usuario')
                         : 'Invitado',
                     style: TextStyle(
@@ -193,8 +188,9 @@ class _DrawerHeader extends ConsumerWidget {
                         : 'Iniciá sesión para más opciones',
                     style: TextStyle(
                       fontSize: 14,
-                      // color: colorScheme.onPrimaryContainer.withOpacity(0.8),
-                      color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
+                      color: colorScheme.onPrimaryContainer.withValues(
+                        alpha: 0.8,
+                      ),
                     ),
                   ),
                 ],

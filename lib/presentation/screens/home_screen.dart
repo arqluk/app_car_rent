@@ -23,11 +23,9 @@ class _HomeView extends StatelessWidget {
         title: '',
         showAuthButtons: true, // muestra los botones
         onLoginPressed: () {
-          // Navegar a la pantalla de login
           context.push('/login_screen');
         },
         onRegisterPressed: () {
-          // Navegar a la pantalla de registro
           context.push('/register_screen');
         },
       ),
@@ -54,11 +52,10 @@ class _HomeView extends StatelessWidget {
 
               const SizedBox(height: 50),
 
-              // ✅ IMAGEN DE VARIOS AUTOS DEBAJO DEL BOTÓN
               ClipRRect(
                 borderRadius: BorderRadius.circular(999),
                 child: Image.asset(
-                  'assets/images/cars_banner.jpg', // imagen agregada a carpeta assets
+                  'assets/images/cars_banner.jpg',
                   width: 200,
                   height: 200,
                   fit: BoxFit.cover,
@@ -99,4 +96,3 @@ class _HomeView extends StatelessWidget {
     );
   }
 }
-

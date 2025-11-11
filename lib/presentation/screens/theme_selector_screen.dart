@@ -11,7 +11,7 @@ class ThemeSelectorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final appTheme = ref.watch(themeNotifierProvider); // obtiene AppTheme
+    final appTheme = ref.watch(themeNotifierProvider);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -19,7 +19,6 @@ class ThemeSelectorScreen extends ConsumerWidget {
         showDarkModeButton: true,
         isDarkMode: appTheme.isDarkMode,
         onDarkModePressed: () {
-          // ✅ aquí llamamos al método del notifier — ya debe existir
           ref.read(themeNotifierProvider.notifier).toggleDarkMode();
         },
       ),
@@ -45,21 +44,20 @@ class _ThemeSelectorView extends ConsumerWidget {
           width: 400, // opcional para desktop / podés quitarlo en mobile
           child: Column(
             mainAxisSize: MainAxisSize
-                .min, // ✅ hace que la columna tome solo su altura necesaria
+                .min, // hace que la columna tome solo su altura necesaria
             children: [
               Text(
                 'Seleccioná el color que prefieras',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  // color: Theme.of(context).colorScheme.onBackground,
                   color: Theme.of(context).colorScheme.onSurface,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 50),
-      
-              // ✅ la lista se adapta automáticamente y ya no colapsa
+
+              // la lista se adapta automáticamente y no colapsa
               for (int index = 0; index < colorsList.length; index++)
                 RadioListTile(
                   title: Text(
@@ -69,7 +67,9 @@ class _ThemeSelectorView extends ConsumerWidget {
                   value: index,
                   groupValue: selectedColor,
                   onChanged: (value) {
-                    ref.read(themeNotifierProvider.notifier).selectColor(value!);
+                    ref
+                        .read(themeNotifierProvider.notifier)
+                        .selectColor(value!);
                     ref.read(selectedColorProvider.notifier).state = value;
                   },
                 ),

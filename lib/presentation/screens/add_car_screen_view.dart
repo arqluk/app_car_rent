@@ -1,8 +1,6 @@
 import 'package:app_car_rental/domain/car.dart';
-// import 'package:app_car_rental/domain/user.dart';
 import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:app_car_rental/presentation/providers/cars_provider.dart';
-// import 'package:app_car_rental/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
