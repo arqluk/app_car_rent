@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:app_car_rental/domain/reservation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 // Estado global de carga para reservations
@@ -47,7 +48,7 @@ class ReservationNotifier extends StateNotifier<List<Reservation>> {
     }
   }
 
-  Future<void> getReservationsByUser(String userId, ref) async {
+  Future<void> getReservationsByUser(String userId, WidgetRef ref) async {
     ref.read(ReservationLoadingProvider.notifier).state = true;
     try {
       final docs = db

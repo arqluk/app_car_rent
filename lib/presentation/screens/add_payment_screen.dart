@@ -309,7 +309,7 @@ class _AddPaymentScreenState extends ConsumerState<AddPaymentScreen> {
                         if (!mounted) return;
 
                         context.push(
-                          '/final_screen',
+                          '/payment_summary_screen',
                           extra: {
                             'car': loadedCar,
                             'reservation': widget.reservation,

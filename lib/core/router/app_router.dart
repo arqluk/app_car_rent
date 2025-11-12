@@ -4,7 +4,7 @@ import 'package:app_car_rental/presentation/screens/access_denied_screen.dart';
 import 'package:app_car_rental/presentation/screens/add_car_screen.dart';
 import 'package:app_car_rental/presentation/screens/admin_screen.dart';
 import 'package:app_car_rental/presentation/screens/car_detail_screen.dart';
-import 'package:app_car_rental/presentation/screens/final_screen.dart';
+import 'package:app_car_rental/presentation/screens/payment_summary_screen.dart';
 import 'package:app_car_rental/presentation/screens/fleet_screen.dart';
 import 'package:app_car_rental/presentation/screens/home_screen.dart';
 import 'package:app_car_rental/presentation/screens/login_screen.dart';
@@ -73,10 +73,10 @@ final appRouter = GoRouter(
       builder: (context, state) => PaymentsListScreen(),
     ),
     GoRoute(
-      path: '/final_screen',
+      path: '/payment_summary_screen',
       builder: (context, state) {
         final extras = state.extra as Map<String, dynamic>;
-        return FinalScreen(
+        return PaymentSummaryScreen(
           car: extras['car'],
           reservation: extras['reservation'],
           payment: extras['payment'],

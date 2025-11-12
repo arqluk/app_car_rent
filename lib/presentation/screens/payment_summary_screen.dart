@@ -5,12 +5,12 @@ import 'package:app_car_rental/presentation/components/custom_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
 
-class FinalScreen extends StatelessWidget {
+class PaymentSummaryScreen extends StatelessWidget {
   final Car car;
   final Reservation reservation;
   final Payment payment;
 
-  const FinalScreen({
+  const PaymentSummaryScreen({
     super.key,
     required this.car,
     required this.reservation,
